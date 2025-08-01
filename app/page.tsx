@@ -94,7 +94,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { name: 'Sneakers', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=300&fit=crop', count: '25+ styles' },
-              { name: 'High Heels', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=300&h=300&fit=crop', count: '30+ styles' },
+              { name: 'High Heels', image: 'https://images.unsplash.com/photo-1603487742131-4160ec999306?w=300&h=300&fit=crop', count: '30+ styles' },
               { name: 'Flats', image: 'https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?w=300&h=300&fit=crop', count: '20+ styles' },
               { name: 'Boots', image: 'https://images.unsplash.com/photo-1608256246200-53e8b47b859f?w=300&h=300&fit=crop', count: '15+ styles' }
             ].map((category) => (
