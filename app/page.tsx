@@ -96,7 +96,7 @@ export default function Home() {
               { name: 'Sneakers', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=300&fit=crop', count: '25+ styles' },
               { name: 'High Heels', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=300&h=300&fit=crop', count: '30+ styles' },
               { name: 'Flats', image: 'https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?w=300&h=300&fit=crop', count: '20+ styles' },
-              { name: 'Boots', image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=300&h=300&fit=crop', count: '15+ styles' }
+              { name: 'Boots', image: 'https://images.unsplash.com/photo-1608256246200-53e8b47b859f?w=300&h=300&fit=crop', count: '15+ styles' }
             ].map((category) => (
               <Link
                 key={category.name}
