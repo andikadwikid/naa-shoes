@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Product } from '../data/products'
 import { useCart } from '../context/CartContext'
+import { useToast } from '../context/ToastContext'
 
 interface ProductCardProps {
   product: Product
@@ -15,6 +16,13 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
   const [selectedSize, setSelectedSize] = useState<number>(product.sizes[0])
   const [selectedColor, setSelectedColor] = useState<string>(product.colors[0])
   const { addToCart } = useCart()
+  const { showToast } = useToast()
+
+  const handleAddToCart = () => {
+    addToCart(product, selectedSize, selectedColor)
+    setIsModalOpen(false)
+    showToast(`${product.name} added to cart!`, 'success')
+  }
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -188,10 +196,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
                     Cancel
                   </button>
                   <button
-                    onClick={() => {
-                      addToCart(product, selectedSize, selectedColor)
-                      setIsModalOpen(false)
-                    }}
+                    onClick={handleAddToCart}
                     className="flex-1 py-3 px-4 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors"
                   >
                     Add to Cart
