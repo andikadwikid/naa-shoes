@@ -49,7 +49,7 @@ export const products: Product[] = [
     id: 3,
     name: "Classic Black Boots",
     price: 950000,
-    image: "https://images.unsplash.com/photo-1608256246200-53e8b47b859f?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=400&h=400&fit=crop",
     category: "Boots",
     description: "Boot hitam klasik yang cocok untuk cuaca dingin dan memberikan kesan edgy.",
     colors: ["Black", "Brown", "Dark Gray"],
