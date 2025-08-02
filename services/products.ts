@@ -129,8 +129,16 @@ export const getProducts = async (): Promise<Product[]> => {
 }
 
 export const getProductById = async (id: number): Promise<Product | null> => {
-  await new Promise(resolve => setTimeout(resolve, 50))
-  return productsData.find(product => product.id === id) || null
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 100))
+
+  // Validate ID
+  if (!id || isNaN(id) || id <= 0) {
+    return null
+  }
+
+  const product = productsData.find(product => product.id === id)
+  return product || null
 }
 
 export const getProductsByCategory = async (category: string): Promise<Product[]> => {
