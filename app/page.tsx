@@ -609,47 +609,112 @@ export default function Home() {
 
         </main>
 
-        {/* Newsletter Section */}
-        <aside 
-          className="py-12 sm:py-16 lg:py-20 bg-pink-600 text-white" 
+        {/* Enhanced Newsletter Section */}
+        <aside
+          className="relative py-20 overflow-hidden"
           aria-labelledby="newsletter-heading"
           role="complementary"
         >
-          <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 text-center">
-            <header>
-              <h2 id="newsletter-heading" className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
-                Stay in Style
-              </h2>
-              <p className="text-lg sm:text-xl mb-6 sm:mb-8 text-pink-100 leading-relaxed">
-                Dapatkan update koleksi terbaru dan promo eksklusif langsung ke email Anda
-              </p>
-            </header>
-            <form 
-              className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 sm:gap-4" 
-              aria-label="Newsletter subscription form"
-            >
-              <label className="sr-only" htmlFor="email-newsletter">
-                Email address for newsletter subscription
-              </label>
-              <input
-                id="email-newsletter"
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 text-base focus:outline-none focus:ring-2 focus:ring-pink-300 touch-manipulation"
-                aria-required="true"
-                aria-describedby="newsletter-description"
-              />
-              <button 
-                type="submit"
-                className="bg-white text-pink-600 font-semibold px-6 py-3 rounded-lg hover:bg-pink-50 active:bg-pink-100 transition-colors duration-200 whitespace-nowrap touch-manipulation focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-600"
-                aria-label="Subscribe to newsletter"
-              >
-                Subscribe
-              </button>
-            </form>
-            <p id="newsletter-description" className="sr-only">
-              Subscribe to receive updates about new products and exclusive offers from NAA Shoes
-            </p>
+          {/* Background with gradient and pattern */}
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-600 via-purple-600 to-pink-700"></div>
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-20 left-20 w-40 h-40 bg-white rounded-full"></div>
+            <div className="absolute bottom-20 right-20 w-32 h-32 bg-white rounded-full"></div>
+            <div className="absolute top-40 right-40 w-24 h-24 bg-white rounded-full"></div>
+          </div>
+
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+              {/* Content */}
+              <div className="text-center lg:text-left text-white">
+                <div className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
+                  <span className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+                  Bergabung dengan 10,000+ Fashion Enthusiast
+                </div>
+
+                <h2 id="newsletter-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                  Jangan Sampai <span className="text-yellow-300">Ketinggalan</span> Tren
+                </h2>
+
+                <p className="text-xl text-white/90 mb-8 leading-relaxed">
+                  Dapatkan akses eksklusif ke koleksi terbaru, tips fashion dari expert,
+                  dan promo khusus yang hanya tersedia untuk subscriber kami.
+                </p>
+
+                {/* Benefits */}
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-center text-white/90">
+                    <svg className="w-5 h-5 text-yellow-300 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    Koleksi terbaru sebelum orang lain
+                  </div>
+                  <div className="flex items-center text-white/90">
+                    <svg className="w-5 h-5 text-yellow-300 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    Diskon eksklusif hingga 30%
+                  </div>
+                  <div className="flex items-center text-white/90">
+                    <svg className="w-5 h-5 text-yellow-300 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    Tips & trik styling dari fashion expert
+                  </div>
+                </div>
+              </div>
+
+              {/* Newsletter Form */}
+              <div className="lg:max-w-md mx-auto w-full">
+                <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Subscribe Sekarang</h3>
+                    <p className="text-gray-600">Gratis & bisa unsubscribe kapan saja</p>
+                  </div>
+
+                  <form className="space-y-4" aria-label="Newsletter subscription form">
+                    <div>
+                      <label className="sr-only" htmlFor="email-newsletter">
+                        Email address for newsletter subscription
+                      </label>
+                      <input
+                        id="email-newsletter"
+                        type="email"
+                        placeholder="Masukkan email Anda"
+                        className="w-full px-4 py-4 rounded-xl border border-gray-200 text-gray-900 text-base focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200"
+                        aria-required="true"
+                        aria-describedby="newsletter-description"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold py-4 px-6 rounded-xl hover:from-pink-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                      aria-label="Subscribe to newsletter"
+                    >
+                      <span className="flex items-center justify-center">
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                        Subscribe Sekarang
+                      </span>
+                    </button>
+                  </form>
+
+                  <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500">
+                      Dengan subscribe, Anda setuju dengan
+                      <a href="#" className="text-pink-600 hover:underline">Terms of Service</a> dan
+                      <a href="#" className="text-pink-600 hover:underline">Privacy Policy</a> kami.
+                    </p>
+                  </div>
+
+                  <p id="newsletter-description" className="sr-only">
+                    Subscribe to receive updates about new products and exclusive offers from NAA Shoes
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </aside>
       </div>
