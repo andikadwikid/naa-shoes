@@ -266,6 +266,23 @@ export default function AdminProductsList() {
             </select>
           </div>
 
+          {/* Brand Filter */}
+          <div>
+            <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-2">
+              Brand
+            </label>
+            <select
+              id="brand"
+              value={selectedBrand}
+              onChange={(e) => setSelectedBrand(e.target.value)}
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+            >
+              {brands.map(brand => (
+                <option key={brand} value={brand}>{brand}</option>
+              ))}
+            </select>
+          </div>
+
           {/* Status Filter */}
           <div>
             <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
