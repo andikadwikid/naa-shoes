@@ -24,19 +24,24 @@ export default function CartPage() {
 
   const generateWhatsAppLink = () => {
     // Generate pesan berdasarkan cart items
-    let message = `Halo! Saya tertarik untuk membeli sepatu dari ${WHATSAPP_CONFIG.storeName}:\n\n`
+    let message = `${WHATSAPP_CONFIG.messageTemplate.greeting} ${WHATSAPP_CONFIG.storeName}:\n\n`
 
+    // Detail produk
+    message += `📦 *DETAIL PESANAN:*\n`
     state.items.forEach((item, index) => {
-      message += `${index + 1}. ${item.product.name}\n`
-      message += `   - Size: ${item.selectedSize}\n`
-      message += `   - Color: ${item.selectedColor}\n`
-      message += `   - Quantity: ${item.quantity}\n`
-      message += `   - Price: ${formatPrice(item.product.price)} x ${item.quantity} = ${formatPrice(item.product.price * item.quantity)}\n\n`
+      message += `\n${index + 1}. *${item.product.name}*\n`
+      message += `   👟 Size: ${item.selectedSize}\n`
+      message += `   🎨 Color: ${item.selectedColor}\n`
+      message += `   📦 Qty: ${item.quantity}\n`
+      message += `   💰 ${formatPrice(item.product.price)} x ${item.quantity} = *${formatPrice(item.product.price * item.quantity)}*\n`
     })
 
+    // Summary
+    message += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n`
+    message += `📋 *RINGKASAN:*\n`
     message += `Total Items: ${state.totalItems}\n`
-    message += `Total Price: ${formatPrice(getTotalPrice())}\n\n`
-    message += `Mohon informasi lebih lanjut untuk proses pemesanan. Terima kasih!`
+    message += `💸 *Total Price: ${formatPrice(getTotalPrice())}*\n\n`
+    message += `${WHATSAPP_CONFIG.messageTemplate.closing}`
 
     // Encode message untuk URL
     const encodedMessage = encodeURIComponent(message)
