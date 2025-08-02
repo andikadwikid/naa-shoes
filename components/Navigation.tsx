@@ -24,18 +24,30 @@ export default function Navigation() {
   const cartItemCount = mounted ? getItemCount() : 0
 
   return (
-    <header className="bg-white shadow-sm border-b border-pink-100 sticky top-0 z-40" role="banner">
-      <nav className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
-        <div className="flex justify-between items-center h-14 sm:h-16">
-          
-          {/* Logo */}
+    <header className="bg-white/95 backdrop-blur-md shadow-lg border-b border-pink-100/50 sticky top-0 z-50" role="banner">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
+        <div className="flex justify-between items-center h-16 sm:h-18">
+
+          {/* Enhanced Logo */}
           <div className="flex-shrink-0">
-            <Link 
-              href="/" 
-              className="text-xl sm:text-2xl font-bold text-pink-600 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
+            <Link
+              href="/"
+              className="group flex items-center py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg"
               aria-label="NAA Shoes - Go to homepage"
             >
-              NAA Shoes
+              <div className="flex items-center space-x-2">
+                {/* Logo icon */}
+                <div className="w-8 h-8 bg-gradient-to-br from-pink-600 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-white font-bold text-sm">N</span>
+                </div>
+                {/* Brand text */}
+                <div className="flex flex-col">
+                  <span className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 group-hover:from-pink-700 group-hover:to-purple-700 transition-colors">
+                    NAA Shoes
+                  </span>
+                  <span className="text-xs text-gray-500 -mt-1 hidden sm:block">Premium Footwear</span>
+                </div>
+              </div>
             </Link>
           </div>
 
