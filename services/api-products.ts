@@ -165,8 +165,16 @@ export const getPaginatedProducts = async (params: PaginationParams): Promise<Pa
       fetch(`/api/products?${queryParams}`)
     ])
 
-    if (!countResponse.ok || !productsResponse.ok) {
-      throw new Error('Failed to fetch products')
+    if (!countResponse.ok) {
+      const errorText = await countResponse.text()
+      console.error('Count API error:', countResponse.status, errorText)
+      throw new Error(`Failed to fetch products count: ${countResponse.status}`)
+    }
+
+    if (!productsResponse.ok) {
+      const errorText = await productsResponse.text()
+      console.error('Products API error:', productsResponse.status, errorText)
+      throw new Error(`Failed to fetch products: ${productsResponse.status}`)
     }
 
     const { count: totalItems } = await countResponse.json()
