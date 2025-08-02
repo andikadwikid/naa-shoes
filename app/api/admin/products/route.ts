@@ -79,6 +79,7 @@ export async function GET(request: NextRequest) {
       take: limit,
       include: {
         category: true,
+        brand: true,
         images: {
           where: { isPrimary: true },
           take: 1
