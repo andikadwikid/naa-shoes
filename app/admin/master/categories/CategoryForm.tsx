@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Toast from '../../components/Toast'
 
 interface CategoryFormProps {
   category?: {
@@ -21,6 +22,11 @@ export default function CategoryForm({ category }: CategoryFormProps) {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [toast, setToast] = useState<{show: boolean, message: string, type: 'success' | 'error'}>({
+    show: false,
+    message: '',
+    type: 'success'
+  })
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,12 +50,25 @@ export default function CategoryForm({ category }: CategoryFormProps) {
       })
 
       if (response.ok) {
-        router.push('/admin/master/categories')
-        router.refresh()
+        setToast({
+          show: true,
+          message: category ? 'Category updated successfully!' : 'Category created successfully!',
+          type: 'success'
+        })
+
+        setTimeout(() => {
+          router.push('/admin/master/categories')
+          router.refresh()
+        }, 1500)
       } else {
         const errorData = await response.json()
         if (errorData.error) {
           setErrors({ general: errorData.error })
+          setToast({
+            show: true,
+            message: 'Failed to save category. Please try again.',
+            type: 'error'
+          })
         }
       }
     } catch (error) {
@@ -68,7 +87,14 @@ export default function CategoryForm({ category }: CategoryFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <>
+      <Toast
+        show={toast.show}
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast(prev => ({ ...prev, show: false }))}
+      />
+      <form onSubmit={handleSubmit} className="space-y-6">
       {errors.general && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
           {errors.general}
@@ -136,5 +162,6 @@ export default function CategoryForm({ category }: CategoryFormProps) {
         </button>
       </div>
     </form>
+    </>
   )
 }
