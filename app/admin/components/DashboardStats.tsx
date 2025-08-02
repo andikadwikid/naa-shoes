@@ -25,7 +25,7 @@ export default function DashboardStats() {
 
       try {
         const [productsRes, categoriesRes, colorsRes, sizesRes] = await Promise.all([
-          fetch('/api/admin/products'),
+          fetch('/api/admin/products?limit=1000'), // Get all products for stats
           fetch('/api/admin/categories'),
           fetch('/api/admin/colors'),
           fetch('/api/admin/sizes')
