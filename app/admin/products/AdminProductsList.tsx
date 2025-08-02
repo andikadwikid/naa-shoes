@@ -85,7 +85,9 @@ export default function AdminProductsList() {
         const response = await fetch('/api/categories')
         if (response.ok) {
           const categoryList = await response.json()
-          setCategories(['All', ...categoryList])
+          // Extract category names from objects
+          const categoryNames = categoryList.map((cat: any) => cat.name)
+          setCategories(['All', ...categoryNames])
         }
       } catch (error) {
         console.error('Error loading categories:', error)
