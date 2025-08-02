@@ -157,13 +157,13 @@ export const getPaginatedProducts = async (params: PaginationParams): Promise<Pa
     // All filtering and sorting now handled by API
 
     // Calculate pagination
-    const totalItems = filteredProducts.length
+    const totalItems = apiProducts.length
     const totalPages = Math.ceil(totalItems / limit)
     const startIndex = (page - 1) * limit
     const endIndex = startIndex + limit
 
     // Get page data and convert to frontend format
-    const data = filteredProducts
+    const data = apiProducts
       .slice(startIndex, endIndex)
       .map(convertAPIProductToProduct)
 
