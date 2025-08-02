@@ -501,6 +501,7 @@ async function main() {
       originalPrice: 380000,
       isOnSale: true,
       category: 'sandals',
+      brand: 'zara',
       colors: ['Pink', 'White'],
       image: 'https://images.unsplash.com/photo-1593187315802-4a09e6618dd0?w=400&h=400&fit=crop'
     }
