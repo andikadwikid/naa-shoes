@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '12')
     const search = searchParams.get('search') || ''
     const category = searchParams.get('category') || 'All'
+    const brand = searchParams.get('brand') || 'All'
     const sortBy = searchParams.get('sortBy') || 'createdAt'
     const status = searchParams.get('status') || 'All'
 
