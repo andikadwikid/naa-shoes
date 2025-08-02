@@ -34,7 +34,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
 
   // Scroll to top when page loads
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [resolvedParams.id])
 
   useEffect(() => {
