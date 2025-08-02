@@ -79,23 +79,26 @@ export default function ProductForm({ product }: ProductFormProps) {
 
       try {
         // Load master data
-        const [categoriesRes, colorsRes, sizesRes] = await Promise.all([
+        const [categoriesRes, brandsRes, colorsRes, sizesRes] = await Promise.all([
           fetch('/api/admin/categories'),
+          fetch('/api/admin/brands'),
           fetch('/api/admin/colors'),
           fetch('/api/admin/sizes')
         ])
 
-        if (!categoriesRes.ok || !colorsRes.ok || !sizesRes.ok) {
+        if (!categoriesRes.ok || !brandsRes.ok || !colorsRes.ok || !sizesRes.ok) {
           throw new Error('Failed to load master data')
         }
 
-        const [categoriesData, colorsData, sizesData] = await Promise.all([
+        const [categoriesData, brandsData, colorsData, sizesData] = await Promise.all([
           categoriesRes.json(),
+          brandsRes.json(),
           colorsRes.json(),
           sizesRes.json()
         ])
 
         setCategories(categoriesData)
+        setBrands(brandsData)
         setColors(colorsData)
         setSizes(sizesData)
 
