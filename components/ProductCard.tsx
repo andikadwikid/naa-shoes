@@ -65,7 +65,16 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
         </div>
 
         {/* Product Name */}
-        <Link href={`/products/${product.id}`}>
+        <Link
+          href={`/products/${product.id}`}
+          className="block"
+          onClick={() => {
+            // Small delay to ensure navigation completes before scroll
+            setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }, 100)
+          }}
+        >
           <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-pink-600 transition-colors leading-snug h-12">
             {product.name}
           </h3>
