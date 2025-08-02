@@ -214,6 +214,7 @@ async function main() {
       originalPrice: 1200000,
       isOnSale: true,
       category: 'high-heels',
+      brand: 'charles-keith',
       colors: ['Rose Gold', 'Gold'],
       image: 'https://images.unsplash.com/photo-1603487742131-4160ec999306?w=400&h=400&fit=crop'
     },
@@ -225,6 +226,7 @@ async function main() {
       originalPrice: 550000,
       isOnSale: true,
       category: 'sneakers',
+      brand: 'nike',
       colors: ['Black', 'White'],
       image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop'
     },
@@ -236,6 +238,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'flats',
+      brand: 'zara',
       colors: ['Brown', 'Nude'],
       image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop'
     },
@@ -247,6 +250,7 @@ async function main() {
       originalPrice: 950000,
       isOnSale: true,
       category: 'boots',
+      brand: 'mango',
       colors: ['Black', 'Brown'],
       image: 'https://images.unsplash.com/photo-1608256246200-53e8b47b90fb?w=400&h=400&fit=crop'
     },
