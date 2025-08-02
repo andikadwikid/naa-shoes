@@ -273,6 +273,27 @@ export default function ProductForm({ product }: ProductFormProps) {
         </div>
       </div>
 
+      {/* Brand Selection */}
+      <div>
+        <label htmlFor="brandId" className="block text-sm font-medium text-gray-700 mb-2">
+          Brand
+        </label>
+        <select
+          id="brandId"
+          name="brandId"
+          value={formData.brandId}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+        >
+          <option value="">Select brand (optional)</option>
+          {brands.map(brand => (
+            <option key={brand.id} value={brand.id}>
+              {brand.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div>
         <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
           Description
