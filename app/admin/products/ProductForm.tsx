@@ -51,6 +51,7 @@ export default function ProductForm({ product }: ProductFormProps) {
     price: product?.price?.toString() || '',
     originalPrice: product?.originalPrice?.toString() || '',
     categoryId: product?.categoryId?.toString() || '',
+    brandId: product?.brandId?.toString() || '',
     isNew: product?.isNew ?? false,
     isOnSale: product?.isOnSale ?? false,
     isActive: product?.isActive ?? true,
@@ -59,6 +60,7 @@ export default function ProductForm({ product }: ProductFormProps) {
   })
 
   const [categories, setCategories] = useState<Category[]>([])
+  const [brands, setBrands] = useState<Brand[]>([])
   const [colors, setColors] = useState<Color[]>([])
   const [sizes, setSizes] = useState<Size[]>([])
   const [selectedColors, setSelectedColors] = useState<number[]>([])
