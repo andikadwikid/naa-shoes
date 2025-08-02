@@ -10,8 +10,8 @@ import { formatCurrency } from '../lib/utils'
 
 export default function ProductCard({ product, className = '' }: ProductCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedSize, setSelectedSize] = useState<number>(product.sizes[0])
-  const [selectedColor, setSelectedColor] = useState<string>(product.colors[0])
+  const [selectedSize, setSelectedSize] = useState<number>(product.sizes?.[0] || 36)
+  const [selectedColor, setSelectedColor] = useState<string>(product.colors?.[0] || 'Black')
   const { addToCart } = useCart()
   const { showToast } = useToast()
 
@@ -95,7 +95,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
           <div className="flex items-center">
             <span className="mr-2">Warna:</span>
             <div className="flex space-x-1">
-              {product.colors.slice(0, 3).map((color, index) => (
+              {(product.colors || []).slice(0, 3).map((color, index) => (
                 <div
                   key={index}
                   className="w-4 h-4 rounded-full border border-gray-300"
@@ -119,7 +119,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
               )}
             </div>
           </div>
-          <span>Size: {product.sizes[0]}-{product.sizes[product.sizes.length - 1]}</span>
+          <span>Size: {product.sizes?.length ? `${product.sizes[0]}-${product.sizes[product.sizes.length - 1]}` : 'Available'}</span>
         </div>
 
         {/* Action Buttons */}
@@ -179,7 +179,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
                     Select Size
                   </label>
                   <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                    {product.sizes.map((size) => (
+                    {(product.sizes || []).map((size) => (
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
@@ -201,7 +201,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
                     Select Color
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {product.colors.map((color) => (
+                    {(product.colors || []).map((color) => (
                       <button
                         key={color}
                         onClick={() => setSelectedColor(color)}
