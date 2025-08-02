@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { ProductCardProps } from '../types/ui'
 import { useCart } from '../hooks/useCart'
@@ -22,29 +23,33 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
 
   return (
     <div className={`group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${className}`}>
-      <div className="relative aspect-square overflow-hidden">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        {product.isNew && (
-          <span className="absolute top-2 left-2 bg-pink-500 text-white text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">
-            NEW
-          </span>
-        )}
-        {product.isOnSale && (
-          <span className="absolute top-2 right-2 bg-red-500 text-white text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">
-            SALE
-          </span>
-        )}
-      </div>
-      
+      <Link href={`/products/${product.id}`} className="block">
+        <div className="relative aspect-square overflow-hidden">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+          {product.isNew && (
+            <span className="absolute top-2 left-2 bg-pink-500 text-white text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">
+              NEW
+            </span>
+          )}
+          {product.isOnSale && (
+            <span className="absolute top-2 right-2 bg-red-500 text-white text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">
+              SALE
+            </span>
+          )}
+        </div>
+      </Link>
+
       <div className="p-3 sm:p-4">
-        <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors leading-tight">
-          {product.name}
-        </h3>
+        <Link href={`/products/${product.id}`}>
+          <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors leading-tight cursor-pointer">
+            {product.name}
+          </h3>
+        </Link>
         
         <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed">
           {product.description}
@@ -67,14 +72,14 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
           </span>
         </div>
 
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex space-x-1 flex-1 min-w-0">
-            {product.colors.slice(0, 3).map((color, index) => (
+        <div className="space-y-3">
+          <div className="flex space-x-1">
+            {product.colors.slice(0, 4).map((color, index) => (
               <div
                 key={index}
                 className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-gray-300 flex-shrink-0"
-                style={{ 
-                  backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' : 
+                style={{
+                  backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
                                    color.toLowerCase() === 'black' ? '#000000' :
                                    color.toLowerCase() === 'pink' ? '#ec4899' :
                                    color.toLowerCase() === 'rose gold' ? '#e11d48' :
@@ -85,17 +90,25 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
                 title={color}
               />
             ))}
-            {product.colors.length > 3 && (
-              <span className="text-xs text-gray-500 whitespace-nowrap">+{product.colors.length - 3}</span>
+            {product.colors.length > 4 && (
+              <span className="text-xs text-gray-500 self-center">+{product.colors.length - 4}</span>
             )}
           </div>
-          
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white text-xs sm:text-sm font-medium px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-colors duration-200 whitespace-nowrap touch-manipulation"
-          >
-            Add to Cart
-          </button>
+
+          <div className="flex gap-2">
+            <Link
+              href={`/products/${product.id}`}
+              className="flex-1 text-center border border-pink-600 text-pink-600 hover:bg-pink-50 text-xs sm:text-sm font-medium py-2 px-3 rounded-lg transition-colors duration-200"
+            >
+              View Details
+            </Link>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex-1 bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white text-xs sm:text-sm font-medium py-2 px-3 rounded-lg transition-colors duration-200 touch-manipulation"
+            >
+              Quick Add
+            </button>
+          </div>
         </div>
 
         {/* Modal for Size and Color Selection */}
