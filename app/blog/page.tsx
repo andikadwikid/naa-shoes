@@ -1,11 +1,12 @@
-import { Metadata } from 'next'
+'use client'
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getBlogPosts, getBlogCategories } from '../../services/blog'
 import { BlogPost, BlogCategory } from '../../types/blog'
 
-export const metadata: Metadata = {
+const metadata = {
   title: "Fashion Blog - Tips & Tren Sepatu Wanita | NAA Shoes",
   description: "Blog fashion terlengkap tentang tips perawatan sepatu, tren terbaru, styling guide, dan panduan memilih sepatu wanita. Update artikel fashion mingguan dari para ahli.",
   keywords: ["blog fashion", "tips sepatu", "tren sepatu 2024", "perawatan sepatu", "styling sepatu", "fashion wanita"],
@@ -45,8 +46,6 @@ const structuredData = {
     "numberOfItems": 6
   }
 }
-
-'use client'
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
