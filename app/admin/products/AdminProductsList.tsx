@@ -131,6 +131,9 @@ export default function AdminProductsList() {
         if (selectedCategory !== 'All') {
           params.append('category', selectedCategory)
         }
+        if (selectedBrand !== 'All') {
+          params.append('brand', selectedBrand)
+        }
         if (selectedStatus !== 'All') {
           params.append('status', selectedStatus)
         }
