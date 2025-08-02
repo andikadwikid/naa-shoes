@@ -4,28 +4,103 @@ import { prisma } from '../../../../lib/prisma'
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const limit = searchParams.get('limit')
-    const orderBy = searchParams.get('orderBy') || 'createdAt'
-    const order = searchParams.get('order') || 'desc'
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '12')
+    const search = searchParams.get('search') || ''
+    const category = searchParams.get('category') || 'All'
+    const sortBy = searchParams.get('sortBy') || 'createdAt'
+    const status = searchParams.get('status') || 'All'
 
-    const queryOptions: any = {
-      orderBy: { [orderBy]: order },
-      include: {
-        category: true,
-        images: true,
-        colors: { include: { color: true } },
-        sizes: { include: { size: true } }
+    const skip = (page - 1) * limit
+
+    // Build where conditions
+    const whereConditions: any = {}
+    const andConditions: any[] = []
+
+    // Search filter
+    if (search) {
+      andConditions.push({
+        name: {
+          contains: search
+        }
+      })
+    }
+
+    // Category filter
+    if (category !== 'All') {
+      andConditions.push({
+        category: {
+          name: category
+        }
+      })
+    }
+
+    // Status filter
+    if (status !== 'All') {
+      if (status === 'Active') {
+        andConditions.push({ isActive: true })
+      } else if (status === 'Inactive') {
+        andConditions.push({ isActive: false })
+      } else if (status === 'On Sale') {
+        andConditions.push({ isOnSale: true })
+      } else if (status === 'New') {
+        andConditions.push({ isNew: true })
       }
     }
 
-    // Add limit if specified
-    if (limit && !isNaN(parseInt(limit))) {
-      queryOptions.take = parseInt(limit)
+    if (andConditions.length > 0) {
+      whereConditions.AND = andConditions
     }
 
-    const products = await prisma.product.findMany(queryOptions)
+    // Build order by
+    let orderBy: any = { createdAt: 'desc' }
+    if (sortBy === 'name') {
+      orderBy = { name: 'asc' }
+    } else if (sortBy === 'price-low') {
+      orderBy = { price: 'asc' }
+    } else if (sortBy === 'price-high') {
+      orderBy = { price: 'desc' }
+    } else if (sortBy === 'newest') {
+      orderBy = { createdAt: 'desc' }
+    } else if (sortBy === 'oldest') {
+      orderBy = { createdAt: 'asc' }
+    }
 
-    return NextResponse.json(products)
+    // Get total count for pagination
+    const totalItems = await prisma.product.count({
+      where: whereConditions
+    })
+
+    // Get products
+    const products = await prisma.product.findMany({
+      where: whereConditions,
+      orderBy,
+      skip,
+      take: limit,
+      include: {
+        category: true,
+        images: {
+          where: { isPrimary: true },
+          take: 1
+        },
+        colors: { include: { color: true } },
+        sizes: { include: { size: true } }
+      }
+    })
+
+    const totalPages = Math.ceil(totalItems / limit)
+
+    return NextResponse.json({
+      data: products,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalItems,
+        limit,
+        hasNext: page < totalPages,
+        hasPrev: page > 1
+      }
+    })
   } catch (error) {
     console.error('Error fetching products:', error)
     return NextResponse.json(
