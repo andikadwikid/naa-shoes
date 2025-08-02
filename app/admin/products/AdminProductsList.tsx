@@ -65,7 +65,7 @@ export default function AdminProductsList() {
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [paginatedData, setPaginatedData] = useState<PaginatedResponse | null>(null)
-  const [categories, setCategories] = useState<Array<{id: number, name: string} | string>>(['All'])
+  const [categories, setCategories] = useState<string[]>(['All'])
 
   const itemsPerPage = 12
 
@@ -208,14 +208,9 @@ export default function AdminProductsList() {
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
             >
-              {categories.map((category, index) => {
-                const key = typeof category === 'string' ? category : category.id
-                const value = typeof category === 'string' ? category : category.name
-                const display = typeof category === 'string' ? category : category.name
-                return (
-                  <option key={key} value={value}>{display}</option>
-                )
-              })}
+              {categories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
             </select>
           </div>
 
