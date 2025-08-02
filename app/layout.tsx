@@ -74,6 +74,17 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EC4899" },
+    { media: "(prefers-color-scheme: dark)", color: "#EC4899" }
+  ],
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
