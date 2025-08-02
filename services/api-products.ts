@@ -128,44 +128,55 @@ export const getPaginatedProducts = async (params: PaginationParams): Promise<Pa
   try {
     const { page = 1, limit = 12, category, search, sortBy } = params
     
-    // Build query parameters - send all filters to API
+    // Build query parameters for count API
+    const countParams = new URLSearchParams()
+    if (category && category !== 'All') {
+      countParams.append('category', category)
+    }
+    if (search) {
+      countParams.append('search', search)
+    }
+
+    // Build query parameters for products API
     const queryParams = new URLSearchParams({
       limit: limit.toString()
     })
 
-    // Add category filter to API call
+    // Add page offset to get correct slice
+    const offset = (page - 1) * limit
+    if (offset > 0) {
+      queryParams.append('offset', offset.toString())
+    }
+
+    // Add filters to API call
     if (category && category !== 'All') {
       queryParams.append('category', category)
     }
-
-    // Add search filter to API call
     if (search) {
       queryParams.append('search', search)
     }
-
-    // Add sort filter to API call
     if (sortBy) {
       queryParams.append('sortBy', sortBy)
     }
 
-    const response = await fetch(`/api/products?${queryParams}`)
-    if (!response.ok) {
+    // Get total count and products in parallel
+    const [countResponse, productsResponse] = await Promise.all([
+      fetch(`/api/products/count?${countParams}`),
+      fetch(`/api/products?${queryParams}`)
+    ])
+
+    if (!countResponse.ok || !productsResponse.ok) {
       throw new Error('Failed to fetch products')
     }
 
-    const apiProducts: APIProduct[] = await response.json()
-    // All filtering and sorting now handled by API
+    const { count: totalItems } = await countResponse.json()
+    const apiProducts: APIProduct[] = await productsResponse.json()
 
     // Calculate pagination
-    const totalItems = apiProducts.length
     const totalPages = Math.ceil(totalItems / limit)
-    const startIndex = (page - 1) * limit
-    const endIndex = startIndex + limit
 
-    // Get page data and convert to frontend format
-    const data = apiProducts
-      .slice(startIndex, endIndex)
-      .map(convertAPIProductToProduct)
+    // Convert API products to frontend format
+    const data = apiProducts.map(convertAPIProductToProduct)
 
     return {
       data,
