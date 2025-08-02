@@ -332,7 +332,7 @@ export default function AdminProductsList() {
             )}
           </div>
 
-          {(debouncedSearchTerm || selectedCategory !== 'All' || selectedStatus !== 'All') && (
+          {(debouncedSearchTerm || selectedCategory !== 'All' || selectedBrand !== 'All' || selectedStatus !== 'All') && (
             <button
               onClick={handleClearFilters}
               className="self-start sm:self-auto text-pink-600 hover:text-pink-700 text-sm font-medium py-2 px-3 rounded-lg hover:bg-pink-50 transition-colors"
