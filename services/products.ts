@@ -118,14 +118,264 @@ const productsData: Product[] = [
     colors: ["Black", "Tan", "Wine"],
     sizes: [36, 37, 38, 39, 40],
     isOnSale: true
+  },
+  {
+    id: 11,
+    name: "Crystal Platform Heels",
+    price: 1450000,
+    image: "https://images.unsplash.com/photo-1596702953748-d63ffa6467eb?w=400&h=400&fit=crop",
+    category: "High Heels",
+    description: "Platform heels dengan detail crystal yang mewah untuk acara spesial.",
+    colors: ["Silver", "Gold", "Clear"],
+    sizes: [36, 37, 38, 39, 40],
+    isNew: true
+  },
+  {
+    id: 12,
+    name: "Urban Street Sneakers",
+    price: 780000,
+    originalPrice: 950000,
+    image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&h=400&fit=crop",
+    category: "Sneakers",
+    description: "Sneakers dengan design urban yang cocok untuk street style.",
+    colors: ["Black", "White", "Gray"],
+    sizes: [36, 37, 38, 39, 40, 41],
+    isOnSale: true
+  },
+  {
+    id: 13,
+    name: "Leather Combat Boots",
+    price: 1150000,
+    image: "https://images.unsplash.com/photo-1608256246200-53e8b47b2579?w=400&h=400&fit=crop",
+    category: "Boots",
+    description: "Combat boots dari kulit asli dengan design yang tangguh dan stylish.",
+    colors: ["Black", "Brown", "Dark Green"],
+    sizes: [36, 37, 38, 39, 40]
+  },
+  {
+    id: 14,
+    name: "Pointed Toe Flats",
+    price: 520000,
+    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop",
+    category: "Flats",
+    description: "Flat shoes dengan pointed toe yang elegan untuk tampilan profesional.",
+    colors: ["Black", "Nude", "Navy"],
+    sizes: [36, 37, 38, 39, 40, 41]
+  },
+  {
+    id: 15,
+    name: "Strappy Block Sandals",
+    price: 680000,
+    image: "https://images.unsplash.com/photo-1594047792946-30dc0a97d4c9?w=400&h=400&fit=crop",
+    category: "Sandals",
+    description: "Sandal dengan tali-tali stylish dan block heel yang nyaman.",
+    colors: ["Nude", "Black", "Tan"],
+    sizes: [36, 37, 38, 39, 40],
+    isNew: true
+  },
+  {
+    id: 16,
+    name: "Retro Running Sneakers",
+    price: 850000,
+    image: "https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=400&h=400&fit=crop",
+    category: "Sneakers",
+    description: "Sneakers dengan design retro yang nyaman untuk aktivitas running.",
+    colors: ["White", "Blue", "Pink"],
+    sizes: [36, 37, 38, 39, 40, 41]
+  },
+  {
+    id: 17,
+    name: "Stiletto Pumps",
+    price: 950000,
+    originalPrice: 1200000,
+    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop",
+    category: "High Heels",
+    description: "Stiletto pumps klasik yang timeless untuk berbagai kesempatan.",
+    colors: ["Red", "Black", "Nude"],
+    sizes: [36, 37, 38, 39, 40],
+    isOnSale: true
+  },
+  {
+    id: 18,
+    name: "Chelsea Boots",
+    price: 1050000,
+    image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=400&h=400&fit=crop",
+    category: "Boots",
+    description: "Chelsea boots klasik dengan elastic sides yang mudah digunakan.",
+    colors: ["Black", "Brown", "Burgundy"],
+    sizes: [36, 37, 38, 39, 40]
+  },
+  {
+    id: 19,
+    name: "Ballet Flats",
+    price: 420000,
+    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=400&fit=crop",
+    category: "Flats",
+    description: "Ballet flats yang feminin dan nyaman untuk penggunaan sehari-hari.",
+    colors: ["Pink", "Black", "Beige"],
+    sizes: [36, 37, 38, 39, 40, 41],
+    isNew: true
+  },
+  {
+    id: 20,
+    name: "Platform Sandals",
+    price: 750000,
+    image: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=400&fit=crop",
+    category: "Sandals",
+    description: "Platform sandals yang memberikan tinggi ekstra dengan kenyamanan maksimal.",
+    colors: ["Beige", "White", "Black"],
+    sizes: [36, 37, 38, 39, 40]
+  },
+  {
+    id: 21,
+    name: "High-Top Canvas Sneakers",
+    price: 580000,
+    originalPrice: 720000,
+    image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&h=400&fit=crop",
+    category: "Sneakers",
+    description: "High-top sneakers dari canvas dengan design kasual yang trendy.",
+    colors: ["White", "Black", "Navy"],
+    sizes: [36, 37, 38, 39, 40, 41],
+    isOnSale: true
+  },
+  {
+    id: 22,
+    name: "Wedge Heel Pumps",
+    price: 820000,
+    image: "https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=400&h=400&fit=crop",
+    category: "High Heels",
+    description: "Wedge pumps yang memberikan kenyamanan lebih dibanding stiletto.",
+    colors: ["Tan", "Black", "Navy"],
+    sizes: [36, 37, 38, 39, 40]
+  },
+  {
+    id: 23,
+    name: "Hiking Boots",
+    price: 1250000,
+    image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=400&h=400&fit=crop",
+    category: "Boots",
+    description: "Hiking boots yang tahan lama untuk petualangan outdoor.",
+    colors: ["Brown", "Black", "Olive"],
+    sizes: [36, 37, 38, 39, 40],
+    isNew: true
+  },
+  {
+    id: 24,
+    name: "Slip-on Sneakers",
+    price: 650000,
+    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400&h=400&fit=crop",
+    category: "Sneakers",
+    description: "Slip-on sneakers yang praktis dan nyaman untuk aktivitas santai.",
+    colors: ["Gray", "White", "Black"],
+    sizes: [36, 37, 38, 39, 40, 41]
+  },
+  {
+    id: 25,
+    name: "Mary Jane Flats",
+    price: 480000,
+    originalPrice: 620000,
+    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=400&fit=crop",
+    category: "Flats",
+    description: "Mary Jane flats dengan strap yang cute dan feminine.",
+    colors: ["Black", "Red", "Nude"],
+    sizes: [36, 37, 38, 39, 40, 41],
+    isOnSale: true
   }
 ]
+
+// Pagination interface
+export interface PaginationParams {
+  page: number
+  limit: number
+  category?: string
+  search?: string
+  sortBy?: string
+}
+
+export interface PaginatedResponse<T> {
+  data: T[]
+  pagination: {
+    currentPage: number
+    totalPages: number
+    totalItems: number
+    hasNextPage: boolean
+    hasPrevPage: boolean
+    limit: number
+  }
+}
 
 // Simulate API calls with async functions
 export const getProducts = async (): Promise<Product[]> => {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 100))
   return productsData
+}
+
+// Get paginated products
+export const getPaginatedProducts = async (params: PaginationParams): Promise<PaginatedResponse<Product>> => {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 150))
+
+  const { page = 1, limit = 12, category, search, sortBy } = params
+
+  let filtered = productsData
+
+  // Filter by category
+  if (category && category !== 'All') {
+    filtered = filtered.filter(product => product.category === category)
+  }
+
+  // Filter by search
+  if (search) {
+    const lowercaseQuery = search.toLowerCase()
+    filtered = filtered.filter(product =>
+      product.name.toLowerCase().includes(lowercaseQuery) ||
+      product.description.toLowerCase().includes(lowercaseQuery) ||
+      product.category.toLowerCase().includes(lowercaseQuery)
+    )
+  }
+
+  // Sort products
+  if (sortBy) {
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.price - b.price
+        case 'price-high':
+          return b.price - a.price
+        case 'name':
+          return a.name.localeCompare(b.name)
+        case 'newest':
+          // Sort by isNew first, then by id (assuming newer products have higher IDs)
+          if (a.isNew && !b.isNew) return -1
+          if (!a.isNew && b.isNew) return 1
+          return b.id - a.id
+        default:
+          return 0
+      }
+    })
+  }
+
+  // Calculate pagination
+  const totalItems = filtered.length
+  const totalPages = Math.ceil(totalItems / limit)
+  const startIndex = (page - 1) * limit
+  const endIndex = startIndex + limit
+
+  // Get page data
+  const data = filtered.slice(startIndex, endIndex)
+
+  return {
+    data,
+    pagination: {
+      currentPage: page,
+      totalPages,
+      totalItems,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      limit
+    }
+  }
 }
 
 export const getProductById = async (id: number): Promise<Product | null> => {
