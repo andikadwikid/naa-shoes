@@ -3,12 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '../context/CartContext'
-
-// Konfigurasi WhatsApp
-const WHATSAPP_CONFIG = {
-  number: '6281234567890', // Ganti dengan nomor WhatsApp toko (format: 62xxx tanpa +)
-  storeName: 'NAA Shoes'
-}
+import { WHATSAPP_CONFIG } from '../config/whatsapp'
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart()
