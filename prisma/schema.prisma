@@ -158,7 +158,7 @@ model Order {
 model OrderItem {
   id        Int     @id @default(autoincrement())
   quantity  Int
-  price     Decimal @db.Decimal(10,2)
+  price     Float
   size      Int
   color     String
   
