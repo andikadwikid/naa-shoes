@@ -139,8 +139,8 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
       <div className="min-h-screen bg-gray-50 pt-20">
         <div className="max-w-7xl mx-auto">
           {/* Breadcrumb Navigation */}
-          <nav 
-            className="px-3 sm:px-4 lg:px-6 xl:px-8 pt-4 sm:pt-6 lg:pt-8" 
+          <nav
+            className="px-3 sm:px-4 lg:px-6 xl:px-8 pt-6 sm:pt-8 lg:pt-10"
             aria-label="Breadcrumb navigation"
             role="navigation"
           >
