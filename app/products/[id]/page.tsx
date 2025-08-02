@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Product } from '../../../types/product'
-import { getProductById, getProducts } from '../../../services/products'
+import { getProductById, getProductsByCategory } from '../../../services/api-products'
 import { useCart } from '../../../hooks/useCart'
 import { useToast } from '../../../hooks/useToast'
 import { formatCurrency } from '../../../lib/utils'
@@ -52,9 +52,9 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         setSelectedColor(productData.colors[0])
 
         // Load related products (same category, excluding current product)
-        const allProducts = await getProducts()
-        const related = allProducts
-          .filter(p => p.category === productData.category && p.id !== productData.id)
+        const categoryProducts = await getProductsByCategory(productData.category)
+        const related = categoryProducts
+          .filter(p => p.id !== productData.id)
           .slice(0, 4)
         setRelatedProducts(related)
       } catch (error) {
