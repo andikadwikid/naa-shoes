@@ -199,6 +199,20 @@ export default function ProductForm({ product }: ProductFormProps) {
     })
   }
 
+  if (isLoading) {
+    return <LoadingSpinner size="lg" text="Loading product data..." />
+  }
+
+  if (loadError) {
+    return (
+      <ErrorAlert
+        title="Loading Error"
+        message={loadError}
+        onRetry={() => window.location.reload()}
+      />
+    )
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {errors.general && (
