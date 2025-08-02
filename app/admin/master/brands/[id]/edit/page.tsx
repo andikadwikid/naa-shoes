@@ -3,9 +3,9 @@ import { prisma } from '../../../../../../lib/prisma'
 import BrandForm from '../../BrandForm'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 async function getBrand(id: number) {
@@ -15,7 +15,8 @@ async function getBrand(id: number) {
 }
 
 export default async function EditBrandPage({ params }: PageProps) {
-  const brandId = parseInt(params.id)
+  const { id } = await params
+  const brandId = parseInt(id)
   
   if (isNaN(brandId)) {
     notFound()
