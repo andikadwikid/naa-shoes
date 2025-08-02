@@ -211,9 +211,153 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Trust Signals Section */}
+        <section className="py-16 bg-gradient-to-r from-gray-50 to-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div className="flex flex-col items-center">
+                <div className="trust-seal mb-4">
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                  </svg>
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Garansi Kualitas</h3>
+                <p className="text-sm text-gray-600">30 hari tukar barang jika tidak puas</p>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="trust-seal mb-4">
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
+                  </svg>
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Gratis Ongkir</h3>
+                <p className="text-sm text-gray-600">Pengiriman gratis ke seluruh Indonesia</p>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="trust-seal mb-4">
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                  </svg>
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Pembayaran Aman</h3>
+                <p className="text-sm text-gray-600">Berbagai metode pembayaran terpercaya</p>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <div className="trust-seal mb-4">
+                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
+                  </svg>
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">Customer Support</h3>
+                <p className="text-sm text-gray-600">Layanan pelanggan 24/7 siap membantu</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Customer Testimonials */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Dipercaya <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">10,000+</span> Wanita Indonesia
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Bergabunglah dengan ribuan wanita yang telah merasakan kenyamanan dan kepercayaan diri bersama NAA Shoes
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="testimonial-card">
+                <div className="flex items-center mb-4">
+                  <Image
+                    src="https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=60&h=60&fit=crop&crop=face"
+                    alt="Sarah, customer testimonial"
+                    width={60}
+                    height={60}
+                    className="rounded-full object-cover"
+                  />
+                  <div className="ml-4">
+                    <h4 className="font-semibold text-gray-900">Sarah Dewi</h4>
+                    <p className="text-sm text-gray-500">Jakarta</p>
+                  </div>
+                </div>
+                <div className="text-yellow-400 mb-4">★★★★★</div>
+                <p className="text-gray-600 leading-relaxed">
+                  "Kualitas sepatu luar biasa! Sangat nyaman dipakai seharian. Design nya juga timeless, cocok untuk berbagai acara."
+                </p>
+              </div>
+
+              <div className="testimonial-card">
+                <div className="flex items-center mb-4">
+                  <Image
+                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
+                    alt="Maya, customer testimonial"
+                    width={60}
+                    height={60}
+                    className="rounded-full object-cover"
+                  />
+                  <div className="ml-4">
+                    <h4 className="font-semibold text-gray-900">Maya Sari</h4>
+                    <p className="text-sm text-gray-500">Surabaya</p>
+                  </div>
+                </div>
+                <div className="text-yellow-400 mb-4">★★★★★</div>
+                <p className="text-gray-600 leading-relaxed">
+                  "Pelayanan customer service nya excellent! Pengiriman cepat dan packaging rapi. Definitely akan order lagi!"
+                </p>
+              </div>
+
+              <div className="testimonial-card">
+                <div className="flex items-center mb-4">
+                  <Image
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+                    alt="Rina, customer testimonial"
+                    width={60}
+                    height={60}
+                    className="rounded-full object-cover"
+                  />
+                  <div className="ml-4">
+                    <h4 className="font-semibold text-gray-900">Rina Hartini</h4>
+                    <p className="text-sm text-gray-500">Bandung</p>
+                  </div>
+                </div>
+                <div className="text-yellow-400 mb-4">★★★★★</div>
+                <p className="text-gray-600 leading-relaxed">
+                  "Harga reasonable untuk kualitas premium. Material berkualitas tinggi dan finishing yang detail. Highly recommended!"
+                </p>
+              </div>
+            </div>
+
+            {/* Stats Section */}
+            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">10,000+</div>
+                <div className="text-gray-600">Happy Customers</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">4.9/5</div>
+                <div className="text-gray-600">Customer Rating</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">100+</div>
+                <div className="text-gray-600">Product Variants</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">24/7</div>
+                <div className="text-gray-600">Customer Support</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Main Content */}
         <main id="main-content" role="main">
-          
+
           {/* Featured Products Section */}
           <section 
             className="py-12 sm:py-16 lg:py-20 bg-white" 
