@@ -1,17 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../../lib/prisma'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const products = await prisma.product.findMany({
-      orderBy: { createdAt: 'desc' },
+    const { searchParams } = new URL(request.url)
+    const limit = searchParams.get('limit')
+    const orderBy = searchParams.get('orderBy') || 'createdAt'
+    const order = searchParams.get('order') || 'desc'
+
+    const queryOptions: any = {
+      orderBy: { [orderBy]: order },
       include: {
         category: true,
         images: true,
         colors: { include: { color: true } },
         sizes: { include: { size: true } }
       }
-    })
+    }
+
+    // Add limit if specified
+    if (limit && !isNaN(parseInt(limit))) {
+      queryOptions.take = parseInt(limit)
+    }
+
+    const products = await prisma.product.findMany(queryOptions)
 
     return NextResponse.json(products)
   } catch (error) {
