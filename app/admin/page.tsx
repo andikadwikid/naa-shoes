@@ -1,4 +1,5 @@
 import DashboardStats from './components/DashboardStats'
+import RecentProducts from './components/RecentProducts'
 
 export default function AdminDashboard() {
   return (
@@ -77,41 +78,47 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Management Links */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h4 className="font-medium text-gray-900 mb-4">Product Management</h4>
-          <div className="space-y-2">
-            <a href="/admin/products" className="block text-sm text-blue-600 hover:text-blue-800">
-              View All Products
-            </a>
-            <a href="/admin/products/create" className="block text-sm text-blue-600 hover:text-blue-800">
-              Add New Product
-            </a>
+      {/* Recent Products and Management Links */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <RecentProducts />
+        
+        <div className="space-y-6">
+          <h3 className="text-lg font-medium text-gray-900">Management</h3>
+          
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h4 className="font-medium text-gray-900 mb-4">Product Management</h4>
+            <div className="space-y-2">
+              <a href="/admin/products" className="block text-sm text-blue-600 hover:text-blue-800">
+                View All Products
+              </a>
+              <a href="/admin/products/create" className="block text-sm text-blue-600 hover:text-blue-800">
+                Add New Product
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h4 className="font-medium text-gray-900 mb-4">Master Data</h4>
-          <div className="space-y-2">
-            <a href="/admin/master/categories" className="block text-sm text-blue-600 hover:text-blue-800">
-              Manage Categories
-            </a>
-            <a href="/admin/master/colors" className="block text-sm text-blue-600 hover:text-blue-800">
-              Manage Colors
-            </a>
-            <a href="/admin/master/sizes" className="block text-sm text-blue-600 hover:text-blue-800">
-              Manage Sizes
-            </a>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h4 className="font-medium text-gray-900 mb-4">Master Data</h4>
+            <div className="space-y-2">
+              <a href="/admin/master/categories" className="block text-sm text-blue-600 hover:text-blue-800">
+                Manage Categories
+              </a>
+              <a href="/admin/master/colors" className="block text-sm text-blue-600 hover:text-blue-800">
+                Manage Colors
+              </a>
+              <a href="/admin/master/sizes" className="block text-sm text-blue-600 hover:text-blue-800">
+                Manage Sizes
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h4 className="font-medium text-gray-900 mb-4">Analytics</h4>
-          <div className="space-y-2">
-            <p className="text-sm text-gray-500">Sales Reports (Coming Soon)</p>
-            <p className="text-sm text-gray-500">Inventory Reports (Coming Soon)</p>
-            <p className="text-sm text-gray-500">Customer Analytics (Coming Soon)</p>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h4 className="font-medium text-gray-900 mb-4">Analytics</h4>
+            <div className="space-y-2">
+              <p className="text-sm text-gray-500">Sales Reports (Coming Soon)</p>
+              <p className="text-sm text-gray-500">Inventory Reports (Coming Soon)</p>
+              <p className="text-sm text-gray-500">Customer Analytics (Coming Soon)</p>
+            </div>
           </div>
         </div>
       </div>
