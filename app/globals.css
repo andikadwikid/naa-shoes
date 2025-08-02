@@ -129,3 +129,37 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Card layout optimization */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    gap: 2.5rem;
+  }
+}
+
+/* Equal height cards */
+.card-equal-height {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Improve image rendering */
+.card-image {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
