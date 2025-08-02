@@ -21,6 +21,39 @@ export default function CartPage() {
     }
   }
 
+  const generateWhatsAppLink = () => {
+    // Nomor WhatsApp toko (ganti dengan nomor yang sesuai)
+    const whatsappNumber = '6281234567890' // Ganti dengan nomor WhatsApp toko
+
+    // Generate pesan berdasarkan cart items
+    let message = `Halo! Saya tertarik untuk membeli sepatu dari NAA Shoes:\n\n`
+
+    state.items.forEach((item, index) => {
+      message += `${index + 1}. ${item.product.name}\n`
+      message += `   - Size: ${item.selectedSize}\n`
+      message += `   - Color: ${item.selectedColor}\n`
+      message += `   - Quantity: ${item.quantity}\n`
+      message += `   - Price: ${formatPrice(item.product.price)} x ${item.quantity} = ${formatPrice(item.product.price * item.quantity)}\n\n`
+    })
+
+    message += `Total Items: ${state.totalItems}\n`
+    message += `Total Price: ${formatPrice(getTotalPrice())}\n\n`
+    message += `Mohon informasi lebih lanjut untuk proses pemesanan. Terima kasih!`
+
+    // Encode message untuk URL
+    const encodedMessage = encodeURIComponent(message)
+
+    // Generate WhatsApp link
+    return `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
+  }
+
+  const handleCheckout = () => {
+    if (state.items.length === 0) return
+
+    const whatsappLink = generateWhatsAppLink()
+    window.open(whatsappLink, '_blank')
+  }
+
   if (state.items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-12">
