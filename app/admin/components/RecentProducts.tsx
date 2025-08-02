@@ -30,14 +30,15 @@ export default function RecentProducts() {
       setError('')
 
       try {
-        const response = await fetch('/api/admin/products?limit=5&orderBy=createdAt&order=desc')
-        
+        const response = await fetch('/api/admin/products?limit=5&sortBy=newest')
+
         if (!response.ok) {
           throw new Error('Failed to load recent products')
         }
 
         const data = await response.json()
-        setProducts(data)
+        // Handle new paginated response format
+        setProducts(data.data || [])
       } catch (error) {
         console.error('Error loading recent products:', error)
         setError('Failed to load recent products')
