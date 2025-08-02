@@ -1,0 +1,27 @@
+{
+  "name": "NAA Shoes - Toko Sepatu Wanita",
+  "short_name": "NAA Shoes",
+  "description": "Koleksi sepatu wanita berkualitas tinggi dengan design modern dan trendy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#EC4899",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "fashion", "lifestyle"],
+  "lang": "id",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
