@@ -22,7 +22,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
   }
 
   return (
-    <div className={`group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${className}`}>
+    <div className={`group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden h-full flex flex-col ${className}`}>
       <Link href={`/products/${product.id}`} className="block">
         <div className="relative aspect-square overflow-hidden">
           <Image
@@ -44,14 +44,14 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
         </div>
       </Link>
 
-      <div className="p-3 sm:p-4">
+      <div className="p-3 sm:p-4 flex flex-col flex-1">
         <Link href={`/products/${product.id}`}>
-          <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors leading-tight cursor-pointer">
+          <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors leading-tight cursor-pointer min-h-[2.5rem] sm:min-h-[3rem]">
             {product.name}
           </h3>
         </Link>
-        
-        <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed">
+
+        <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-3 leading-relaxed min-h-[3rem] sm:min-h-[3.75rem]">
           {product.description}
         </p>
 
@@ -60,51 +60,55 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
             <span className="font-bold text-base sm:text-lg text-gray-900 truncate">
               {formatCurrency(product.price)}
             </span>
-            {product.originalPrice && (
-              <span className="text-xs sm:text-sm text-gray-500 line-through truncate">
-                {formatCurrency(product.originalPrice)}
-              </span>
-            )}
+            <div className="min-h-[1.25rem]">
+              {product.originalPrice && (
+                <span className="text-xs sm:text-sm text-gray-500 line-through truncate">
+                  {formatCurrency(product.originalPrice)}
+                </span>
+              )}
+            </div>
           </div>
-          
+
           <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full whitespace-nowrap">
             {product.category}
           </span>
         </div>
 
-        <div className="space-y-3">
-          <div className="flex space-x-1">
-            {product.colors.slice(0, 4).map((color, index) => (
-              <div
-                key={index}
-                className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-gray-300 flex-shrink-0"
-                style={{
-                  backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
-                                   color.toLowerCase() === 'black' ? '#000000' :
-                                   color.toLowerCase() === 'pink' ? '#ec4899' :
-                                   color.toLowerCase() === 'rose gold' ? '#e11d48' :
-                                   color.toLowerCase() === 'nude' ? '#d4a574' :
-                                   color.toLowerCase() === 'coral' ? '#f97316' :
-                                   '#9ca3af'
-                }}
-                title={color}
-              />
-            ))}
-            {product.colors.length > 4 && (
-              <span className="text-xs text-gray-500 self-center">+{product.colors.length - 4}</span>
-            )}
+        <div className="mt-auto space-y-3">
+          <div className="flex items-center min-h-[1.25rem] sm:min-h-[1.5rem]">
+            <div className="flex space-x-1">
+              {product.colors.slice(0, 4).map((color, index) => (
+                <div
+                  key={index}
+                  className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-gray-300 flex-shrink-0"
+                  style={{
+                    backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
+                                     color.toLowerCase() === 'black' ? '#000000' :
+                                     color.toLowerCase() === 'pink' ? '#ec4899' :
+                                     color.toLowerCase() === 'rose gold' ? '#e11d48' :
+                                     color.toLowerCase() === 'nude' ? '#d4a574' :
+                                     color.toLowerCase() === 'coral' ? '#f97316' :
+                                     '#9ca3af'
+                  }}
+                  title={color}
+                />
+              ))}
+              {product.colors.length > 4 && (
+                <span className="text-xs text-gray-500 self-center ml-1">+{product.colors.length - 4}</span>
+              )}
+            </div>
           </div>
 
           <div className="flex gap-2">
             <Link
               href={`/products/${product.id}`}
-              className="flex-1 text-center border border-pink-600 text-pink-600 hover:bg-pink-50 text-xs sm:text-sm font-medium py-2 px-3 rounded-lg transition-colors duration-200"
+              className="flex-1 text-center border border-pink-600 text-pink-600 hover:bg-pink-50 active:bg-pink-100 text-xs sm:text-sm font-medium py-2.5 px-3 rounded-lg transition-colors duration-200 touch-manipulation"
             >
               View Details
             </Link>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex-1 bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white text-xs sm:text-sm font-medium py-2 px-3 rounded-lg transition-colors duration-200 touch-manipulation"
+              className="flex-1 bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white text-xs sm:text-sm font-medium py-2.5 px-3 rounded-lg transition-colors duration-200 touch-manipulation"
             >
               Quick Add
             </button>
