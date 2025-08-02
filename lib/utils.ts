@@ -1,8 +1,6 @@
-import { type ClassValue, clsx } from 'clsx'
-
-// Utility function to combine classes (using clsx)
-export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs)
+// Utility function to combine classes (simple implementation)
+export function cn(...classes: (string | undefined | null | false)[]): string {
+  return classes.filter(Boolean).join(' ')
 }
 
 // Utility to debounce function calls
