@@ -28,14 +28,20 @@ export default function Navigation() {
               >
                 Home
               </Link>
-              <Link 
-                href="/products" 
+              <Link
+                href="/products"
                 className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
                 Products
               </Link>
-              <Link 
-                href="/about" 
+              <Link
+                href="/blog"
+                className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              >
+                Blog
+              </Link>
+              <Link
+                href="/about"
                 className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
                 About
