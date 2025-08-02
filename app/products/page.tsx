@@ -68,6 +68,7 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState('name')
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [categoriesLoading, setCategoriesLoading] = useState(true)
   const [paginatedData, setPaginatedData] = useState<PaginatedResponse<Product> | null>(null)
   const [categories, setCategories] = useState<string[]>(['All'])
 
@@ -76,11 +77,15 @@ export default function ProductsPage() {
   // Load categories on mount
   useEffect(() => {
     const loadCategories = async () => {
+      setCategoriesLoading(true)
       try {
         const categoryList = await getCategories()
         setCategories(categoryList)
       } catch (error) {
         console.error('Error loading categories:', error)
+        // Keep default categories on error
+      } finally {
+        setCategoriesLoading(false)
       }
     }
 
@@ -192,12 +197,17 @@ export default function ProductsPage() {
                   id="category"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-3 py-3 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent touch-manipulation"
+                  disabled={categoriesLoading}
+                  className="w-full px-3 py-3 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-describedby="category-description"
                 >
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
+                  {categoriesLoading ? (
+                    <option>Loading categories...</option>
+                  ) : (
+                    categories.map(category => (
+                      <option key={category} value={category}>{category}</option>
+                    ))
+                  )}
                 </select>
                 <p id="category-description" className="sr-only">Filter products by category</p>
               </div>
