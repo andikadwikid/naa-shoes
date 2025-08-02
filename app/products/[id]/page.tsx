@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -13,12 +13,14 @@ import ProductCard from '../../../components/ProductCard'
 import ReviewsSection from '../../../components/ReviewsSection'
 
 interface ProductDetailPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
+  // Unwrap the params Promise
+  const resolvedParams = use(params)
   const [product, setProduct] = useState<Product | null>(null)
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([])
   const [selectedSize, setSelectedSize] = useState<number | null>(null)
@@ -34,7 +36,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     const loadProduct = async () => {
       setIsLoading(true)
       try {
-        const productData = await getProductById(parseInt(params.id))
+        const productData = await getProductById(parseInt(resolvedParams.id))
         if (!productData) {
           notFound()
           return
@@ -59,7 +61,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     }
 
     loadProduct()
-  }, [params.id])
+  }, [resolvedParams.id])
 
   const handleAddToCart = () => {
     if (!product || !selectedSize) {
