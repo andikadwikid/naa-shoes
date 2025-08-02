@@ -1,11 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCart } from '../hooks/useCart'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const { getItemCount } = useCart()
 
   const handleMenuToggle = () => {
@@ -16,7 +17,11 @@ export default function Navigation() {
     setIsMenuOpen(false)
   }
 
-  const cartItemCount = getItemCount()
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const cartItemCount = mounted ? getItemCount() : 0
 
   return (
     <header className="bg-white shadow-sm border-b border-pink-100 sticky top-0 z-40" role="banner">
