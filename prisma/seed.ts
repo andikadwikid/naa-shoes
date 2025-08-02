@@ -496,6 +496,17 @@ async function main() {
       colors.find(c => c.name === colorName)!.id
     )
 
+    // Find brand or assign random brand if not specified
+    let brandId: number | null = null
+    if ((productData as any).brand) {
+      const brand = brands.find(b => b.slug === (productData as any).brand)
+      brandId = brand ? brand.id : null
+    } else {
+      // Assign random brand for products without brand
+      const randomBrand = brands[Math.floor(Math.random() * brands.length)]
+      brandId = randomBrand.id
+    }
+
     await prisma.product.create({
       data: {
         name: productData.name,
@@ -505,6 +516,7 @@ async function main() {
         originalPrice: productData.originalPrice,
         isOnSale: productData.isOnSale,
         categoryId: category.id,
+        brandId: brandId,
         images: {
           create: [
             {
