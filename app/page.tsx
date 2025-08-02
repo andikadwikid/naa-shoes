@@ -75,49 +75,139 @@ export default function Home() {
 
 
       <div className="min-h-screen">
-        {/* Hero Banner */}
-        <section 
-          className="relative bg-gradient-to-r from-pink-500 to-rose-400 text-white overflow-hidden" 
+        {/* Enhanced Hero Banner */}
+        <section
+          className="relative min-h-screen flex items-center bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 overflow-hidden"
           role="banner"
           aria-labelledby="hero-heading"
         >
-          <div className="absolute inset-0 bg-black opacity-20" aria-hidden="true"></div>
-          <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-32">
-            <header className="text-center">
-              <h1 
-                id="hero-heading"
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight"
-              >
-                Step Into Style
-              </h1>
-              <p 
-                className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-pink-100 max-w-2xl mx-auto leading-relaxed"
-                role="text"
-                aria-describedby="hero-heading"
-              >
-                Koleksi sepatu wanita terbaru untuk gaya hidup modern Anda
-              </p>
-              <nav 
-                className="flex flex-col sm:flex-row gap-4 sm:gap-4 justify-center items-center" 
-                aria-label="Hero call-to-action buttons"
-                role="navigation"
-              >
-                <Link
-                  href="/products"
-                  className="bg-white text-pink-600 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-pink-50 active:bg-pink-100 transition-all duration-200 transform hover:scale-105 text-base sm:text-lg touch-manipulation focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-500"
-                  aria-label="Browse our complete collection of women's shoes"
+          {/* Decorative Background Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div className="absolute top-40 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div className="absolute -bottom-8 left-20 w-72 h-72 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          </div>
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+              {/* Hero Content */}
+              <div className="text-center lg:text-left">
+                {/* Trust Badge */}
+                <div className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 mb-6 shadow-lg">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Dipercaya 10,000+ Wanita Indonesia
+                </div>
+
+                <h1
+                  id="hero-heading"
+                  className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
                 >
-                  Shop Now
-                </Link>
-                <Link
-                  href="/about"
-                  className="border-2 border-white text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-white hover:text-pink-600 active:bg-pink-50 transition-all duration-200 text-base sm:text-lg touch-manipulation focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-500"
-                  aria-label="Learn more about NAA Shoes company and values"
+                  <span className="text-gray-900">Langkah</span>
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">
+                    Penuh Percaya Diri
+                  </span>
+                </h1>
+
+                <p
+                  className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
+                  role="text"
+                  aria-describedby="hero-heading"
                 >
-                  Learn More
-                </Link>
-              </nav>
-            </header>
+                  Temukan sepatu impian yang mencerminkan kepribadian unik Anda.
+                  <span className="font-semibold text-gray-800"> Kualitas premium, desain elegan, kenyamanan maksimal.</span>
+                </p>
+
+                {/* Trust Indicators */}
+                <div className="flex flex-wrap justify-center lg:justify-start gap-6 mb-8 text-sm text-gray-600">
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    Gratis Ongkir
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    Garansi 30 Hari
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    Kualitas Premium
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <Link
+                    href="/products"
+                    className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-pink-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    aria-label="Browse our complete collection of women's shoes"
+                  >
+                    <span>Jelajahi Koleksi</span>
+                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    href="/about"
+                    className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-700 font-semibold rounded-2xl border-2 border-gray-200 hover:border-pink-300 hover:text-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    aria-label="Learn more about NAA Shoes company and values"
+                  >
+                    Tentang Kami
+                  </Link>
+                </div>
+              </div>
+
+              {/* Hero Image */}
+              <div className="relative lg:order-first lg:order-last">
+                <div className="relative">
+                  {/* Main Hero Image */}
+                  <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-700">
+                    <Image
+                      src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&h=750&fit=crop&crop=center"
+                      alt="Wanita elegan mengenakan sepatu NAA Shoes dengan percaya diri"
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                  </div>
+
+                  {/* Floating Elements */}
+                  <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex -space-x-2">
+                        <div className="w-8 h-8 bg-pink-100 rounded-full border-2 border-white"></div>
+                        <div className="w-8 h-8 bg-purple-100 rounded-full border-2 border-white"></div>
+                        <div className="w-8 h-8 bg-rose-100 rounded-full border-2 border-white"></div>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">2,847+</p>
+                        <p className="text-xs text-gray-500">Happy Customers</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-xl">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex text-yellow-400">
+                        ★★★★★
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">4.9</p>
+                        <p className="text-xs text-gray-500">Rating</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
