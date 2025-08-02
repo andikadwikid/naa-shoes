@@ -107,25 +107,6 @@ export default function ProductForm({ product }: ProductFormProps) {
           const response = await fetch(`/api/admin/products/${product.id}`)
           if (response.ok) {
             const productData = await response.json()
-            console.log('Loaded product data:', productData)
-            console.log('BrandId from API:', productData.brandId)
-            console.log('Current formData brandId:', formData.brandId)
-
-            // Update form data with complete product data
-            setFormData(prev => ({
-              ...prev,
-              name: productData.name || '',
-              description: productData.description || '',
-              price: productData.price?.toString() || '',
-              originalPrice: productData.originalPrice?.toString() || '',
-              categoryId: productData.categoryId?.toString() || '',
-              brandId: productData.brandId ? productData.brandId.toString() : '',
-              isNew: productData.isNew ?? false,
-              isOnSale: productData.isOnSale ?? false,
-              isActive: productData.isActive ?? true,
-              material: productData.material || '',
-              weight: productData.weight?.toString() || ''
-            }))
 
             // Set existing colors
             if (productData.colors) {
