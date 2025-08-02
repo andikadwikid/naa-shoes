@@ -128,10 +128,15 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      
 
+      {/* Scroll to top on page load */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.scrollTo(0, 0);`
+        }}
+      />
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 pt-20">
         <div className="max-w-7xl mx-auto">
           {/* Breadcrumb Navigation */}
           <nav 
