@@ -465,6 +465,7 @@ async function main() {
       originalPrice: 450000,
       isOnSale: true,
       category: 'sneakers',
+      brand: 'converse',
       colors: ['White', 'Black'],
       image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=400&h=400&fit=crop'
     },
@@ -476,6 +477,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'flats',
+      brand: 'charles-keith',
       colors: ['Black', 'Nude'],
       image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop'
     },
@@ -487,6 +489,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'boots',
+      brand: 'pedro',
       colors: ['Black', 'Brown'],
       image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400&h=400&fit=crop'
     },
