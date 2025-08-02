@@ -150,6 +150,7 @@ export default function ProductForm({ product }: ProductFormProps) {
         price: parseFloat(formData.price),
         originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
         categoryId: parseInt(formData.categoryId),
+        brandId: formData.brandId ? parseInt(formData.brandId) : null,
         weight: formData.weight ? parseFloat(formData.weight) : null,
         colors: selectedColors,
         sizes: selectedSizes
