@@ -58,6 +58,7 @@ const navigation = [
     ),
     children: [
       { name: 'Categories', href: '/admin/master/categories' },
+      { name: 'Brands', href: '/admin/master/brands' },
       { name: 'Colors', href: '/admin/master/colors' },
       { name: 'Sizes', href: '/admin/master/sizes' }
     ]
