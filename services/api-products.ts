@@ -128,57 +128,33 @@ export const getPaginatedProducts = async (params: PaginationParams): Promise<Pa
   try {
     const { page = 1, limit = 12, category, search, sortBy } = params
     
-    // Build query parameters
+    // Build query parameters - send all filters to API
     const queryParams = new URLSearchParams({
-      limit: limit.toString(),
-      orderBy: getOrderBy(sortBy),
-      order: getOrder(sortBy)
+      limit: limit.toString()
     })
+
+    // Add category filter to API call
+    if (category && category !== 'All') {
+      queryParams.append('category', category)
+    }
+
+    // Add search filter to API call
+    if (search) {
+      queryParams.append('search', search)
+    }
+
+    // Add sort filter to API call
+    if (sortBy) {
+      queryParams.append('sortBy', sortBy)
+    }
 
     const response = await fetch(`/api/products?${queryParams}`)
     if (!response.ok) {
       throw new Error('Failed to fetch products')
     }
-    
+
     const apiProducts: APIProduct[] = await response.json()
-    let filteredProducts = apiProducts.filter(product => product.isActive)
-
-    // Apply category filter
-    if (category && category !== 'All') {
-      filteredProducts = filteredProducts.filter(product => 
-        product.category.name === category
-      )
-    }
-
-    // Apply search filter
-    if (search) {
-      const lowercaseQuery = search.toLowerCase()
-      filteredProducts = filteredProducts.filter(product =>
-        product.name.toLowerCase().includes(lowercaseQuery) ||
-        (product.description && product.description.toLowerCase().includes(lowercaseQuery)) ||
-        product.category.name.toLowerCase().includes(lowercaseQuery)
-      )
-    }
-
-    // Apply sorting
-    if (sortBy) {
-      filteredProducts.sort((a, b) => {
-        switch (sortBy) {
-          case 'price-low':
-            return a.price - b.price
-          case 'price-high':
-            return b.price - a.price
-          case 'name':
-            return a.name.localeCompare(b.name)
-          case 'newest':
-            if (a.isNew && !b.isNew) return -1
-            if (!a.isNew && b.isNew) return 1
-            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          default:
-            return 0
-        }
-      })
-    }
+    // All filtering and sorting now handled by API
 
     // Calculate pagination
     const totalItems = filteredProducts.length
