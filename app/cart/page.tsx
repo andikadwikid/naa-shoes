@@ -1,24 +1,10 @@
-import { Metadata } from 'next'
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '../../hooks/useCart'
 import { generateWhatsAppLink, getWhatsAppConfig } from '../../lib/whatsapp'
 import { formatCurrency } from '../../lib/utils'
-
-export const metadata: Metadata = {
-  title: "Shopping Cart - NAA Shoes | Review Your Selected Items",
-  description: "Review your selected women's shoes in your shopping cart. Secure checkout via WhatsApp. Free shipping on all orders from NAA Shoes.",
-  keywords: ["shopping cart", "checkout", "women's shoes", "secure payment", "free shipping"],
-  openGraph: {
-    title: "Shopping Cart - NAA Shoes",
-    description: "Review your selected items and proceed to secure checkout",
-    url: "https://naashoes.com/cart",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://naashoes.com/cart",
-  },
-}
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -32,8 +18,6 @@ const structuredData = {
     "url": "https://naashoes.com"
   }
 }
-
-'use client'
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart()
