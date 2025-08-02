@@ -129,43 +129,68 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
           </div>
         </div>
 
-        <div className="mt-auto space-y-3">
-          <div className="flex items-center min-h-[1.25rem] sm:min-h-[1.5rem]">
-            <div className="flex space-x-1">
-              {product.colors.slice(0, 4).map((color, index) => (
-                <div
-                  key={index}
-                  className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-gray-300 flex-shrink-0"
-                  style={{
-                    backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
-                                     color.toLowerCase() === 'black' ? '#000000' :
-                                     color.toLowerCase() === 'pink' ? '#ec4899' :
-                                     color.toLowerCase() === 'rose gold' ? '#e11d48' :
-                                     color.toLowerCase() === 'nude' ? '#d4a574' :
-                                     color.toLowerCase() === 'coral' ? '#f97316' :
-                                     '#9ca3af'
-                  }}
-                  title={color}
-                />
-              ))}
-              {product.colors.length > 4 && (
-                <span className="text-xs text-gray-500 self-center ml-1">+{product.colors.length - 4}</span>
-              )}
+        <div className="mt-auto space-y-4">
+          {/* Enhanced color selection */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span className="text-xs font-medium text-gray-700">Warna:</span>
+              <div className="flex space-x-1">
+                {product.colors.slice(0, 3).map((color, index) => (
+                  <div
+                    key={index}
+                    className="w-5 h-5 rounded-full border-2 border-gray-200 hover:border-pink-300 transition-colors cursor-pointer shadow-sm"
+                    style={{
+                      backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
+                                       color.toLowerCase() === 'black' ? '#000000' :
+                                       color.toLowerCase() === 'pink' ? '#ec4899' :
+                                       color.toLowerCase() === 'rose gold' ? '#e11d48' :
+                                       color.toLowerCase() === 'nude' ? '#d4a574' :
+                                       color.toLowerCase() === 'coral' ? '#f97316' :
+                                       color.toLowerCase() === 'silver' ? '#9ca3af' :
+                                       color.toLowerCase() === 'gold' ? '#fbbf24' :
+                                       color.toLowerCase() === 'brown' ? '#92400e' :
+                                       '#9ca3af'
+                    }}
+                    title={color}
+                  />
+                ))}
+                {product.colors.length > 3 && (
+                  <div className="w-5 h-5 rounded-full border-2 border-gray-200 bg-gray-100 flex items-center justify-center">
+                    <span className="text-xs text-gray-600 font-medium">+{product.colors.length - 3}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Size indicator */}
+            <div className="text-xs text-gray-500">
+              Size: {product.sizes[0]}-{product.sizes[product.sizes.length - 1]}
             </div>
           </div>
 
-          <div className="flex gap-2">
+          {/* Enhanced CTA buttons */}
+          <div className="flex gap-3">
             <Link
               href={`/products/${product.id}`}
-              className="flex-1 text-center border border-pink-600 text-pink-600 hover:bg-pink-50 active:bg-pink-100 text-xs sm:text-sm font-medium py-2.5 px-3 rounded-lg transition-colors duration-200 touch-manipulation"
+              className="flex-1 group/btn text-center border-2 border-gray-200 text-gray-700 hover:border-pink-300 hover:text-pink-600 text-sm font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:shadow-md"
             >
-              View Details
+              <span className="flex items-center justify-center">
+                Lihat Detail
+                <svg className="ml-1 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
             </Link>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex-1 bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white text-xs sm:text-sm font-medium py-2.5 px-3 rounded-lg transition-colors duration-200 touch-manipulation"
+              className="flex-1 group/add bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white text-sm font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
-              Quick Add
+              <span className="flex items-center justify-center">
+                <svg className="w-4 h-4 mr-1 group-hover/add:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Keranjang
+              </span>
             </button>
           </div>
         </div>
