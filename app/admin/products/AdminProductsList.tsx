@@ -71,6 +71,8 @@ export default function AdminProductsList() {
   const [loading, setLoading] = useState(false)
   const [paginatedData, setPaginatedData] = useState<PaginatedResponse | null>(null)
   const [categories, setCategories] = useState<string[]>(['All'])
+  const [brands, setBrands] = useState<string[]>(['All'])
+  const [selectedBrand, setSelectedBrand] = useState('All')
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid')
 
   const itemsPerPage = 12
