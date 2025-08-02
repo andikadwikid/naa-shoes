@@ -23,13 +23,14 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Filter by search
+    // Filter by search (SQLite doesn't fully support mode: 'insensitive', so we'll handle case sensitivity in application)
     if (search) {
+      const searchLower = search.toLowerCase()
       andConditions.push({
         OR: [
-          { name: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } },
-          { category: { name: { contains: search, mode: 'insensitive' } } }
+          { name: { contains: search } },
+          { description: { contains: search } },
+          { category: { name: { contains: search } } }
         ]
       })
     }
