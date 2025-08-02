@@ -44,10 +44,26 @@ model Size {
   isActive  Boolean       @default(true)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
-  
+
   productSizes ProductSize[]
-  
+
   @@map("sizes")
+}
+
+model Brand {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  logo        String?   // URL to brand logo
+  website     String?   // Brand website URL
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+
+  @@map("brands")
 }
 
 // Product Models
