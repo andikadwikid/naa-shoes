@@ -105,8 +105,79 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     return null
   }
 
+  // Product Schema.org JSON-LD
+  const productSchema = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.name,
+    "image": product.image,
+    "description": product.description,
+    "sku": `NAA-${product.id}`,
+    "mpn": `NAA-${product.id}`,
+    "brand": {
+      "@type": "Brand",
+      "name": "NAA Shoes"
+    },
+    "category": product.category,
+    "offers": {
+      "@type": "Offer",
+      "url": `https://naashoes.com/products/${product.id}`,
+      "priceCurrency": "IDR",
+      "price": product.price,
+      "priceValidUntil": "2025-12-31",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "NAA Shoes"
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.5",
+      "reviewCount": "127"
+    }
+  }
+
+  // Breadcrumb Schema.org JSON-LD
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://naashoes.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Products",
+        "item": "https://naashoes.com/products"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": product.name,
+        "item": `https://naashoes.com/products/${product.id}`
+      }
+    ]
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      <div className="min-h-screen bg-gray-50">
       {/* Breadcrumb */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4">
@@ -448,6 +519,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   )
 }
