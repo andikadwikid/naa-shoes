@@ -151,14 +151,14 @@ export default function AdminProductsList() {
     }
 
     fetchProducts()
-  }, [currentPage, selectedCategory, selectedStatus, debouncedSearchTerm, sortBy])
+  }, [currentPage, selectedCategory, selectedBrand, selectedStatus, debouncedSearchTerm, sortBy])
 
   // Reset to page 1 when filters change
   useEffect(() => {
     if (currentPage !== 1) {
       setCurrentPage(1)
     }
-  }, [selectedCategory, selectedStatus, debouncedSearchTerm, sortBy])
+  }, [selectedCategory, selectedBrand, selectedStatus, debouncedSearchTerm, sortBy])
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
@@ -169,6 +169,7 @@ export default function AdminProductsList() {
     setSearchTerm('')
     setDebouncedSearchTerm('')
     setSelectedCategory('All')
+    setSelectedBrand('All')
     setSelectedStatus('All')
     setCurrentPage(1)
   }
