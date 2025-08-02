@@ -36,6 +36,15 @@ export async function GET(request: NextRequest) {
       })
     }
 
+    // Brand filter
+    if (brand !== 'All') {
+      andConditions.push({
+        brand: {
+          name: brand
+        }
+      })
+    }
+
     // Status filter
     if (status !== 'All') {
       if (status === 'Active') {
