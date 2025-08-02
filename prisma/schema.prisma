@@ -82,17 +82,20 @@ model Product {
   material      String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  
+
   // Relations
   categoryId    Int
   category      Category @relation(fields: [categoryId], references: [id])
-  
+
+  brandId       Int?
+  brand         Brand? @relation(fields: [brandId], references: [id])
+
   images        ProductImage[]
   colors        ProductColor[]
   sizes         ProductSize[]
   reviews       Review[]
   orderItems    OrderItem[]
-  
+
   @@map("products")
 }
 
