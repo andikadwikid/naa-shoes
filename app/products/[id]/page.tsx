@@ -32,6 +32,11 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { addToCart } = useCart()
   const { showToast } = useToast()
 
+  // Scroll to top when page loads
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [resolvedParams.id])
+
   useEffect(() => {
     const loadProduct = async () => {
       setIsLoading(true)
@@ -41,7 +46,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           notFound()
           return
         }
-        
+
         setProduct(productData)
         setSelectedSize(productData.sizes[0])
         setSelectedColor(productData.colors[0])
