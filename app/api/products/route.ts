@@ -8,8 +8,39 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category')
     const search = searchParams.get('search')
     const featured = searchParams.get('featured')
-    const orderBy = searchParams.get('orderBy') || 'createdAt'
-    const order = searchParams.get('order') || 'desc'
+    const sortBy = searchParams.get('sortBy')
+    const orderBy = searchParams.get('orderBy') || getOrderByFromSort(sortBy) || 'createdAt'
+    const order = searchParams.get('order') || getOrderFromSort(sortBy) || 'desc'
+
+    // Helper functions for sorting
+    function getOrderByFromSort(sortBy: string | null): string {
+      switch (sortBy) {
+        case 'price-low':
+        case 'price-high':
+          return 'price'
+        case 'name':
+          return 'name'
+        case 'newest':
+          return 'createdAt'
+        default:
+          return 'createdAt'
+      }
+    }
+
+    function getOrderFromSort(sortBy: string | null): string {
+      switch (sortBy) {
+        case 'price-low':
+          return 'asc'
+        case 'price-high':
+          return 'desc'
+        case 'name':
+          return 'asc'
+        case 'newest':
+          return 'desc'
+        default:
+          return 'desc'
+      }
+    }
 
     const queryOptions: any = {
       where: {
@@ -29,18 +60,27 @@ export async function GET(request: NextRequest) {
       queryOptions.take = parseInt(limit)
     }
 
-    // Filter by category
+    // Filter by category (combine with existing where conditions)
     if (category && category !== 'All') {
-      queryOptions.where.category = {
-        name: category
+      queryOptions.where = {
+        ...queryOptions.where,
+        category: {
+          name: category
+        }
       }
     }
 
     // Filter by search
     if (search) {
-      queryOptions.where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } }
+      queryOptions.where.AND = [
+        queryOptions.where,
+        {
+          OR: [
+            { name: { contains: search, mode: 'insensitive' } },
+            { description: { contains: search, mode: 'insensitive' } },
+            { category: { name: { contains: search, mode: 'insensitive' } } }
+          ]
+        }
       ]
     }
 
