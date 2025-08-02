@@ -27,16 +27,6 @@ export const metadata: Metadata = {
   publisher: "NAA Shoes",
   applicationName: "NAA Shoes",
   referrer: "origin-when-cross-origin",
-  colorScheme: "light",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#EC4899" },
-    { media: "(prefers-color-scheme: dark)", color: "#EC4899" }
-  ],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
