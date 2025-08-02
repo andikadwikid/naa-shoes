@@ -367,13 +367,13 @@ export default function AdminProductsList() {
                 </svg>
                 <h3 className="mt-2 text-sm font-medium text-gray-900">No products found</h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  {debouncedSearchTerm || selectedCategory !== 'All' || selectedStatus !== 'All'
+                  {debouncedSearchTerm || selectedCategory !== 'All' || selectedBrand !== 'All' || selectedStatus !== 'All'
                     ? 'Try adjusting your filters to find products.'
                     : 'Get started by adding your first product.'
                   }
                 </p>
                 <div className="mt-6">
-                  {debouncedSearchTerm || selectedCategory !== 'All' || selectedStatus !== 'All' ? (
+                  {debouncedSearchTerm || selectedCategory !== 'All' || selectedBrand !== 'All' || selectedStatus !== 'All' ? (
                     <button
                       onClick={handleClearFilters}
                       className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-pink-600 bg-pink-50 hover:bg-pink-100"
