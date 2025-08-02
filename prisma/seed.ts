@@ -429,6 +429,7 @@ async function main() {
       originalPrice: 850000,
       isOnSale: true,
       category: 'boots',
+      brand: 'nike',
       colors: ['Black', 'Brown'],
       image: 'https://images.unsplash.com/photo-1542840410-3092f99611a3?w=400&h=400&fit=crop'
     },
@@ -440,6 +441,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'sandals',
+      brand: 'hm',
       colors: ['Brown', 'Nude'],
       image: 'https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=400&h=400&fit=crop'
     },
@@ -451,6 +453,7 @@ async function main() {
       originalPrice: 920000,
       isOnSale: true,
       category: 'high-heels',
+      brand: 'pedro',
       colors: ['Silver', 'Gold'],
       image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&h=400&fit=crop'
     },
