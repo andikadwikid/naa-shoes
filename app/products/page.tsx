@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import ProductCard from '../../components/ProductCard'
 import Pagination from '../../components/Pagination'
-import { getPaginatedProducts, categories, type PaginatedResponse } from '../../services/products'
+import { getPaginatedProducts, getCategories, type PaginatedResponse } from '../../services/api-products'
 import { Product } from '../../types/product'
 
 const metadata = {
@@ -68,8 +68,23 @@ export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [paginatedData, setPaginatedData] = useState<PaginatedResponse<Product> | null>(null)
+  const [categories, setCategories] = useState<string[]>(['All'])
 
   const itemsPerPage = 12
+
+  // Load categories on mount
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const categoryList = await getCategories()
+        setCategories(categoryList)
+      } catch (error) {
+        console.error('Error loading categories:', error)
+      }
+    }
+
+    loadCategories()
+  }, [])
 
   // Fetch products when filters change
   useEffect(() => {
