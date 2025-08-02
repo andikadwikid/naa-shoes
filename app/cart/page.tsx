@@ -4,6 +4,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '../context/CartContext'
 
+// Konfigurasi WhatsApp
+const WHATSAPP_CONFIG = {
+  number: '6281234567890', // Ganti dengan nomor WhatsApp toko (format: 62xxx tanpa +)
+  storeName: 'NAA Shoes'
+}
+
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart()
 
@@ -22,11 +28,8 @@ export default function CartPage() {
   }
 
   const generateWhatsAppLink = () => {
-    // Nomor WhatsApp toko (ganti dengan nomor yang sesuai)
-    const whatsappNumber = '6281234567890' // Ganti dengan nomor WhatsApp toko
-
     // Generate pesan berdasarkan cart items
-    let message = `Halo! Saya tertarik untuk membeli sepatu dari NAA Shoes:\n\n`
+    let message = `Halo! Saya tertarik untuk membeli sepatu dari ${WHATSAPP_CONFIG.storeName}:\n\n`
 
     state.items.forEach((item, index) => {
       message += `${index + 1}. ${item.product.name}\n`
@@ -44,7 +47,7 @@ export default function CartPage() {
     const encodedMessage = encodeURIComponent(message)
 
     // Generate WhatsApp link
-    return `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
+    return `https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodedMessage}`
   }
 
   const handleCheckout = () => {
