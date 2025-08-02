@@ -116,15 +116,22 @@ export default function Navigation() {
             >
               Home
             </Link>
-            <Link 
-              href="/products" 
+            <Link
+              href="/products"
               className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation"
               onClick={() => setIsMenuOpen(false)}
             >
               Products
             </Link>
-            <Link 
-              href="/about" 
+            <Link
+              href="/blog"
+              className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link
+              href="/about"
               className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation"
               onClick={() => setIsMenuOpen(false)}
             >
