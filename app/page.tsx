@@ -3,10 +3,60 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { motion } from "framer-motion"
 import ProductCard from "../components/ProductCard"
+import AnimatedProductCard from "../components/AnimatedProductCard"
 import Footer from "../components/Footer"
 import WhatsAppFloat from "../components/WhatsAppFloat"
 import { getFeaturedProducts } from "../services/api-products"
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+}
+
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+}
+
+const fadeInRight = {
+  hidden: { opacity: 0, x: 60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+}
 
 // Metadata will be handled by layout.tsx for client components
 
@@ -102,34 +152,47 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
               {/* Hero Content */}
-              <div className="text-center lg:text-left">
+              <motion.div
+                className="text-center lg:text-left"
+                initial="hidden"
+                animate="visible"
+                variants={staggerContainer}
+              >
                 {/* Trust Badge */}
-                <div className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 mb-6 shadow-lg">
+                <motion.div
+                  className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 mb-6 shadow-lg"
+                  variants={fadeInUp}
+                >
                   <span className="text-green-500 mr-2">✓</span>
                   Dipercaya 10,000+ Wanita Indonesia
-                </div>
+                </motion.div>
 
-                <h1
+                <motion.h1
                   id="hero-heading"
                   className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight"
+                  variants={fadeInUp}
                 >
                   <span className="text-gray-900">Langkah</span>
                   <span className="block text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">
                     Penuh Percaya Diri
                   </span>
-                </h1>
+                </motion.h1>
 
-                <p
+                <motion.p
                   className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
                   role="text"
                   aria-describedby="hero-heading"
+                  variants={fadeInUp}
                 >
                   Temukan sepatu impian yang mencerminkan kepribadian unik Anda.
                   <span className="font-semibold text-gray-800"> Kualitas premium, desain elegan, kenyamanan maksimal.</span>
-                </p>
+                </motion.p>
 
                 {/* Trust Indicators */}
-                <div className="flex flex-wrap justify-center lg:justify-start gap-6 mb-8 text-sm text-gray-600">
+                <motion.div
+                  className="flex flex-wrap justify-center lg:justify-start gap-6 mb-8 text-sm text-gray-600"
+                  variants={fadeInUp}
+                >
                   <div className="flex items-center">
                     <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
@@ -148,10 +211,13 @@ export default function Home() {
                     </svg>
                     Kualitas Premium
                   </div>
-                </div>
+                </motion.div>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                  variants={fadeInUp}
+                >
                   <Link
                     href="/products"
                     className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-pink-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
@@ -170,11 +236,16 @@ export default function Home() {
                   >
                     Tentang Kami
                   </Link>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* Hero Image */}
-              <div className="relative lg:order-first lg:order-last">
+              <motion.div
+                className="relative lg:order-first lg:order-last"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInRight}
+              >
                 <div className="relative">
                   {/* Main Hero Image */}
                   <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-700">
@@ -207,7 +278,7 @@ export default function Home() {
                   <div className="absolute -top-6 -right-6 bg-white rounded-2xl p-4 shadow-xl">
                     <div className="flex items-center space-x-2">
                       <div className="flex text-yellow-400">
-                        ★★★★★
+                        ★★���★★
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-gray-900">4.9</p>
@@ -216,13 +287,19 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* Trust Signals Section */}
-        <section className="py-16 bg-gradient-to-r from-gray-50 to-gray-100">
+        <motion.section
+          className="py-16 bg-gradient-to-r from-gray-50 to-gray-100"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div className="flex flex-col items-center">
@@ -267,7 +344,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Customer Testimonials */}
         <section className="py-20 bg-white">
@@ -379,18 +456,34 @@ export default function Home() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-rose-100 to-pink-100 rounded-full transform -translate-x-32 translate-y-32 opacity-50"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-              <header className="text-center mb-16">
-                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-pink-100 to-purple-100 rounded-full text-sm font-medium text-pink-800 mb-6">
+              <motion.header
+                className="text-center mb-16"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={staggerContainer}
+              >
+                <motion.div
+                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-pink-100 to-purple-100 rounded-full text-sm font-medium text-pink-800 mb-6"
+                  variants={fadeInUp}
+                >
                   <span className="w-2 h-2 bg-pink-500 rounded-full mr-2 animate-pulse"></span>
                   Koleksi Terpopuler
-                </div>
-                <h2 id="featured-products-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                </motion.div>
+                <motion.h2
+                  id="featured-products-heading"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+                  variants={fadeInUp}
+                >
                   Sepatu <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">Impian</span> Anda
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+                </motion.h2>
+                <motion.p
+                  className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8"
+                  variants={fadeInUp}
+                >
                   Setiap langkah adalah pernyataan gaya. Temukan sepatu yang tidak hanya memukau mata,
                   tetapi juga memberikan kenyamanan luar biasa untuk aktivitas sehari-hari Anda.
-                </p>
+                </motion.p>
 
                 {/* Trust indicators for this section */}
                 <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
@@ -413,7 +506,7 @@ export default function Home() {
                     Comfort Technology
                   </div>
                 </div>
-              </header>
+              </motion.header>
 
               {isLoading ? (
                 <div className="text-center py-12">
@@ -426,17 +519,23 @@ export default function Home() {
                   </div>
                 </div>
               ) : featuredProducts.length > 0 ? (
-                <div
+                <motion.div
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
                   role="list"
                   aria-label="Featured products"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={staggerContainer}
                 >
-                  {featuredProducts.map((product) => (
-                    <div key={product.id} role="listitem" className="group">
-                      <ProductCard product={product} />
-                    </div>
+                  {featuredProducts.map((product, index) => (
+                    <AnimatedProductCard
+                      key={product.id}
+                      product={product}
+                      index={index}
+                    />
                   ))}
-                </div>
+                </motion.div>
               ) : (
                 <div className="text-center py-12">
                   <p className="text-gray-600">No featured products available at the moment.</p>

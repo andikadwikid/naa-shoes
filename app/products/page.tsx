@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import ProductCard from '../../components/ProductCard'
+import AnimatedProductCard from '../../components/AnimatedProductCard'
 import Pagination from '../../components/Pagination'
 import Footer from '../../components/Footer'
 import WhatsAppFloat from '../../components/WhatsAppFloat'
@@ -150,6 +152,45 @@ export default function ProductsPage() {
   const products = paginatedData?.data || []
   const pagination = paginatedData?.pagination
 
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  }
+
+  const fadeInDown = {
+    hidden: { opacity: 0, y: -30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  }
+
+  const scaleIn = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  }
+
   return (
     <>
       <script
@@ -164,17 +205,34 @@ export default function ProductsPage() {
       <main className="min-h-screen bg-gray-50 py-4 sm:py-6 lg:py-8">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
           {/* Header */}
-          <header className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
+          <motion.header
+            className="mb-6 sm:mb-8"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInDown}
+          >
+            <motion.h1
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4"
+              variants={fadeInUp}
+            >
               All Products
-            </h1>
-            <p className="text-base sm:text-lg text-gray-600">
+            </motion.h1>
+            <motion.p
+              className="text-base sm:text-lg text-gray-600"
+              variants={fadeInUp}
+            >
               Temukan sepatu impian Anda dari koleksi lengkap kami
-            </p>
-          </header>
+            </motion.p>
+          </motion.header>
 
           {/* Filters and Search */}
-          <section className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8" aria-labelledby="filters-heading">
+          <motion.section
+            className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8"
+            aria-labelledby="filters-heading"
+            initial="hidden"
+            animate="visible"
+            variants={scaleIn}
+          >
             <h2 id="filters-heading" className="sr-only">Product filters</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Search */}
@@ -245,10 +303,15 @@ export default function ProductsPage() {
                 <p id="sort-description" className="sr-only">Sort products by different criteria</p>
               </div>
             </div>
-          </section>
+          </motion.section>
 
           {/* Results Summary */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+          <motion.div
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+          >
             <div className="text-sm sm:text-base text-gray-600">
               {pagination && (
                 <p className="mb-1 sm:mb-0">
@@ -282,11 +345,18 @@ export default function ProductsPage() {
                 Clear Filters
               </button>
             )}
-          </div>
+          </motion.div>
 
           {/* Loading State */}
           {loading && (
-            <div className="text-center py-12" role="status" aria-live="polite">
+            <motion.div
+              className="text-center py-12"
+              role="status"
+              aria-live="polite"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+            >
               <div className="inline-flex items-center">
                 <svg className="animate-spin -ml-1 mr-3 h-8 w-8 text-pink-600" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -299,24 +369,41 @@ export default function ProductsPage() {
                   }
                 </span>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* Products Grid */}
           {!loading && products.length > 0 && (
-            <section aria-labelledby="products-heading">
+            <motion.section
+              aria-labelledby="products-heading"
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+            >
               <h2 id="products-heading" className="sr-only">Products List</h2>
-              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8" role="list">
-                {products.map((product) => (
-                  <div key={product.id} role="listitem">
-                    <ProductCard product={product} />
-                  </div>
+              <motion.div
+                className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
+                role="list"
+                variants={staggerContainer}
+              >
+                {products.map((product, index) => (
+                  <AnimatedProductCard
+                    key={product.id}
+                    product={product}
+                    index={index}
+                  />
                 ))}
-              </div>
+              </motion.div>
 
               {/* Pagination */}
               {pagination && pagination.totalPages > 1 && (
-                <nav className="mt-12" aria-label="Products pagination">
+                <motion.nav
+                  className="mt-12"
+                  aria-label="Products pagination"
+                  initial="hidden"
+                  animate="visible"
+                  variants={fadeInUp}
+                >
                   <Pagination
                     currentPage={pagination.currentPage}
                     totalPages={pagination.totalPages}
@@ -329,14 +416,19 @@ export default function ProductsPage() {
                       Page {pagination.currentPage} of {pagination.totalPages}
                     </p>
                   </div>
-                </nav>
+                </motion.nav>
               )}
-            </section>
+            </motion.section>
           )}
 
           {/* No Results */}
           {!loading && products.length === 0 && (
-            <div className="text-center py-12">
+            <motion.div
+              className="text-center py-12"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+            >
               <div className="max-w-md mx-auto">
                 <svg className="mx-auto h-24 w-24 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.563M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -353,7 +445,7 @@ export default function ProductsPage() {
                   Clear All Filters
                 </button>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </main>
