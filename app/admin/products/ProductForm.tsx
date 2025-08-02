@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import LoadingSpinner from '../components/LoadingSpinner'
+import ErrorAlert from '../components/ErrorAlert'
 
 interface Category {
   id: number
@@ -56,41 +58,41 @@ export default function ProductForm({ product }: ProductFormProps) {
   const [selectedColors, setSelectedColors] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<{sizeId: number, stock: number}[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [loadError, setLoadError] = useState<string>('')
   const router = useRouter()
 
   // Load master data and existing product data
   useEffect(() => {
-    const loadMasterData = async () => {
+    const loadData = async () => {
+      setIsLoading(true)
+      setLoadError('')
+
       try {
+        // Load master data
         const [categoriesRes, colorsRes, sizesRes] = await Promise.all([
           fetch('/api/admin/categories'),
           fetch('/api/admin/colors'),
           fetch('/api/admin/sizes')
         ])
 
-        if (categoriesRes.ok) {
-          const categoriesData = await categoriesRes.json()
-          setCategories(categoriesData)
+        if (!categoriesRes.ok || !colorsRes.ok || !sizesRes.ok) {
+          throw new Error('Failed to load master data')
         }
 
-        if (colorsRes.ok) {
-          const colorsData = await colorsRes.json()
-          setColors(colorsData)
-        }
+        const [categoriesData, colorsData, sizesData] = await Promise.all([
+          categoriesRes.json(),
+          colorsRes.json(),
+          sizesRes.json()
+        ])
 
-        if (sizesRes.ok) {
-          const sizesData = await sizesRes.json()
-          setSizes(sizesData)
-        }
-      } catch (error) {
-        console.error('Error loading master data:', error)
-      }
-    }
+        setCategories(categoriesData)
+        setColors(colorsData)
+        setSizes(sizesData)
 
-    const loadExistingProductData = async () => {
-      if (product?.id) {
-        try {
+        // Load existing product data if in edit mode
+        if (product?.id) {
           const response = await fetch(`/api/admin/products/${product.id}`)
           if (response.ok) {
             const productData = await response.json()
@@ -108,14 +110,16 @@ export default function ProductForm({ product }: ProductFormProps) {
               })))
             }
           }
-        } catch (error) {
-          console.error('Error loading existing product data:', error)
         }
+      } catch (error) {
+        console.error('Error loading data:', error)
+        setLoadError('Failed to load required data. Please try again.')
+      } finally {
+        setIsLoading(false)
       }
     }
 
-    loadMasterData()
-    loadExistingProductData()
+    loadData()
   }, [product?.id])
 
   const handleSubmit = async (e: React.FormEvent) => {
