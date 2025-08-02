@@ -1,11 +1,12 @@
-import { Metadata } from 'next'
+'use client'
+
 import { useState, useEffect, useMemo } from 'react'
 import ProductCard from '../../components/ProductCard'
 import Pagination from '../../components/Pagination'
 import { getPaginatedProducts, categories, type PaginatedResponse } from '../../services/products'
 import { Product } from '../../types/product'
 
-export const metadata: Metadata = {
+const metadata = {
   title: "Koleksi Sepatu Wanita Terlengkap - Sneakers, Heels, Boots | NAA Shoes",
   description: "Jelajahi koleksi sepatu wanita terlengkap dengan kualitas terbaik. Sneakers, high heels, boots, flats, sandals dengan harga terjangkau. Gratis ongkir & garansi kualitas.",
   keywords: ["sepatu wanita", "sneakers", "high heels", "boots", "flats", "sandals", "sepatu online", "fashion", "footwear"],
@@ -40,8 +41,6 @@ const structuredData = {
     "numberOfItems": 25
   }
 }
-
-'use client'
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('')
