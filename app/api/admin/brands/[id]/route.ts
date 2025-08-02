@@ -160,9 +160,10 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Params }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<Params> }) {
   try {
-    const id = parseInt(params.id)
+    const { id: paramId } = await params
+    const id = parseInt(paramId)
     
     if (isNaN(id)) {
       return NextResponse.json(
