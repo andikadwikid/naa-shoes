@@ -1,4 +1,5 @@
-import { Metadata } from 'next'
+'use client'
+
 import { use, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -10,54 +11,7 @@ interface BlogDetailPageProps {
   params: Promise<{ slug: string }>
 }
 
-// Generate metadata dynamically
-export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
-  const resolvedParams = await params
-  const post = await getBlogPostBySlug(resolvedParams.slug)
-  
-  if (!post) {
-    return {
-      title: 'Article Not Found | NAA Shoes Blog',
-      description: 'The requested article could not be found.',
-    }
-  }
-
-  return {
-    title: `${post.title} | NAA Shoes Blog`,
-    description: post.excerpt,
-    keywords: post.tags,
-    authors: [{ name: post.author.name }],
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      url: `https://naashoes.com/blog/${post.slug}`,
-      type: 'article',
-      publishedTime: post.publishedAt,
-      authors: [post.author.name],
-      section: post.category,
-      tags: post.tags,
-      images: [
-        {
-          url: post.image,
-          width: 800,
-          height: 400,
-          alt: post.title,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
-      images: [post.image],
-    },
-    alternates: {
-      canonical: `https://naashoes.com/blog/${post.slug}`,
-    },
-  }
-}
-
-'use client'
+// Note: generateMetadata is removed since this is now a client component
 
 export default function BlogDetailPage({ params }: BlogDetailPageProps) {
   const resolvedParams = use(params)
