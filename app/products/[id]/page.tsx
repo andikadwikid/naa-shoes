@@ -10,6 +10,7 @@ import { useCart } from '../../../hooks/useCart'
 import { useToast } from '../../../hooks/useToast'
 import { formatCurrency } from '../../../lib/utils'
 import ProductCard from '../../../components/ProductCard'
+import ReviewsSection from '../../../components/ReviewsSection'
 
 interface ProductDetailPageProps {
   params: {
@@ -322,6 +323,113 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   30-day return policy
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Product Details Tabs */}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Reviews */}
+          <div className="lg:col-span-2">
+            <ReviewsSection productId={product.id} />
+          </div>
+
+          {/* Shipping & Care Info */}
+          <div className="space-y-6">
+            {/* Shipping Info */}
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Shipping & Returns</h3>
+              <div className="space-y-4 text-sm text-gray-600">
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H20a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                  </svg>
+                  <div>
+                    <p className="font-medium text-gray-900">Free Shipping</p>
+                    <p>On orders over Rp 500.000</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="font-medium text-gray-900">Fast Delivery</p>
+                    <p>2-3 business days within Jakarta</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <svg className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <div>
+                    <p className="font-medium text-gray-900">Easy Returns</p>
+                    <p>30-day return policy</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Care Instructions */}
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Care Instructions</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                  Clean with soft, damp cloth
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                  Air dry naturally, avoid direct sunlight
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                  Store in dust bag when not in use
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                  Use leather conditioner monthly
+                </li>
+              </ul>
+            </div>
+
+            {/* Size Guide */}
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Size Guide</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-2">Size</th>
+                      <th className="text-left py-2">Length (cm)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-600">
+                    <tr className="border-b">
+                      <td className="py-2">36</td>
+                      <td className="py-2">23.0</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2">37</td>
+                      <td className="py-2">23.7</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2">38</td>
+                      <td className="py-2">24.3</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="py-2">39</td>
+                      <td className="py-2">25.0</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2">40</td>
+                      <td className="py-2">25.7</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
