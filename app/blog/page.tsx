@@ -137,7 +137,11 @@ export default function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <main className="min-h-screen bg-gray-50 py-4 sm:py-6 lg:py-8">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
           {/* Header */}
