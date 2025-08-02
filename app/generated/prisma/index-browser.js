@@ -244,6 +244,57 @@ exports.Prisma.ReviewScalarFieldEnum = {
   customerId: 'customerId'
 };
 
+exports.Prisma.AuthorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  avatar: 'avatar',
+  bio: 'bio',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BlogCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BlogPostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  excerpt: 'excerpt',
+  content: 'content',
+  image: 'image',
+  isPublished: 'isPublished',
+  isFeatured: 'isFeatured',
+  readTime: 'readTime',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  authorId: 'authorId',
+  blogCategoryId: 'blogCategoryId'
+};
+
+exports.Prisma.TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.BlogTagScalarFieldEnum = {
+  id: 'id',
+  blogPostId: 'blogPostId',
+  tagId: 'tagId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -279,7 +330,12 @@ exports.Prisma.ModelName = {
   Customer: 'Customer',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  Review: 'Review'
+  Review: 'Review',
+  Author: 'Author',
+  BlogCategory: 'BlogCategory',
+  BlogPost: 'BlogPost',
+  Tag: 'Tag',
+  BlogTag: 'BlogTag'
 };
 
 /**

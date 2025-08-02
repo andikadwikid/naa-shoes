@@ -3,8 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getBlogPosts, getBlogCategories } from '../../services/blog'
+import { getBlogPosts, getBlogCategories, getBlogPostsByCategory } from '../../services/blog'
 import { BlogPost, BlogCategory } from '../../types/blog'
+import Pagination from '../../components/Pagination'
+import Footer from '../../components/Footer'
+import WhatsAppFloat from '../../components/WhatsAppFloat'
 
 const metadata = {
   title: "Fashion Blog - Tips & Tren Sepatu Wanita | NAA Shoes",
@@ -71,32 +74,69 @@ export default function BlogPage() {
   const [categories, setCategories] = useState<BlogCategory[]>([])
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [loading, setLoading] = useState(true)
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 6, // 6 posts per page to show pagination sooner
+    total: 0,
+    totalPages: 0
+  })
+
+  const fetchPosts = async (page = 1, category = 'all') => {
+    setLoading(true)
+    try {
+      let postsResponse
+      if (category === 'all') {
+        postsResponse = await getBlogPosts(page, pagination.limit)
+      } else {
+        postsResponse = await getBlogPostsByCategory(category, page, pagination.limit)
+      }
+
+      setPosts(postsResponse.blogs)
+      if (postsResponse.pagination) {
+        setPagination(postsResponse.pagination)
+      }
+    } catch (error) {
+      console.error('Error fetching blog posts:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchCategories = async () => {
+    try {
+      const categoriesData = await getBlogCategories()
+      setCategories(categoriesData)
+    } catch (error) {
+      console.error('Error fetching blog categories:', error)
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const [postsData, categoriesData] = await Promise.all([
-          getBlogPosts(),
-          getBlogCategories()
-        ])
-        setPosts(postsData)
-        setCategories(categoriesData)
-      } catch (error) {
-        console.error('Error fetching blog data:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
+    fetchCategories()
+    fetchPosts(1, selectedCategory)
   }, [])
 
-  const filteredPosts = selectedCategory === 'all' 
-    ? posts 
-    : posts.filter(post => post.category === categories.find(cat => cat.slug === selectedCategory)?.name)
+  useEffect(() => {
+    fetchPosts(1, selectedCategory)
+  }, [selectedCategory])
 
-  const featuredPost = posts.find(post => post.featured)
-  const regularPosts = filteredPosts.filter(post => !post.featured || selectedCategory !== 'all')
+  // Handle featured post display logic
+  const featuredPost = selectedCategory === 'all' ? posts.find(post => post.featured) : null
+  const regularPosts = selectedCategory === 'all'
+    ? posts.filter(post => post.id !== featuredPost?.id) // Only filter out the specific featured post being shown at top
+    : posts // Show all posts when filtering by category
+
+  const handlePageChange = (page: number) => {
+    setPagination(prev => ({ ...prev, page }))
+    fetchPosts(page, selectedCategory)
+    // Scroll to top of posts section
+    document.getElementById('blog-posts-section')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category)
+    setPagination(prev => ({ ...prev, page: 1 }))
+  }
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -221,7 +261,7 @@ export default function BlogPage() {
               {categories.map((category) => (
                 <button
                   key={category.slug}
-                  onClick={() => setSelectedCategory(category.slug)}
+                  onClick={() => handleCategoryChange(category.slug)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 touch-manipulation ${
                     selectedCategory === category.slug
                       ? 'bg-pink-600 text-white'
@@ -238,76 +278,95 @@ export default function BlogPage() {
           </nav>
 
           {/* Blog Posts Grid */}
-          {regularPosts.length > 0 ? (
-            <section aria-labelledby="blog-posts-heading">
-              <h2 id="blog-posts-heading" className="sr-only">Blog Articles</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" role="list">
-                {regularPosts.map((post) => (
-                  <article key={post.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300" role="listitem">
-                    <Link href={`/blog/${post.slug}`} className="block" aria-label={`Read article: ${post.title}`}>
-                      <div className="relative h-48 sm:h-56">
-                        <Image
-                          src={post.image}
-                          alt={`Article image: ${post.title}`}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                      </div>
-                      <div className="p-6">
-                        <div className="mb-3">
-                          <span className="text-pink-600 font-medium text-sm uppercase tracking-wide">
-                            {post.category}
-                          </span>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2 hover:text-pink-600 transition-colors">
-                          {post.title}
-                        </h3>
-                        <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
-                          {post.excerpt}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
+          <div id="blog-posts-section">
+            {regularPosts.length > 0 ? (
+              <>
+                <section aria-labelledby="blog-posts-heading">
+                  <h2 id="blog-posts-heading" className="sr-only">Blog Articles</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" role="list">
+                    {regularPosts.map((post) => (
+                      <article key={post.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300" role="listitem">
+                        <Link href={`/blog/${post.slug}`} className="block" aria-label={`Read article: ${post.title}`}>
+                          <div className="relative h-48 sm:h-56">
                             <Image
-                              src={post.author.avatar}
-                              alt={`${post.author.name} - Author photo`}
-                              width={32}
-                              height={32}
-                              className="rounded-full object-cover"
+                              src={post.image}
+                              alt={`Article image: ${post.title}`}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             />
-                            <div>
-                              <p className="font-medium text-gray-900 text-sm">{post.author.name}</p>
-                              <p className="text-xs text-gray-500">{formatDate(post.publishedAt)}</p>
+                          </div>
+                          <div className="p-6">
+                            <div className="mb-3">
+                              <span className="text-pink-600 font-medium text-sm uppercase tracking-wide">
+                                {post.category}
+                              </span>
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2 hover:text-pink-600 transition-colors">
+                              {post.title}
+                            </h3>
+                            <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+                              {post.excerpt}
+                            </p>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-3">
+                                <Image
+                                  src={post.author.avatar}
+                                  alt={`${post.author.name} - Author photo`}
+                                  width={32}
+                                  height={32}
+                                  className="rounded-full object-cover"
+                                />
+                                <div>
+                                  <p className="font-medium text-gray-900 text-sm">{post.author.name}</p>
+                                  <p className="text-xs text-gray-500">{formatDate(post.publishedAt)}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center text-gray-500 text-sm">
+                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {post.readTime} min
+                              </div>
                             </div>
                           </div>
-                          <div className="flex items-center text-gray-500 text-sm">
-                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            {post.readTime} min
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </article>
-                ))}
+                        </Link>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Pagination */}
+                <div className="mt-8 sm:mt-12">
+                  <Pagination
+                    currentPage={pagination.page}
+                    totalPages={pagination.totalPages}
+                    onPageChange={handlePageChange}
+                    totalItems={pagination.total}
+                    itemsPerPage={pagination.limit}
+                    className="bg-white p-4 rounded-lg shadow-sm"
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-12">
+                <div className="max-w-md mx-auto">
+                  <svg className="mx-auto h-24 w-24 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Tidak ada artikel</h3>
+                  <p className="text-gray-600">
+                    Belum ada artikel untuk kategori yang dipilih.
+                  </p>
+                </div>
               </div>
-            </section>
-          ) : (
-            <div className="text-center py-12">
-              <div className="max-w-md mx-auto">
-                <svg className="mx-auto h-24 w-24 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                </svg>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Tidak ada artikel</h3>
-                <p className="text-gray-600">
-                  Belum ada artikel untuk kategori yang dipilih.
-                </p>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </main>
+
+      <Footer />
+      <WhatsAppFloat />
     </>
   )
 }

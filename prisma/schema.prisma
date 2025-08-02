@@ -211,6 +211,83 @@ model Review {
   @@map("reviews")
 }
 
+// Blog Models
+model Author {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  avatar    String? // URL to author avatar
+  bio       String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogPosts BlogPost[]
+
+  @@map("authors")
+}
+
+model BlogCategory {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  blogPosts BlogPost[]
+
+  @@map("blog_categories")
+}
+
+model BlogPost {
+  id           Int       @id @default(autoincrement())
+  title        String
+  slug         String    @unique
+  excerpt      String?
+  content      String    @db.Text
+  image        String?   // Featured image URL
+  isPublished  Boolean   @default(false)
+  isFeatured   Boolean   @default(false)
+  readTime     Int?      // Estimated read time in minutes
+  publishedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  authorId         Int
+  author           Author        @relation(fields: [authorId], references: [id])
+  blogCategoryId   Int
+  blogCategory     BlogCategory  @relation(fields: [blogCategoryId], references: [id])
+  tags             BlogTag[]
+
+  @@map("blog_posts")
+}
+
+model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  blogTags BlogTag[]
+
+  @@map("tags")
+}
+
+model BlogTag {
+  id Int @id @default(autoincrement())
+
+  blogPostId Int
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+
+  tagId Int
+  tag   Tag @relation(fields: [tagId], references: [id])
+
+  @@unique([blogPostId, tagId])
+  @@map("blog_tags")
+}
+
 // Enums
 enum OrderStatus {
   PENDING

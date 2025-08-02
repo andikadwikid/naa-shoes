@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import ProductCard from "../components/ProductCard"
+import Footer from "../components/Footer"
+import WhatsAppFloat from "../components/WhatsAppFloat"
 import { getFeaturedProducts } from "../services/api-products"
 
 // Metadata will be handled by layout.tsx for client components
@@ -742,6 +744,9 @@ export default function Home() {
           </div>
         </aside>
       </div>
+
+      <Footer />
+      <WhatsAppFloat />
     </>
   )
 }

@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import ProductCard from '../../components/ProductCard'
 import Pagination from '../../components/Pagination'
+import Footer from '../../components/Footer'
+import WhatsAppFloat from '../../components/WhatsAppFloat'
 import { getPaginatedProducts, getCategories } from '../../services/api-products'
 import { Product } from '../../types/product'
 import type { PaginatedResponse } from '../../services/api-products'
@@ -355,6 +357,9 @@ export default function ProductsPage() {
           )}
         </div>
       </main>
+
+      <Footer />
+      <WhatsAppFloat />
     </>
   )
 }

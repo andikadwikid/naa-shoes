@@ -1,48 +1,63 @@
+'use client'
+
 interface PaginationProps {
   currentPage: number
   totalPages: number
   onPageChange: (page: number) => void
+  showInfo?: boolean
+  totalItems?: number
+  itemsPerPage?: number
   className?: string
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange, className = '' }: PaginationProps) {
+export default function Pagination({ 
+  currentPage, 
+  totalPages, 
+  onPageChange, 
+  showInfo = true,
+  totalItems = 0,
+  itemsPerPage = 10,
+  className = ""
+}: PaginationProps) {
+  if (totalPages <= 1) return null
+
+  const startItem = ((currentPage - 1) * itemsPerPage) + 1
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems)
+
+  // Generate page numbers with smart ellipsis
   const getPageNumbers = () => {
     const pages = []
-    const showPages = 5 // Total pages to show around current page
+    const showEllipsis = totalPages > 7
 
-    if (totalPages <= showPages) {
-      // Show all pages if total is small
+    if (!showEllipsis) {
+      // Show all pages if 7 or fewer
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i)
       }
     } else {
-      // Calculate start and end pages
-      let start = Math.max(1, currentPage - Math.floor(showPages / 2))
-      let end = Math.min(totalPages, start + showPages - 1)
-
-      // Adjust start if end is at the limit
-      if (end === totalPages) {
-        start = Math.max(1, end - showPages + 1)
-      }
-
-      // Add first page and ellipsis if needed
-      if (start > 1) {
+      // Smart pagination for many pages
+      if (currentPage <= 4) {
+        // Show 1,2,3,4,5...last
+        for (let i = 1; i <= 5; i++) {
+          pages.push(i)
+        }
+        pages.push('ellipsis')
+        pages.push(totalPages)
+      } else if (currentPage >= totalPages - 3) {
+        // Show 1...last-4,last-3,last-2,last-1,last
         pages.push(1)
-        if (start > 2) {
-          pages.push('...')
+        pages.push('ellipsis')
+        for (let i = totalPages - 4; i <= totalPages; i++) {
+          pages.push(i)
         }
-      }
-
-      // Add pages in range
-      for (let i = start; i <= end; i++) {
-        pages.push(i)
-      }
-
-      // Add last page and ellipsis if needed
-      if (end < totalPages) {
-        if (end < totalPages - 1) {
-          pages.push('...')
+      } else {
+        // Show 1...current-1,current,current+1...last
+        pages.push(1)
+        pages.push('ellipsis')
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i)
         }
+        pages.push('ellipsis')
         pages.push(totalPages)
       }
     }
@@ -50,71 +65,87 @@ export default function Pagination({ currentPage, totalPages, onPageChange, clas
     return pages
   }
 
-  const pages = getPageNumbers()
-
-  if (totalPages <= 1) return null
-
   return (
-    <div className={`flex items-center justify-center space-x-1 sm:space-x-2 ${className}`}>
-      {/* Previous Button */}
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={`
-          px-2 sm:px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 touch-manipulation
-          ${currentPage === 1
-            ? 'text-gray-400 cursor-not-allowed bg-gray-100'
-            : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-pink-600'
-          }
-        `}
-        aria-label="Previous page"
-      >
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+    <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 ${className}`}>
+      {/* Results info */}
+      {showInfo && totalItems > 0 && (
+        <div className="text-sm text-gray-700 order-2 sm:order-1">
+          Menampilkan <span className="font-medium">{startItem}</span> sampai{' '}
+          <span className="font-medium">{endItem}</span> dari{' '}
+          <span className="font-medium">{totalItems}</span> artikel
+        </div>
+      )}
 
-      {/* Page Numbers */}
-      <div className="flex items-center space-x-1">
-        {pages.map((page, index) => (
+      {/* Pagination controls */}
+      <nav className="order-1 sm:order-2" aria-label="Pagination">
+        <div className="flex items-center space-x-1">
+          {/* Previous button */}
           <button
-            key={index}
-            onClick={() => typeof page === 'number' ? onPageChange(page) : undefined}
-            disabled={page === '...'}
-            className={`
-              px-2 sm:px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 min-w-[32px] sm:min-w-[40px] touch-manipulation
-              ${typeof page === 'number' && page === currentPage
-                ? 'bg-pink-600 text-white shadow-sm'
-                : typeof page === 'number'
-                ? 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-pink-600'
-                : 'text-gray-400 cursor-default bg-transparent'
-              }
-            `}
-            aria-label={typeof page === 'number' ? `Go to page ${page}` : undefined}
-            aria-current={typeof page === 'number' && page === currentPage ? 'page' : undefined}
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage <= 1}
+            className="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
+            aria-label="Halaman sebelumnya"
           >
-            {page}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span className="ml-1 hidden sm:inline">Sebelumnya</span>
           </button>
-        ))}
-      </div>
 
-      {/* Next Button */}
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className={`
-          px-2 sm:px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 touch-manipulation
-          ${currentPage === totalPages
-            ? 'text-gray-400 cursor-not-allowed bg-gray-100'
-            : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-pink-600'
-          }
-        `}
-        aria-label="Next page"
-      >
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+          {/* Page numbers */}
+          <div className="hidden sm:flex items-center space-x-1">
+            {getPageNumbers().map((page, index) => {
+              if (page === 'ellipsis') {
+                return (
+                  <span
+                    key={`ellipsis-${index}`}
+                    className="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700"
+                  >
+                    ...
+                  </span>
+                )
+              }
+
+              const pageNum = page as number
+              const isActive = pageNum === currentPage
+
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => onPageChange(pageNum)}
+                  className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                    isActive
+                      ? 'z-10 bg-pink-600 text-white border-pink-600'
+                      : 'text-gray-700 bg-white border border-gray-300 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-300'
+                  }`}
+                  aria-label={`Halaman ${pageNum}`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {pageNum}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Mobile page indicator */}
+          <div className="sm:hidden px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md">
+            {currentPage} / {totalPages}
+          </div>
+
+          {/* Next button */}
+          <button
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage >= totalPages}
+            className="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
+            aria-label="Halaman selanjutnya"
+          >
+            <span className="mr-1 hidden sm:inline">Selanjutnya</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </nav>
     </div>
   )
 }
