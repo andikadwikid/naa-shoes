@@ -20,6 +20,11 @@ interface Product {
     id: number
     name: string
   }
+  brand?: {
+    id: number
+    name: string
+    slug: string
+  }
   images: Array<{
     id: number
     url: string
