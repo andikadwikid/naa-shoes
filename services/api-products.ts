@@ -96,7 +96,9 @@ export const getCategories = async (): Promise<string[]> => {
   try {
     const response = await fetch('/api/categories')
     if (!response.ok) {
-      throw new Error('Failed to fetch categories')
+      const errorText = await response.text()
+      console.error('Categories API error:', response.status, errorText)
+      throw new Error(`Failed to fetch categories: ${response.status}`)
     }
     const categories: Category[] = await response.json()
     const categoryNames = categories.map(cat => cat.name)
@@ -113,7 +115,9 @@ export const getProducts = async (): Promise<any[]> => {
   try {
     const response = await fetch('/api/products')
     if (!response.ok) {
-      throw new Error('Failed to fetch products')
+      const errorText = await response.text()
+      console.error('Products API error:', response.status, errorText)
+      throw new Error(`Failed to fetch products: ${response.status}`)
     }
     const apiProducts: APIProduct[] = await response.json()
     return apiProducts.map(convertAPIProductToProduct)
@@ -222,9 +226,11 @@ export const getProductById = async (id: number): Promise<any | null> => {
       if (response.status === 404) {
         return null
       }
-      throw new Error('Failed to fetch product')
+      const errorText = await response.text()
+      console.error('Product API error:', response.status, errorText)
+      throw new Error(`Failed to fetch product: ${response.status}`)
     }
-    
+
     const apiProduct: APIProduct = await response.json()
     return convertAPIProductToProduct(apiProduct)
   } catch (error) {
