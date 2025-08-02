@@ -1,10 +1,47 @@
-'use client'
-
+import { Metadata } from 'next'
 import { useState, useEffect, useMemo } from 'react'
 import ProductCard from '../../components/ProductCard'
 import Pagination from '../../components/Pagination'
 import { getPaginatedProducts, categories, type PaginatedResponse } from '../../services/products'
 import { Product } from '../../types/product'
+
+export const metadata: Metadata = {
+  title: "Koleksi Sepatu Wanita Terlengkap - Sneakers, Heels, Boots | NAA Shoes",
+  description: "Jelajahi koleksi sepatu wanita terlengkap dengan kualitas terbaik. Sneakers, high heels, boots, flats, sandals dengan harga terjangkau. Gratis ongkir & garansi kualitas.",
+  keywords: ["sepatu wanita", "sneakers", "high heels", "boots", "flats", "sandals", "sepatu online", "fashion", "footwear"],
+  openGraph: {
+    title: "Koleksi Sepatu Wanita Terlengkap | NAA Shoes",
+    description: "Jelajahi koleksi sepatu wanita terlengkap dengan kualitas terbaik",
+    url: "https://naashoes.com/products",
+    type: "website",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1200&h=630&fit=crop",
+        width: 1200,
+        height: 630,
+        alt: "Koleksi Sepatu Wanita NAA Shoes",
+      },
+    ],
+  },
+  alternates: {
+    canonical: "https://naashoes.com/products",
+  },
+}
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Koleksi Sepatu Wanita",
+  "description": "Koleksi sepatu wanita terlengkap dengan berbagai kategori dan style",
+  "url": "https://naashoes.com/products",
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Sepatu Wanita",
+    "numberOfItems": 25
+  }
+}
+
+'use client'
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('')
