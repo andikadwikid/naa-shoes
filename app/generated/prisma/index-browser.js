@@ -244,17 +244,6 @@ exports.Prisma.ReviewScalarFieldEnum = {
   customerId: 'customerId'
 };
 
-exports.Prisma.AdminScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  name: 'name',
-  password: 'password',
-  role: 'role',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -278,12 +267,6 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   CANCELLED: 'CANCELLED'
 };
 
-exports.AdminRole = exports.$Enums.AdminRole = {
-  SUPER_ADMIN: 'SUPER_ADMIN',
-  ADMIN: 'ADMIN',
-  EDITOR: 'EDITOR'
-};
-
 exports.Prisma.ModelName = {
   Category: 'Category',
   Color: 'Color',
@@ -296,8 +279,7 @@ exports.Prisma.ModelName = {
   Customer: 'Customer',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  Review: 'Review',
-  Admin: 'Admin'
+  Review: 'Review'
 };
 
 /**

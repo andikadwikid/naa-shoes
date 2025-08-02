@@ -211,20 +211,6 @@ model Review {
   @@map("reviews")
 }
 
-// Admin Models
-model Admin {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String
-  password  String // Should be hashed
-  role      AdminRole @default(ADMIN)
-  isActive  Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@map("admins")
-}
-
 // Enums
 enum OrderStatus {
   PENDING
@@ -233,10 +219,4 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
-}
-
-enum AdminRole {
-  SUPER_ADMIN
-  ADMIN
-  EDITOR
 }
