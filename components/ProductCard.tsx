@@ -24,7 +24,15 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
   return (
     <div className={`group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col ${className}`}>
       {/* Product Image */}
-      <Link href={`/products/${product.id}`} className="block relative">
+      <Link
+        href={`/products/${product.id}`}
+        className="block relative"
+        onClick={() => {
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }, 100)
+        }}
+      >
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={product.image}
