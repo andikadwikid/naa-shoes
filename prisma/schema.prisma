@@ -56,12 +56,12 @@ model Product {
   name          String
   slug          String   @unique
   description   String?
-  price         Decimal  @db.Decimal(10,2)
-  originalPrice Decimal? @db.Decimal(10,2)
+  price         Float
+  originalPrice Float?
   isNew         Boolean  @default(false)
   isOnSale      Boolean  @default(false)
   isActive      Boolean  @default(true)
-  weight        Decimal? @db.Decimal(5,2) // in grams
+  weight        Float? // in grams
   dimensions    String?  // JSON string for length, width, height
   material      String?
   createdAt     DateTime @default(now())
