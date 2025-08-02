@@ -182,7 +182,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <div className="min-h-screen bg-gray-50 pt-16 sm:pt-18">
+      <div className="min-h-screen bg-gray-50 pt-20">
       {/* Breadcrumb */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4">
