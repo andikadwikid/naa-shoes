@@ -26,7 +26,7 @@ const navigation = [
     children: [
       { name: 'All Products', href: '/admin/products' },
       { name: 'Add Product', href: '/admin/products/create' },
-      { name: 'Categories', href: '/admin/products/categories' },
+      { name: 'Categories', href: '/admin/master/categories' },
       { name: 'Stock Management', href: '/admin/products/stock' }
     ]
   },
