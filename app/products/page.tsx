@@ -3,8 +3,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import ProductCard from '../../components/ProductCard'
 import Pagination from '../../components/Pagination'
-import { getPaginatedProducts, getCategories, type PaginatedResponse } from '../../services/api-products'
+import { getPaginatedProducts, getCategories } from '../../services/api-products'
 import { Product } from '../../types/product'
+import type { PaginatedResponse } from '../../services/api-products'
 
 const metadata = {
   title: "Koleksi Sepatu Wanita Terlengkap - Sneakers, Heels, Boots | NAA Shoes",
