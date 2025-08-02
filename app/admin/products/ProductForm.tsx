@@ -51,7 +51,7 @@ export default function ProductForm({ product }: ProductFormProps) {
     price: product?.price?.toString() || '',
     originalPrice: product?.originalPrice?.toString() || '',
     categoryId: product?.categoryId?.toString() || '',
-    brandId: product?.brandId?.toString() || '',
+    brandId: product?.brandId ? product.brandId.toString() : '',
     isNew: product?.isNew ?? false,
     isOnSale: product?.isOnSale ?? false,
     isActive: product?.isActive ?? true,
