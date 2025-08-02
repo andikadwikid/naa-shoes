@@ -136,6 +136,11 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
           <Link
             href={`/products/${product.id}`}
             className="flex-1 text-center border border-gray-300 text-gray-700 hover:border-pink-500 hover:text-pink-600 text-sm font-medium py-2.5 rounded-lg transition-colors"
+            onClick={() => {
+              setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }, 100)
+            }}
           >
             Detail
           </Link>
