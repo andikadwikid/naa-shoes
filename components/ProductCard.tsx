@@ -68,34 +68,65 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
         </div>
       </Link>
 
-      <div className="p-3 sm:p-4 flex flex-col flex-1">
-        <Link href={`/products/${product.id}`}>
-          <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors leading-tight cursor-pointer min-h-[2.5rem] sm:min-h-[3rem]">
+      <div className="p-4 sm:p-6 flex flex-col flex-1">
+        {/* Category badge */}
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-xs font-medium bg-gradient-to-r from-pink-100 to-purple-100 text-pink-700 px-3 py-1 rounded-full">
+            {product.category}
+          </span>
+
+          {/* Rating stars */}
+          <div className="flex items-center text-yellow-400 text-xs">
+            <span className="mr-1">★★★★★</span>
+            <span className="text-gray-500 text-xs">(4.9)</span>
+          </div>
+        </div>
+
+        <Link href={`/products/${product.id}`} className="group/link">
+          <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-2 line-clamp-2 group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-pink-600 group-hover/link:to-purple-600 transition-all duration-300 leading-tight cursor-pointer min-h-[2.5rem] sm:min-h-[3rem]">
             {product.name}
           </h3>
         </Link>
 
-        <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-3 leading-relaxed min-h-[3rem] sm:min-h-[3.75rem]">
+        <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed min-h-[2.5rem]">
           {product.description}
         </p>
 
-        <div className="flex items-start justify-between mb-3 gap-2">
-          <div className="flex flex-col min-w-0 flex-1">
-            <span className="font-bold text-base sm:text-lg text-gray-900 truncate">
-              {formatCurrency(product.price)}
-            </span>
-            <div className="min-h-[1.25rem]">
+        {/* Price section with better visual hierarchy */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-3">
+              <span className="font-bold text-xl text-gray-900">
+                {formatCurrency(product.price)}
+              </span>
               {product.originalPrice && (
-                <span className="text-xs sm:text-sm text-gray-500 line-through truncate">
+                <span className="text-sm text-gray-500 line-through">
                   {formatCurrency(product.originalPrice)}
                 </span>
               )}
             </div>
+            {product.originalPrice && (
+              <span className="text-xs text-green-600 font-medium">
+                Hemat {Math.round((1 - product.price / product.originalPrice) * 100)}%
+              </span>
+            )}
           </div>
+        </div>
 
-          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full whitespace-nowrap">
-            {product.category}
-          </span>
+        {/* Trust indicators */}
+        <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+          <div className="flex items-center">
+            <svg className="w-3 h-3 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+            </svg>
+            <span>Gratis Ongkir</span>
+          </div>
+          <div className="flex items-center">
+            <svg className="w-3 h-3 text-blue-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"/>
+            </svg>
+            <span>Garansi 30hr</span>
+          </div>
         </div>
 
         <div className="mt-auto space-y-3">
