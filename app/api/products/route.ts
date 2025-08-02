@@ -5,6 +5,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const limit = searchParams.get('limit')
+    const offset = searchParams.get('offset')
     const category = searchParams.get('category')
     const search = searchParams.get('search')
     const featured = searchParams.get('featured')
@@ -58,6 +59,11 @@ export async function GET(request: NextRequest) {
     // Add limit if specified
     if (limit && !isNaN(parseInt(limit))) {
       queryOptions.take = parseInt(limit)
+    }
+
+    // Add offset if specified
+    if (offset && !isNaN(parseInt(offset))) {
+      queryOptions.skip = parseInt(offset)
     }
 
     // Filter by category (combine with existing where conditions)
