@@ -43,9 +43,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<Pa
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: Params }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<Params> }) {
   try {
-    const id = parseInt(params.id)
+    const { id: paramId } = await params
+    const id = parseInt(paramId)
     
     if (isNaN(id)) {
       return NextResponse.json(
