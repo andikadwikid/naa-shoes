@@ -43,10 +43,49 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Build where conditions properly to avoid circular references
+    const whereConditions: any = {
+      isActive: true // Only show active products to public
+    }
+
+    // Array to collect all conditions that need to be combined with AND
+    const andConditions: any[] = []
+
+    // Filter by category
+    if (category && category !== 'All') {
+      whereConditions.category = {
+        name: category
+      }
+    }
+
+    // Filter by search
+    if (search) {
+      andConditions.push({
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+          { category: { name: { contains: search, mode: 'insensitive' } } }
+        ]
+      })
+    }
+
+    // Filter for featured products
+    if (featured === 'true') {
+      andConditions.push({
+        OR: [
+          { isNew: true },
+          { isOnSale: true }
+        ]
+      })
+    }
+
+    // Combine all conditions
+    if (andConditions.length > 0) {
+      whereConditions.AND = andConditions
+    }
+
     const queryOptions: any = {
-      where: {
-        isActive: true // Only show active products to public
-      },
+      where: whereConditions,
       orderBy: { [orderBy]: order },
       include: {
         category: true,
@@ -64,41 +103,6 @@ export async function GET(request: NextRequest) {
     // Add offset if specified
     if (offset && !isNaN(parseInt(offset))) {
       queryOptions.skip = parseInt(offset)
-    }
-
-    // Filter by category (combine with existing where conditions)
-    if (category && category !== 'All') {
-      queryOptions.where = {
-        ...queryOptions.where,
-        category: {
-          name: category
-        }
-      }
-    }
-
-    // Filter by search
-    if (search) {
-      queryOptions.where.AND = [
-        queryOptions.where,
-        {
-          OR: [
-            { name: { contains: search, mode: 'insensitive' } },
-            { description: { contains: search, mode: 'insensitive' } },
-            { category: { name: { contains: search, mode: 'insensitive' } } }
-          ]
-        }
-      ]
-    }
-
-    // Filter for featured products
-    if (featured === 'true') {
-      queryOptions.where = {
-        ...queryOptions.where,
-        OR: [
-          { isNew: true },
-          { isOnSale: true }
-        ]
-      }
     }
 
     const products = await prisma.product.findMany(queryOptions)
