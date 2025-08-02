@@ -545,6 +545,7 @@ async function main() {
 
   console.log('Database seeded successfully!')
   console.log('Categories:', categories.length)
+  console.log('Brands:', brands.length)
   console.log('Colors:', colors.length)
   console.log('Sizes:', sizes.length)
   console.log('Admin created:', admin.email)
