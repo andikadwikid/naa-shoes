@@ -35,18 +35,20 @@ export default function DashboardStats() {
           throw new Error('Failed to load dashboard data')
         }
 
-        const [products, categories, colors, sizes] = await Promise.all([
+        const [productsData, categories, colors, sizes] = await Promise.all([
           productsRes.json(),
           categoriesRes.json(),
           colorsRes.json(),
           sizesRes.json()
         ])
 
+        // Handle new paginated response format for products
+        const products = productsData.data || []
         const activeProducts = products.filter((p: any) => p.isActive).length
         const inactiveProducts = products.length - activeProducts
 
         setStats({
-          totalProducts: products.length,
+          totalProducts: productsData.pagination?.totalItems || products.length,
           totalCategories: categories.length,
           totalColors: colors.length,
           totalSizes: sizes.length,
