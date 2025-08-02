@@ -393,6 +393,7 @@ async function main() {
       originalPrice: 1050000,
       isOnSale: true,
       category: 'high-heels',
+      brand: 'zara',
       colors: ['Pink', 'Rose Gold'],
       image: 'https://images.unsplash.com/photo-1506629905851-d6633b4417b1?w=400&h=400&fit=crop'
     },
@@ -404,6 +405,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'sneakers',
+      brand: 'nike',
       colors: ['Black', 'White'],
       image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400&h=400&fit=crop'
     },
@@ -415,6 +417,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'flats',
+      brand: 'mango',
       colors: ['Nude', 'Brown'],
       image: 'https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=400&h=400&fit=crop'
     },
