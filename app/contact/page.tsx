@@ -1,20 +1,6 @@
-import { Metadata } from 'next'
-import { useState } from 'react'
+'use client'
 
-export const metadata: Metadata = {
-  title: "Contact NAA Shoes - Customer Service & Support | Get Help",
-  description: "Contact NAA Shoes for customer support, product inquiries, orders, and general questions. We're here to help with your women's footwear needs. Multiple contact options available.",
-  keywords: ["contact NAA Shoes", "customer service", "support", "help", "shoe store contact", "customer care"],
-  openGraph: {
-    title: "Contact NAA Shoes - Customer Service & Support",
-    description: "Get in touch with NAA Shoes customer service team for support and assistance",
-    url: "https://naashoes.com/contact",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://naashoes.com/contact",
-  },
-}
+import { useState } from 'react'
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -47,8 +33,6 @@ const structuredData = {
     }
   }
 }
-
-'use client'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
