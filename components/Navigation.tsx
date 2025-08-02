@@ -51,32 +51,35 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Enhanced Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8" role="menubar">
-              <Link 
-                href="/" 
-                className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
+            <div className="ml-10 flex items-center space-x-1" role="menubar">
+              <Link
+                href="/"
+                className="group relative px-4 py-2 text-gray-700 hover:text-pink-600 font-medium text-sm transition-all duration-300 rounded-lg hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                 role="menuitem"
                 aria-label="Go to homepage"
               >
-                Home
+                <span className="relative z-10">Home</span>
+                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
               </Link>
-              <Link 
-                href="/products" 
-                className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
+              <Link
+                href="/products"
+                className="group relative px-4 py-2 text-gray-700 hover:text-pink-600 font-medium text-sm transition-all duration-300 rounded-lg hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                 role="menuitem"
                 aria-label="Browse our shoe collection"
               >
-                Products
+                <span className="relative z-10">Koleksi</span>
+                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
               </Link>
-              <Link 
-                href="/blog" 
-                className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
+              <Link
+                href="/blog"
+                className="group relative px-4 py-2 text-gray-700 hover:text-pink-600 font-medium text-sm transition-all duration-300 rounded-lg hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                 role="menuitem"
                 aria-label="Read our fashion blog"
               >
-                Blog
+                <span className="relative z-10">Blog</span>
+                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
               </Link>
               <Link 
                 href="/about" 
