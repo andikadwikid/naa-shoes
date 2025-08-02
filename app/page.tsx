@@ -121,6 +121,93 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Blog Posts Section */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+              Fashion Tips & Trends
+            </h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Dapatkan insight terbaru seputar fashion, tips perawatan sepatu, dan tren terkini
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
+            {[
+              {
+                title: "Tren Sepatu Wanita 2024: Gaya yang Tak Lekang Oleh Waktu",
+                excerpt: "Temukan tren sepatu wanita terbaru di tahun 2024 yang menggabungkan kenyamanan dan gaya.",
+                image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=300&fit=crop",
+                category: "Fashion Trends",
+                readTime: "5 min",
+                slug: "tren-sepatu-wanita-2024"
+              },
+              {
+                title: "Cara Merawat Sepatu Kulit Agar Tahan Lama",
+                excerpt: "Tips dan trik merawat sepatu kulit kesayangan agar tetap awet dan terlihat seperti baru.",
+                image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=300&fit=crop",
+                category: "Care Tips",
+                readTime: "7 min",
+                slug: "cara-merawat-sepatu-kulit"
+              },
+              {
+                title: "Sepatu Ramah Lingkungan: Trend Sustainable Fashion",
+                excerpt: "Mengenal trend sepatu ramah lingkungan dan cara memilih footwear yang mendukung sustainability.",
+                image: "https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=400&h=300&fit=crop",
+                category: "Sustainability",
+                readTime: "7 min",
+                slug: "sepatu-ramah-lingkungan-sustainable-fashion"
+              }
+            ].map((post, index) => (
+              <article key={index} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <Link href={`/blog/${post.slug}`} className="block">
+                  <div className="relative h-48">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="mb-3">
+                      <span className="text-pink-600 font-medium text-sm uppercase tracking-wide">
+                        {post.category}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight line-clamp-2 hover:text-pink-600 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between text-sm text-gray-500">
+                      <span>{post.readTime} read</span>
+                      <span className="text-pink-600 font-medium hover:text-pink-700">
+                        Read More →
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link
+              href="/blog"
+              className="inline-flex items-center bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
+            >
+              Lihat Semua Artikel
+              <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-pink-600 text-white">
         <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 text-center">
