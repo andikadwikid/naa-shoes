@@ -289,13 +289,13 @@ function getOrder(sortBy?: string): string {
 // Get products by category
 export const getProductsByCategory = async (category: string): Promise<any[]> => {
   try {
-    const response = await fetch('/api/admin/products')
+    const response = await fetch('/api/products')
     if (!response.ok) {
       throw new Error('Failed to fetch products')
     }
-    
+
     const apiProducts: APIProduct[] = await response.json()
-    let filteredProducts = apiProducts.filter(product => product.isActive)
+    let filteredProducts = apiProducts
     
     if (category !== 'All') {
       filteredProducts = filteredProducts.filter(product => 
@@ -313,14 +313,14 @@ export const getProductsByCategory = async (category: string): Promise<any[]> =>
 // Search products
 export const searchProducts = async (query: string): Promise<any[]> => {
   try {
-    const response = await fetch('/api/admin/products')
+    const response = await fetch('/api/products')
     if (!response.ok) {
       throw new Error('Failed to fetch products')
     }
-    
+
     const apiProducts: APIProduct[] = await response.json()
     const lowercaseQuery = query.toLowerCase()
-    
+
     const filteredProducts = apiProducts
       .filter(product => 
         product.name.toLowerCase().includes(lowercaseQuery) ||
