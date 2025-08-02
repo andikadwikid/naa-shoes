@@ -59,7 +59,7 @@ export default function ProductForm({ product }: ProductFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const router = useRouter()
 
-  // Load master data
+  // Load master data and existing product data
   useEffect(() => {
     const loadMasterData = async () => {
       try {
@@ -73,7 +73,7 @@ export default function ProductForm({ product }: ProductFormProps) {
           const categoriesData = await categoriesRes.json()
           setCategories(categoriesData)
         }
-        
+
         if (colorsRes.ok) {
           const colorsData = await colorsRes.json()
           setColors(colorsData)
@@ -88,8 +88,35 @@ export default function ProductForm({ product }: ProductFormProps) {
       }
     }
 
+    const loadExistingProductData = async () => {
+      if (product?.id) {
+        try {
+          const response = await fetch(`/api/admin/products/${product.id}`)
+          if (response.ok) {
+            const productData = await response.json()
+
+            // Set existing colors
+            if (productData.colors) {
+              setSelectedColors(productData.colors.map((pc: any) => pc.colorId))
+            }
+
+            // Set existing sizes with stock
+            if (productData.sizes) {
+              setSelectedSizes(productData.sizes.map((ps: any) => ({
+                sizeId: ps.sizeId,
+                stock: ps.stock
+              })))
+            }
+          }
+        } catch (error) {
+          console.error('Error loading existing product data:', error)
+        }
+      }
+    }
+
     loadMasterData()
-  }, [])
+    loadExistingProductData()
+  }, [product?.id])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
