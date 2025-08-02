@@ -359,44 +359,75 @@ export default function Home() {
         <main id="main-content" role="main">
 
           {/* Featured Products Section */}
-          <section 
-            className="py-12 sm:py-16 lg:py-20 bg-white" 
+          <section
+            className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden"
             aria-labelledby="featured-products-heading"
             role="region"
           >
-            <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-              <header className="text-center mb-8 sm:mb-12">
-                <h2 id="featured-products-heading" className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                  Featured Products
+            {/* Background Decoration */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-pink-100 to-purple-100 rounded-full transform translate-x-32 -translate-y-32 opacity-50"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-rose-100 to-pink-100 rounded-full transform -translate-x-32 translate-y-32 opacity-50"></div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+              <header className="text-center mb-16">
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-pink-100 to-purple-100 rounded-full text-sm font-medium text-pink-800 mb-6">
+                  <span className="w-2 h-2 bg-pink-500 rounded-full mr-2 animate-pulse"></span>
+                  Koleksi Terpopuler
+                </div>
+                <h2 id="featured-products-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                  Sepatu <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">Impian</span> Anda
                 </h2>
-                <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                  Pilihan terbaik dari koleksi terbaru kami yang sedang trending
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+                  Setiap langkah adalah pernyataan gaya. Temukan sepatu yang tidak hanya memukau mata,
+                  tetapi juga memberikan kenyamanan luar biasa untuk aktivitas sehari-hari Anda.
                 </p>
+
+                {/* Trust indicators for this section */}
+                <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+                  <div className="flex items-center">
+                    <svg className="w-4 h-4 text-pink-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    Bahan Premium
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-4 h-4 text-pink-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    Desain Eksklusif
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-4 h-4 text-pink-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    Comfort Technology
+                  </div>
+                </div>
               </header>
-              
-              <div 
-                className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8" 
+
+              <div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
                 role="list"
                 aria-label="Featured products"
               >
                 {featuredProducts.map((product) => (
-                  <div key={product.id} role="listitem">
+                  <div key={product.id} role="listitem" className="group">
                     <ProductCard product={product} />
                   </div>
                 ))}
               </div>
-              
-              <footer className="text-center mt-8 sm:mt-12">
+
+              <footer className="text-center mt-16">
                 <Link
                   href="/products"
-                  className="inline-flex items-center bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                  className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold rounded-2xl hover:from-pink-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                   aria-label="View our complete collection of women's shoes"
                 >
-                  View All Products
-                  <svg 
-                    className="ml-2 w-5 h-5" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <span>Lihat Semua Koleksi</span>
+                  <svg
+                    className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
                     viewBox="0 0 24 24" 
                     aria-hidden="true"
                     focusable="false"
