@@ -22,6 +22,11 @@ interface Size {
   value: number
 }
 
+interface Brand {
+  id: number
+  name: string
+}
+
 interface ProductFormProps {
   product?: {
     id: number
@@ -30,6 +35,7 @@ interface ProductFormProps {
     price: number
     originalPrice?: number | null
     categoryId: number
+    brandId?: number | null
     isNew: boolean
     isOnSale: boolean
     isActive: boolean
