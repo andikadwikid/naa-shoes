@@ -41,49 +41,49 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
           className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
         {product.isNew && (
-          <span className="absolute top-2 left-2 bg-pink-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+          <span className="absolute top-2 left-2 bg-pink-500 text-white text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">
             NEW
           </span>
         )}
         {product.isOnSale && (
-          <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+          <span className="absolute top-2 right-2 bg-red-500 text-white text-xs sm:text-sm font-semibold px-2 py-1 rounded-full">
             SALE
           </span>
         )}
       </div>
-      
-      <div className="p-4">
-        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors">
+
+      <div className="p-3 sm:p-4">
+        <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors leading-tight">
           {product.name}
         </h3>
-        
-        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+
+        <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed">
           {product.description}
         </p>
 
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex flex-col">
-            <span className="font-bold text-lg text-gray-900">
+        <div className="flex items-start justify-between mb-3 gap-2">
+          <div className="flex flex-col min-w-0 flex-1">
+            <span className="font-bold text-base sm:text-lg text-gray-900 truncate">
               {formatPrice(product.price)}
             </span>
             {product.originalPrice && (
-              <span className="text-sm text-gray-500 line-through">
+              <span className="text-xs sm:text-sm text-gray-500 line-through truncate">
                 {formatPrice(product.originalPrice)}
               </span>
             )}
           </div>
-          
-          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+
+          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full whitespace-nowrap">
             {product.category}
           </span>
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex space-x-1">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex space-x-1 flex-1 min-w-0">
             {product.colors.slice(0, 3).map((color, index) => (
               <div
                 key={index}
-                className="w-4 h-4 rounded-full border border-gray-300"
+                className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-gray-300 flex-shrink-0"
                 style={{
                   backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
                                    color.toLowerCase() === 'black' ? '#000000' :
@@ -97,13 +97,13 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
               />
             ))}
             {product.colors.length > 3 && (
-              <span className="text-xs text-gray-500">+{product.colors.length - 3}</span>
+              <span className="text-xs text-gray-500 whitespace-nowrap">+{product.colors.length - 3}</span>
             )}
           </div>
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-pink-600 hover:bg-pink-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200"
+            className="bg-pink-600 hover:bg-pink-700 active:bg-pink-800 text-white text-xs sm:text-sm font-medium px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-colors duration-200 whitespace-nowrap touch-manipulation"
           >
             Add to Cart
           </button>
