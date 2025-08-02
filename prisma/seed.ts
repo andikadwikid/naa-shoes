@@ -333,6 +333,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'high-heels',
+      brand: 'pedro',
       colors: ['Rose Gold', 'Gold'],
       image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&h=400&fit=crop'
     },
@@ -344,6 +345,7 @@ async function main() {
       originalPrice: 480000,
       isOnSale: true,
       category: 'sneakers',
+      brand: 'converse',
       colors: ['White', 'Silver'],
       image: 'https://images.unsplash.com/photo-1588484628369-dd7a85bfdc38?w=400&h=400&fit=crop'
     },
@@ -355,6 +357,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'flats',
+      brand: 'zara',
       colors: ['Black', 'Brown'],
       image: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&h=400&fit=crop'
     },
@@ -366,6 +369,7 @@ async function main() {
       originalPrice: 1200000,
       isOnSale: true,
       category: 'boots',
+      brand: 'nike',
       colors: ['Brown', 'Black'],
       image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=400&h=400&fit=crop'
     },
@@ -377,6 +381,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'sandals',
+      brand: 'charles-keith',
       colors: ['Gold', 'Silver'],
       image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop'
     },
