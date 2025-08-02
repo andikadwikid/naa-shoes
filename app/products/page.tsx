@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import ProductCard from '../../components/ProductCard'
 import Pagination from '../../components/Pagination'
 import { getPaginatedProducts, getCategories } from '../../services/api-products'
@@ -64,6 +64,7 @@ const breadcrumbSchema = {
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [sortBy, setSortBy] = useState('name')
   const [currentPage, setCurrentPage] = useState(1)
@@ -73,6 +74,15 @@ export default function ProductsPage() {
   const [categories, setCategories] = useState<string[]>(['All'])
 
   const itemsPerPage = 12
+
+  // Debounce search term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [searchTerm])
 
   // Load categories on mount
   useEffect(() => {
@@ -101,7 +111,7 @@ export default function ProductsPage() {
           page: currentPage,
           limit: itemsPerPage,
           category: selectedCategory,
-          search: searchTerm,
+          search: debouncedSearchTerm,
           sortBy
         })
         setPaginatedData(response)
@@ -113,14 +123,14 @@ export default function ProductsPage() {
     }
 
     fetchProducts()
-  }, [currentPage, selectedCategory, searchTerm, sortBy])
+  }, [currentPage, selectedCategory, debouncedSearchTerm, sortBy])
 
   // Reset to page 1 when filters change
   useEffect(() => {
     if (currentPage !== 1) {
       setCurrentPage(1)
     }
-  }, [selectedCategory, searchTerm, sortBy])
+  }, [selectedCategory, debouncedSearchTerm, sortBy])
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
@@ -130,6 +140,7 @@ export default function ProductsPage() {
 
   const handleClearFilters = () => {
     setSearchTerm('')
+    setDebouncedSearchTerm('')
     setSelectedCategory('All')
     setCurrentPage(1)
   }
@@ -242,11 +253,11 @@ export default function ProductsPage() {
                   Showing {((pagination.currentPage - 1) * pagination.limit) + 1}-{Math.min(pagination.currentPage * pagination.limit, pagination.totalItems)} of {pagination.totalItems} products
                 </p>
               )}
-              {(searchTerm || selectedCategory !== 'All') && (
+              {(debouncedSearchTerm || selectedCategory !== 'All') && (
                 <p className="text-xs sm:text-sm">
-                  {searchTerm && (
+                  {debouncedSearchTerm && (
                     <span>
-                      for "<span className="font-semibold text-pink-600">{searchTerm}</span>"
+                      for "<span className="font-semibold text-pink-600">{debouncedSearchTerm}</span>"
                     </span>
                   )}
                   {selectedCategory !== 'All' && (
@@ -260,7 +271,7 @@ export default function ProductsPage() {
             </div>
 
             {/* Clear Filters */}
-            {(searchTerm || selectedCategory !== 'All') && (
+            {(debouncedSearchTerm || selectedCategory !== 'All') && (
               <button
                 onClick={handleClearFilters}
                 className="self-start sm:self-auto text-pink-600 hover:text-pink-700 text-sm font-medium py-2 px-3 rounded-lg hover:bg-pink-50 transition-colors touch-manipulation"
