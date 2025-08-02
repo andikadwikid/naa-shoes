@@ -74,23 +74,15 @@ export default function ProductForm({ product }: ProductFormProps) {
           setCategories(categoriesData)
         }
         
-        // For now, we'll create dummy data since we haven't created colors/sizes APIs yet
-        setColors([
-          { id: 1, name: 'Black', hexCode: '#000000' },
-          { id: 2, name: 'White', hexCode: '#FFFFFF' },
-          { id: 3, name: 'Pink', hexCode: '#EC4899' },
-          { id: 4, name: 'Brown', hexCode: '#92400E' }
-        ])
-        
-        setSizes([
-          { id: 1, value: 36 },
-          { id: 2, value: 37 },
-          { id: 3, value: 38 },
-          { id: 4, value: 39 },
-          { id: 5, value: 40 },
-          { id: 6, value: 41 },
-          { id: 7, value: 42 }
-        ])
+        if (colorsRes.ok) {
+          const colorsData = await colorsRes.json()
+          setColors(colorsData)
+        }
+
+        if (sizesRes.ok) {
+          const sizesData = await sizesRes.json()
+          setSizes(sizesData)
+        }
       } catch (error) {
         console.error('Error loading master data:', error)
       }
