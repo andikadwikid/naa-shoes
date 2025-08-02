@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
       orderBy: { [orderBy]: order },
       include: {
         category: true,
-        images: true,
+        galleryImages: { orderBy: { displayOrder: 'asc' } },
         colors: { include: { color: true } },
         sizes: { include: { size: true } }
       }

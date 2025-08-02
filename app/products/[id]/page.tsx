@@ -87,12 +87,12 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     }
   }
 
-  // Mock product images (in real app, product would have multiple images)
-  const productImages = product ? [
-    product.image,
-    product.image, // Duplicate for demo
-    product.image,
-  ] : []
+  // Get product gallery images with fallback
+  const productImages = product ? (
+    product.galleryImages && product.galleryImages.length > 0
+      ? product.galleryImages.map(img => img.url)
+      : [product.thumbnailUrl || product.image || '/placeholder-product.svg']
+  ) : []
 
   if (isLoading) {
     return (
@@ -115,7 +115,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
     "@context": "https://schema.org/",
     "@type": "Product",
     "name": product.name,
-    "image": product.image,
+    "image": product.thumbnailUrl || product.image || product.galleryImages?.[0]?.url || '/placeholder-product.svg',
     "description": product.description,
     "sku": `NAA-${product.id}`,
     "mpn": `NAA-${product.id}`,
@@ -235,7 +235,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                 >
                   <Image
                     src={image}
-                    alt={`${product.name} view ${index + 1}`}
+                    alt={product.galleryImages?.[index]?.altText || `${product.name} view ${index + 1}`}
                     fill
                     className="object-cover"
                   />

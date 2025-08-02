@@ -13,6 +13,7 @@ interface Product {
   description: string
   price: number
   originalPrice?: number
+  thumbnailUrl?: string
   isOnSale: boolean
   isNew: boolean
   isActive: boolean
@@ -25,11 +26,12 @@ interface Product {
     name: string
     slug: string
   }
-  images: Array<{
+  galleryImages: Array<{
     id: number
     url: string
     altText: string
-    isPrimary: boolean
+    caption?: string
+    displayOrder: number
   }>
   colors: Array<{
     id: number
@@ -400,9 +402,9 @@ export default function AdminProductsList() {
                     <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                       {/* Product Image */}
                       <div className="relative aspect-square">
-                        {product.images[0] ? (
+                        {product.thumbnailUrl || product.galleryImages[0] ? (
                           <Image
-                            src={product.images[0].url}
+                            src={product.thumbnailUrl || product.galleryImages[0].url}
                             alt={product.name}
                             fill
                             className="object-cover"
@@ -524,10 +526,10 @@ export default function AdminProductsList() {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="flex-shrink-0 h-12 w-12">
-                                {product.images[0] ? (
+                                {product.thumbnailUrl || product.galleryImages[0] ? (
                                   <Image
                                     className="h-12 w-12 rounded-lg object-cover"
-                                    src={product.images[0].url}
+                                    src={product.thumbnailUrl || product.galleryImages[0].url}
                                     alt={product.name}
                                     width={48}
                                     height={48}

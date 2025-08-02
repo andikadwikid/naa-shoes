@@ -526,6 +526,19 @@ async function main() {
       brandId = randomBrand.id
     }
 
+    // Generate gallery images with different variations
+    const generateGalleryImages = (baseImage: string, productName: string) => {
+      const galleryVariations = [
+        { url: baseImage, caption: `Main view of ${productName}`, displayOrder: 0 },
+        { url: baseImage.replace('crop', 'crop&bg=f8f9fa'), caption: `Alternative view of ${productName}`, displayOrder: 1 },
+        { url: baseImage.replace('crop', 'crop&bg=gray'), caption: `Side view of ${productName}`, displayOrder: 2 }
+      ]
+
+      return galleryVariations.slice(0, Math.floor(Math.random() * 3) + 1) // 1-3 images randomly
+    }
+
+    const galleryImagesData = generateGalleryImages(productData.image, productData.name)
+
     await prisma.product.create({
       data: {
         name: productData.name,
@@ -533,18 +546,17 @@ async function main() {
         description: productData.description,
         price: productData.price,
         originalPrice: productData.originalPrice,
+        thumbnailUrl: productData.image,
         isOnSale: productData.isOnSale,
         categoryId: category.id,
         brandId: brandId,
-        images: {
-          create: [
-            {
-              url: productData.image,
-              altText: productData.name,
-              isPrimary: true,
-              order: 1
-            }
-          ]
+        galleryImages: {
+          create: galleryImagesData.map(img => ({
+            url: img.url,
+            altText: productData.name,
+            caption: img.caption,
+            displayOrder: img.displayOrder
+          }))
         },
         colors: {
           create: productColors.map(colorId => ({ colorId }))

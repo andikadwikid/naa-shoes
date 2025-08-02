@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    unoptimized: true, // For development with local uploads
   },
   // Fix for development cross-origin requests
   allowedDevOrigins: [

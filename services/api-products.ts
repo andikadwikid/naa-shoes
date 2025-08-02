@@ -5,6 +5,7 @@ export interface APIProduct {
   description?: string | null
   price: number
   originalPrice?: number | null
+  thumbnailUrl?: string | null
   categoryId: number
   isNew: boolean
   isOnSale: boolean
@@ -18,12 +19,12 @@ export interface APIProduct {
     name: string
     slug: string
   }
-  images: {
+  galleryImages: {
     id: number
     url: string
     altText?: string | null
-    isPrimary: boolean
-    order: number
+    caption?: string | null
+    displayOrder: number
   }[]
   colors: {
     colorId: number
@@ -81,13 +82,15 @@ function convertAPIProductToProduct(apiProduct: APIProduct) {
     description: apiProduct.description || '',
     price: apiProduct.price,
     originalPrice: apiProduct.originalPrice,
-    image: apiProduct.images.find(img => img.isPrimary)?.url || apiProduct.images[0]?.url || '/placeholder-product.jpg',
+    thumbnailUrl: apiProduct.thumbnailUrl,
+    image: apiProduct.thumbnailUrl || apiProduct.galleryImages?.[0]?.url || '/placeholder-product.svg', // Keep for backward compatibility
     category: apiProduct.category.name,
     colors: apiProduct.colors.map(c => c.color.name),
     sizes: apiProduct.sizes.map(s => s.size.value).sort((a, b) => a - b),
     isNew: apiProduct.isNew,
     isOnSale: apiProduct.isOnSale,
-    isActive: apiProduct.isActive
+    isActive: apiProduct.isActive,
+    galleryImages: apiProduct.galleryImages
   }
 }
 

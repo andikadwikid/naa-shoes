@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<Pa
       include: {
         category: true,
         brand: true,
-        images: true,
+        galleryImages: { orderBy: { displayOrder: 'asc' } },
         colors: { include: { color: true } },
         sizes: { include: { size: true } }
       }
@@ -71,7 +71,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       material,
       weight,
       colors,
-      sizes
+      sizes,
+      thumbnailUrl,
+      galleryImages
     } = body
 
     // Check if product exists
@@ -117,6 +119,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       ...(originalPrice !== undefined && { originalPrice: originalPrice ? parseFloat(originalPrice) : null }),
       ...(categoryId && { categoryId: parseInt(categoryId) }),
       ...(brandId !== undefined && { brandId: brandId ? parseInt(brandId) : null }),
+      ...(thumbnailUrl !== undefined && { thumbnailUrl }),
       ...(isNew !== undefined && { isNew }),
       ...(isOnSale !== undefined && { isOnSale }),
       ...(isActive !== undefined && { isActive }),
@@ -130,7 +133,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       include: {
         category: true,
         brand: true,
-        images: true,
+        galleryImages: { orderBy: { displayOrder: 'asc' } },
         colors: { include: { color: true } },
         sizes: { include: { size: true } }
       }
@@ -168,6 +171,27 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
             productId: id,
             sizeId: size.sizeId,
             stock: size.stock || 0
+          }))
+        })
+      }
+    }
+
+    // Handle gallery images update if provided
+    if (galleryImages && Array.isArray(galleryImages)) {
+      // Delete existing gallery images
+      await prisma.productImage.deleteMany({
+        where: { productId: id }
+      })
+
+      // Add new gallery images
+      if (galleryImages.length > 0) {
+        await prisma.productImage.createMany({
+          data: galleryImages.map((img: any, index: number) => ({
+            productId: id,
+            url: img.url,
+            altText: img.altText || name || existingProduct.name,
+            caption: img.caption || null,
+            displayOrder: index
           }))
         })
       }

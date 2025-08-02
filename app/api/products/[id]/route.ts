@@ -23,7 +23,7 @@ export async function GET(
       },
       include: {
         category: true,
-        images: true,
+        galleryImages: { orderBy: { displayOrder: 'asc' } },
         colors: { include: { color: true } },
         sizes: { include: { size: true } }
       }

@@ -3,47 +3,50 @@
 
 generator client {
   provider = "prisma-client-js"
+  // output   = "../app/generated/prisma"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  // provider = "sqlite"
+  // url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // Master Data Models
 model Category {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  slug        String    @unique
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slug        String   @unique
   description String?
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  
-  products    Product[]
-  
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products Product[]
+
   @@map("categories")
 }
 
 model Color {
-  id        Int             @id @default(autoincrement())
-  name      String          @unique
-  hexCode   String?         // For display purposes
-  isActive  Boolean         @default(true)
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  hexCode   String? // For display purposes
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   productColors ProductColor[]
-  
+
   @@map("colors")
 }
 
 model Size {
-  id        Int           @id @default(autoincrement())
-  value     Int           @unique // Size number (36, 37, 38, etc.)
-  isActive  Boolean       @default(true)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id        Int      @id @default(autoincrement())
+  value     Int      @unique // Size number (36, 37, 38, etc.)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   productSizes ProductSize[]
 
@@ -51,17 +54,17 @@ model Size {
 }
 
 model Brand {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  slug        String    @unique
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slug        String   @unique
   description String?
-  logo        String?   // URL to brand logo
-  website     String?   // Brand website URL
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  logo        String? // URL to brand logo
+  website     String? // Brand website URL
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  products    Product[]
+  products Product[]
 
   @@map("brands")
 }
@@ -74,23 +77,24 @@ model Product {
   description   String?
   price         Float
   originalPrice Float?
+  thumbnailUrl  String? // Main product thumbnail for quick display
   isNew         Boolean  @default(false)
   isOnSale      Boolean  @default(false)
   isActive      Boolean  @default(true)
   weight        Float? // in grams
-  dimensions    String?  // JSON string for length, width, height
+  dimensions    String? // JSON string for length, width, height
   material      String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   // Relations
-  categoryId    Int
-  category      Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
 
-  brandId       Int?
-  brand         Brand? @relation(fields: [brandId], references: [id])
+  brandId Int?
+  brand   Brand? @relation(fields: [brandId], references: [id])
 
-  images        ProductImage[]
+  galleryImages ProductImage[] @relation("ProductGallery")
   colors        ProductColor[]
   sizes         ProductSize[]
   reviews       Review[]
@@ -100,42 +104,42 @@ model Product {
 }
 
 model ProductImage {
-  id        Int      @id @default(autoincrement())
-  url       String
-  altText   String?
-  isPrimary Boolean  @default(false)
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  
+  id          Int      @id @default(autoincrement())
+  url         String
+  altText     String?
+  caption     String? // Optional caption for gallery display
+  displayOrder Int     @default(0) // Order in gallery
+  createdAt   DateTime @default(now())
+
   productId Int
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, name: "ProductGallery")
+
   @@map("product_images")
 }
 
 model ProductColor {
-  id        Int     @id @default(autoincrement())
-  
+  id Int @id @default(autoincrement())
+
   productId Int
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  
-  colorId   Int
-  color     Color   @relation(fields: [colorId], references: [id])
-  
+
+  colorId Int
+  color   Color @relation(fields: [colorId], references: [id])
+
   @@unique([productId, colorId])
   @@map("product_colors")
 }
 
 model ProductSize {
-  id        Int     @id @default(autoincrement())
-  stock     Int     @default(0)
-  
+  id    Int @id @default(autoincrement())
+  stock Int @default(0)
+
   productId Int
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  
-  sizeId    Int
-  size      Size    @relation(fields: [sizeId], references: [id])
-  
+
+  sizeId Int
+  size   Size @relation(fields: [sizeId], references: [id])
+
   @@unique([productId, sizeId])
   @@map("product_sizes")
 }
@@ -148,76 +152,76 @@ model Customer {
   phone     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  orders    Order[]
-  reviews   Review[]
-  
+
+  orders  Order[]
+  reviews Review[]
+
   @@map("customers")
 }
 
 model Order {
-  id            Int         @id @default(autoincrement())
-  orderNumber   String      @unique
-  status        OrderStatus @default(PENDING)
-  totalAmount   Float
-  shippingCost  Float       @default(0)
-  notes         String?
+  id              Int         @id @default(autoincrement())
+  orderNumber     String      @unique
+  status          OrderStatus @default(PENDING)
+  totalAmount     Float
+  shippingCost    Float       @default(0)
+  notes           String?
   shippingAddress String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
-  customerId    Int
-  customer      Customer @relation(fields: [customerId], references: [id])
-  
-  orderItems    OrderItem[]
-  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  orderItems OrderItem[]
+
   @@map("orders")
 }
 
 model OrderItem {
-  id        Int     @id @default(autoincrement())
-  quantity  Int
-  price     Float
-  size      Int
-  color     String
-  
-  orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  
+  id       Int    @id @default(autoincrement())
+  quantity Int
+  price    Float
+  size     Int
+  color    String
+
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
   productId Int
   product   Product @relation(fields: [productId], references: [id])
-  
+
   @@map("order_items")
 }
 
 // Review System
 model Review {
-  id        Int      @id @default(autoincrement())
-  rating    Int      // 1-5 stars
-  comment   String?
-  isApproved Boolean @default(false)
-  createdAt DateTime @default(now())
-  
-  productId  Int
-  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  
+  id         Int      @id @default(autoincrement())
+  rating     Int // 1-5 stars
+  comment    String?
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
   customerId Int
   customer   Customer @relation(fields: [customerId], references: [id])
-  
+
   @@map("reviews")
 }
 
 // Admin Models
 model Admin {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   name      String
-  password  String   // Should be hashed
+  password  String // Should be hashed
   role      AdminRole @default(ADMIN)
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
   @@map("admins")
 }
 

@@ -27,7 +27,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
       <Link href={`/products/${product.id}`} className="block relative">
         <div className="relative aspect-square overflow-hidden">
           <Image
-            src={product.image}
+            src={product.thumbnailUrl || product.image || product.galleryImages?.[0]?.url || '/placeholder-product.svg'}
             alt={product.name}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -161,7 +161,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
                 <div className="flex space-x-3 sm:space-x-4 mb-6">
                   <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0">
                     <Image
-                      src={product.image}
+                      src={product.thumbnailUrl || product.image || product.galleryImages?.[0]?.url || '/placeholder-product.svg'}
                       alt={product.name}
                       fill
                       className="object-cover rounded-lg"

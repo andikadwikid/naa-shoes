@@ -2,11 +2,13 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { useCart } from '../hooks/useCart'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
   const { getItemCount } = useCart()
 
   const handleMenuToggle = () => {
@@ -15,6 +17,13 @@ export default function Navigation() {
 
   const handleMenuClose = () => {
     setIsMenuOpen(false)
+  }
+
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(path)
   }
 
   useEffect(() => {
@@ -32,7 +41,7 @@ export default function Navigation() {
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="group flex items-center py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg"
+              className="group flex items-center py-2 focus:outline-none rounded-lg"
               aria-label="NAA Shoes - Go to homepage"
             >
               <div className="flex items-center space-x-2">
@@ -56,56 +65,98 @@ export default function Navigation() {
             <div className="ml-10 flex items-center space-x-1" role="menubar">
               <Link
                 href="/"
-                className="group relative px-4 py-2 text-gray-700 hover:text-pink-600 font-medium text-sm transition-all duration-300 rounded-lg hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                className={`group relative px-4 py-2 font-medium text-sm transition-all duration-300 rounded-lg focus:outline-none ${
+                  isActive('/')
+                    ? 'text-pink-600 bg-pink-50'
+                    : 'text-gray-700 hover:text-pink-600 hover:bg-pink-50'
+                }`}
                 role="menuitem"
                 aria-label="Go to homepage"
+                aria-current={isActive('/') ? 'page' : undefined}
               >
                 <span className="relative z-10">Home</span>
-                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
+                <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 transition-transform duration-300 rounded-full ${
+                  isActive('/') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></div>
               </Link>
               <Link
                 href="/products"
-                className="group relative px-4 py-2 text-gray-700 hover:text-pink-600 font-medium text-sm transition-all duration-300 rounded-lg hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                className={`group relative px-4 py-2 font-medium text-sm transition-all duration-300 rounded-lg focus:outline-none ${
+                  isActive('/products')
+                    ? 'text-pink-600 bg-pink-50'
+                    : 'text-gray-700 hover:text-pink-600 hover:bg-pink-50'
+                }`}
                 role="menuitem"
                 aria-label="Browse our shoe collection"
+                aria-current={isActive('/products') ? 'page' : undefined}
               >
                 <span className="relative z-10">Koleksi</span>
-                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
+                <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 transition-transform duration-300 rounded-full ${
+                  isActive('/products') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></div>
               </Link>
               <Link
                 href="/blog"
-                className="group relative px-4 py-2 text-gray-700 hover:text-pink-600 font-medium text-sm transition-all duration-300 rounded-lg hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                className={`group relative px-4 py-2 font-medium text-sm transition-all duration-300 rounded-lg focus:outline-none ${
+                  isActive('/blog')
+                    ? 'text-pink-600 bg-pink-50'
+                    : 'text-gray-700 hover:text-pink-600 hover:bg-pink-50'
+                }`}
                 role="menuitem"
                 aria-label="Read our fashion blog"
+                aria-current={isActive('/blog') ? 'page' : undefined}
               >
                 <span className="relative z-10">Blog</span>
-                <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
+                <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 transition-transform duration-300 rounded-full ${
+                  isActive('/blog') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></div>
               </Link>
-              <Link 
-                href="/about" 
-                className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
+              <Link
+                href="/about"
+                className={`group relative px-4 py-2 font-medium text-sm transition-all duration-300 rounded-lg focus:outline-none ${
+                  isActive('/about')
+                    ? 'text-pink-600 bg-pink-50'
+                    : 'text-gray-700 hover:text-pink-600 hover:bg-pink-50'
+                }`}
                 role="menuitem"
                 aria-label="Learn about our company"
+                aria-current={isActive('/about') ? 'page' : undefined}
               >
-                About
+                <span className="relative z-10">About</span>
+                <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 transition-transform duration-300 rounded-full ${
+                  isActive('/about') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></div>
               </Link>
-              <Link 
-                href="/contact" 
-                className="text-gray-900 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
+              <Link
+                href="/contact"
+                className={`group relative px-4 py-2 font-medium text-sm transition-all duration-300 rounded-lg focus:outline-none ${
+                  isActive('/contact')
+                    ? 'text-pink-600 bg-pink-50'
+                    : 'text-gray-700 hover:text-pink-600 hover:bg-pink-50'
+                }`}
                 role="menuitem"
                 aria-label="Contact customer service"
+                aria-current={isActive('/contact') ? 'page' : undefined}
               >
-                Contact
+                <span className="relative z-10">Contact</span>
+                <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-pink-600 to-purple-600 transition-transform duration-300 rounded-full ${
+                  isActive('/contact') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></div>
               </Link>
             </div>
           </div>
 
           {/* Desktop Shopping Cart */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link 
-              href="/cart" 
-              className="relative text-gray-600 hover:text-pink-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded p-1"
+            <Link
+              href="/cart"
+              className={`relative transition-colors duration-200 focus:outline-none rounded p-1 ${
+                isActive('/cart')
+                  ? 'text-pink-600'
+                  : 'text-gray-600 hover:text-pink-600'
+              }`}
               aria-label={`Shopping cart with ${cartItemCount} item${cartItemCount !== 1 ? 's' : ''}`}
+              aria-current={isActive('/cart') ? 'page' : undefined}
             >
               <svg 
                 className="w-6 h-6" 
@@ -133,10 +184,15 @@ export default function Navigation() {
           <div className="md:hidden flex items-center space-x-2">
             
             {/* Mobile Cart Icon */}
-            <Link 
-              href="/cart" 
-              className="relative p-2 text-gray-600 hover:text-pink-600 transition-colors duration-200 touch-manipulation focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
+            <Link
+              href="/cart"
+              className={`relative p-2 transition-colors duration-200 touch-manipulation focus:outline-none rounded ${
+                isActive('/cart')
+                  ? 'text-pink-600'
+                  : 'text-gray-600 hover:text-pink-600'
+              }`}
               aria-label={`Shopping cart with ${cartItemCount} item${cartItemCount !== 1 ? 's' : ''}`}
+              aria-current={isActive('/cart') ? 'page' : undefined}
             >
               <svg 
                 className="w-6 h-6" 
@@ -162,7 +218,7 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={handleMenuToggle}
-              className="p-2 text-gray-600 hover:text-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg touch-manipulation"
+              className="p-2 text-gray-600 hover:text-pink-600 focus:outline-none rounded-lg touch-manipulation"
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -195,48 +251,73 @@ export default function Navigation() {
           aria-label="Mobile navigation menu"
         >
           <div className="px-3 py-3 space-y-1">
-            <Link 
-              href="/" 
-              className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+            <Link
+              href="/"
+              className={`block text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none px-4 py-3 ${
+                isActive('/')
+                  ? 'text-pink-600 bg-pink-50 border-l-4 border-pink-600'
+                  : 'text-gray-900 hover:text-pink-600 hover:bg-pink-50'
+              }`}
               onClick={handleMenuClose}
               role="menuitem"
               aria-label="Go to homepage"
+              aria-current={isActive('/') ? 'page' : undefined}
             >
               Home
             </Link>
-            <Link 
-              href="/products" 
-              className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+            <Link
+              href="/products"
+              className={`block text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none px-4 py-3 ${
+                isActive('/products')
+                  ? 'text-pink-600 bg-pink-50 border-l-4 border-pink-600'
+                  : 'text-gray-900 hover:text-pink-600 hover:bg-pink-50'
+              }`}
               onClick={handleMenuClose}
               role="menuitem"
               aria-label="Browse our shoe collection"
+              aria-current={isActive('/products') ? 'page' : undefined}
             >
               Products
             </Link>
-            <Link 
-              href="/blog" 
-              className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+            <Link
+              href="/blog"
+              className={`block text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none px-4 py-3 ${
+                isActive('/blog')
+                  ? 'text-pink-600 bg-pink-50 border-l-4 border-pink-600'
+                  : 'text-gray-900 hover:text-pink-600 hover:bg-pink-50'
+              }`}
               onClick={handleMenuClose}
               role="menuitem"
               aria-label="Read our fashion blog"
+              aria-current={isActive('/blog') ? 'page' : undefined}
             >
               Blog
             </Link>
-            <Link 
-              href="/about" 
-              className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+            <Link
+              href="/about"
+              className={`block text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none px-4 py-3 ${
+                isActive('/about')
+                  ? 'text-pink-600 bg-pink-50 border-l-4 border-pink-600'
+                  : 'text-gray-900 hover:text-pink-600 hover:bg-pink-50'
+              }`}
               onClick={handleMenuClose}
               role="menuitem"
               aria-label="Learn about our company"
+              aria-current={isActive('/about') ? 'page' : undefined}
             >
               About
             </Link>
-            <Link 
-              href="/contact" 
-              className="block text-gray-900 hover:text-pink-600 hover:bg-pink-50 px-4 py-3 text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+            <Link
+              href="/contact"
+              className={`block text-base font-medium rounded-lg transition-colors touch-manipulation focus:outline-none px-4 py-3 ${
+                isActive('/contact')
+                  ? 'text-pink-600 bg-pink-50 border-l-4 border-pink-600'
+                  : 'text-gray-900 hover:text-pink-600 hover:bg-pink-50'
+              }`}
               onClick={handleMenuClose}
               role="menuitem"
               aria-label="Contact customer service"
+              aria-current={isActive('/contact') ? 'page' : undefined}
             >
               Contact
             </Link>

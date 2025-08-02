@@ -3,13 +3,21 @@ export interface Product {
   name: string
   price: number
   originalPrice?: number
-  image: string
+  thumbnailUrl?: string | null
+  image?: string // Keep for backward compatibility
   category: string
   description: string
   colors: string[]
   sizes: number[]
   isNew?: boolean
   isOnSale?: boolean
+  galleryImages?: Array<{
+    id: number
+    url: string
+    altText?: string
+    caption?: string
+    displayOrder: number
+  }>
 }
 
 export interface CartItem {

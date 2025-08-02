@@ -90,8 +90,8 @@ export async function GET(request: NextRequest) {
       include: {
         category: true,
         brand: true,
-        images: {
-          where: { isPrimary: true },
+        galleryImages: {
+          orderBy: { displayOrder: 'asc' },
           take: 1
         },
         colors: { include: { color: true } },
@@ -133,9 +133,11 @@ export async function POST(request: NextRequest) {
       brandId,
       colors,
       sizes,
-      images,
+      thumbnailUrl,
+      galleryImages,
       isNew,
       isOnSale,
+      isActive,
       material,
       weight
     } = body
@@ -173,16 +175,18 @@ export async function POST(request: NextRequest) {
         originalPrice: originalPrice ? parseFloat(originalPrice) : null,
         categoryId: parseInt(categoryId),
         brandId: brandId ? parseInt(brandId) : null,
+        thumbnailUrl: thumbnailUrl || null,
         isNew: isNew || false,
         isOnSale: isOnSale || false,
+        isActive: isActive ?? true,
         material,
         weight: weight ? parseFloat(weight) : null,
-        images: images ? {
-          create: images.map((img: any, index: number) => ({
+        galleryImages: galleryImages ? {
+          create: galleryImages.map((img: any, index: number) => ({
             url: img.url,
             altText: img.altText || name,
-            isPrimary: index === 0,
-            order: index
+            caption: img.caption || null,
+            displayOrder: index
           }))
         } : undefined,
         colors: colors ? {
@@ -199,7 +203,7 @@ export async function POST(request: NextRequest) {
       },
       include: {
         category: true,
-        images: true,
+        galleryImages: { orderBy: { displayOrder: 'asc' } },
         colors: { include: { color: true } },
         sizes: { include: { size: true } }
       }

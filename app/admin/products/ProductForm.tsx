@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorAlert from '../components/ErrorAlert'
+import ThumbnailUpload from '../components/ThumbnailUpload'
+import GalleryUpload from '../components/GalleryUpload'
 
 interface Category {
   id: number
@@ -27,6 +29,16 @@ interface Brand {
   name: string
 }
 
+interface GalleryImage {
+  url: string
+  filename: string
+  originalName: string
+  size: number
+  type: string
+  altText?: string
+  caption?: string
+}
+
 interface ProductFormProps {
   product?: {
     id: number
@@ -34,6 +46,7 @@ interface ProductFormProps {
     description?: string | null
     price: number
     originalPrice?: number | null
+    thumbnailUrl?: string | null
     categoryId: number
     brandId?: number | null
     isNew: boolean
@@ -65,6 +78,8 @@ export default function ProductForm({ product }: ProductFormProps) {
   const [sizes, setSizes] = useState<Size[]>([])
   const [selectedColors, setSelectedColors] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<{sizeId: number, stock: number}[]>([])
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(product?.thumbnailUrl || null)
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -120,6 +135,25 @@ export default function ProductForm({ product }: ProductFormProps) {
                 stock: ps.stock
               })))
             }
+
+            // Set existing thumbnail
+            if (productData.thumbnailUrl) {
+              setThumbnailUrl(productData.thumbnailUrl)
+            }
+
+            // Set existing gallery images
+            if (productData.galleryImages) {
+              const existingGallery = productData.galleryImages.map((img: any) => ({
+                url: img.url,
+                filename: img.url.split('/').pop() || '',
+                originalName: img.altText || 'Gallery image',
+                size: 0,
+                type: 'image/jpeg',
+                altText: img.altText,
+                caption: img.caption
+              }))
+              setGalleryImages(existingGallery)
+            }
           }
         }
       } catch (error) {
@@ -152,8 +186,14 @@ export default function ProductForm({ product }: ProductFormProps) {
         categoryId: parseInt(formData.categoryId),
         brandId: formData.brandId ? parseInt(formData.brandId) : null,
         weight: formData.weight ? parseFloat(formData.weight) : null,
+        thumbnailUrl,
         colors: selectedColors,
-        sizes: selectedSizes
+        sizes: selectedSizes,
+        galleryImages: galleryImages.map(img => ({
+          url: img.url,
+          altText: img.altText || formData.name,
+          caption: img.caption || null
+        }))
       }
 
       const response = await fetch(url, {
@@ -376,6 +416,25 @@ export default function ProductForm({ product }: ProductFormProps) {
           onChange={handleChange}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
           placeholder="e.g., Leather, Canvas, Synthetic"
+        />
+      </div>
+
+      {/* Product Thumbnail */}
+      <div>
+        <ThumbnailUpload
+          thumbnailUrl={thumbnailUrl}
+          onChange={setThumbnailUrl}
+          productName={formData.name}
+        />
+      </div>
+
+      {/* Product Gallery */}
+      <div>
+        <GalleryUpload
+          images={galleryImages}
+          onChange={setGalleryImages}
+          maxImages={8}
+          productName={formData.name}
         />
       </div>
 

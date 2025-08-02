@@ -10,10 +10,11 @@ interface Product {
   id: number
   name: string
   price: number
+  thumbnailUrl?: string | null
   category: {
     name: string
   }
-  images: {
+  galleryImages: {
     url: string
     altText: string
   }[]
@@ -85,10 +86,10 @@ export default function RecentProducts() {
             {products.map((product) => (
               <div key={product.id} className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gray-200 rounded-lg flex-shrink-0 relative">
-                  {product.images[0] ? (
+                  {product.thumbnailUrl || (product.galleryImages && product.galleryImages[0]) ? (
                     <Image
-                      src={product.images[0].url}
-                      alt={product.images[0].altText || product.name}
+                      src={product.thumbnailUrl || product.galleryImages[0].url}
+                      alt={product.galleryImages?.[0]?.altText || product.name}
                       fill
                       className="object-cover rounded-lg"
                     />
