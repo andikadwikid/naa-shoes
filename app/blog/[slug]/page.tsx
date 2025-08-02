@@ -152,7 +152,7 @@ export default function BlogDetailPage({ params }: BlogDetailPageProps) {
             {/* Content */}
             <div className="bg-white rounded-xl shadow-sm p-6 sm:p-8 lg:p-10 mb-8">
               <div
-                className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-h2:text-2xl prose-h3:text-xl prose-p:text-black prose-p:leading-relaxed prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-black prose-ul:text-black prose-li:text-black"
+                className="text-black prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-h2:text-2xl prose-h3:text-xl prose-p:text-black prose-p:leading-relaxed prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-black prose-ul:text-black prose-li:text-black"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </div>
