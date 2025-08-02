@@ -16,9 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NAA Shoes - Toko Sepatu Wanita Terpercaya | Sneakers, Heels, Boots",
+  title: {
+    default: "NAA Shoes - Toko Sepatu Wanita Terpercaya | Sneakers, Heels, Boots",
+    template: "%s | NAA Shoes"
+  },
   description: "Koleksi sepatu wanita berkualitas tinggi dengan design modern dan trendy. Sneakers, high heels, boots, flats, dan sandals untuk wanita aktif usia 21-40 tahun. Gratis ongkir & garansi kualitas.",
-  keywords: ["sepatu wanita", "sneakers wanita", "high heels", "boots", "sepatu online", "fashion wanita", "footwear"],
+  keywords: ["sepatu wanita", "sneakers wanita", "high heels", "boots", "sepatu online", "fashion wanita", "footwear", "blog fashion", "tips sepatu"],
   authors: [{ name: "NAA Shoes" }],
   creator: "NAA Shoes",
   publisher: "NAA Shoes",
