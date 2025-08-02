@@ -1,22 +1,12 @@
-import { Metadata } from "next"
+'use client'
+
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import ProductCard from "../components/ProductCard"
 import { getFeaturedProducts } from "../services/api-products"
 
-export const metadata: Metadata = {
-  title: "NAA Shoes - Sepatu Wanita Terbaru | Sneakers, Heels, Boots Online",
-  description: "Toko online sepatu wanita terpercaya dengan koleksi terlengkap. Sneakers, high heels, boots, flats berkualitas tinggi. Gratis ongkir, harga terjangkau, fashion wanita modern.",
-  openGraph: {
-    title: "NAA Shoes - Sepatu Wanita Terbaru",
-    description: "Koleksi sepatu wanita terlengkap dengan kualitas terbaik",
-    url: "https://naashoes.com",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://naashoes.com",
-  },
-}
+// Metadata will be handled by layout.tsx for client components
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -65,6 +55,24 @@ const structuredData = {
 }
 
 export default function Home() {
+  const [featuredProducts, setFeaturedProducts] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const loadFeaturedProducts = async () => {
+      setIsLoading(true)
+      try {
+        const products = await getFeaturedProducts()
+        setFeaturedProducts(products)
+      } catch (error) {
+        console.error('Error loading featured products:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadFeaturedProducts()
+  }, [])
   return (
     <>
       <script
@@ -405,17 +413,33 @@ export default function Home() {
                 </div>
               </header>
 
-              <div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
-                role="list"
-                aria-label="Featured products"
-              >
-                {featuredProducts.map((product) => (
-                  <div key={product.id} role="listitem" className="group">
-                    <ProductCard product={product} />
+              {isLoading ? (
+                <div className="text-center py-12">
+                  <div className="inline-flex items-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-8 w-8 text-pink-600" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span className="text-gray-600">Loading featured products...</span>
                   </div>
-                ))}
-              </div>
+                </div>
+              ) : featuredProducts.length > 0 ? (
+                <div
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
+                  role="list"
+                  aria-label="Featured products"
+                >
+                  {featuredProducts.map((product) => (
+                    <div key={product.id} role="listitem" className="group">
+                      <ProductCard product={product} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-gray-600">No featured products available at the moment.</p>
+                </div>
+              )}
 
               <footer className="text-center mt-16">
                 <Link
