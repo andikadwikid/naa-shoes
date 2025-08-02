@@ -1,37 +1,65 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import ProductCard from '../../components/ProductCard'
-import { products, categories } from '../../services/products'
+import Pagination from '../../components/Pagination'
+import { getPaginatedProducts, categories, type PaginatedResponse } from '../../services/products'
+import { Product } from '../../types/product'
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [sortBy, setSortBy] = useState('name')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [paginatedData, setPaginatedData] = useState<PaginatedResponse<Product> | null>(null)
 
-  const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products.filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           product.description.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory
-      
-      return matchesSearch && matchesCategory
-    })
+  const itemsPerPage = 12
 
-    // Sort products
-    return filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low':
-          return a.price - b.price
-        case 'price-high':
-          return b.price - a.price
-        case 'name':
-          return a.name.localeCompare(b.name)
-        default:
-          return 0
+  // Fetch products when filters change
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true)
+      try {
+        const response = await getPaginatedProducts({
+          page: currentPage,
+          limit: itemsPerPage,
+          category: selectedCategory,
+          search: searchTerm,
+          sortBy
+        })
+        setPaginatedData(response)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+      } finally {
+        setLoading(false)
       }
-    })
-  }, [searchTerm, selectedCategory, sortBy])
+    }
+
+    fetchProducts()
+  }, [currentPage, selectedCategory, searchTerm, sortBy])
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    if (currentPage !== 1) {
+      setCurrentPage(1)
+    }
+  }, [selectedCategory, searchTerm, sortBy])
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    // Smooth scroll to top of products section
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleClearFilters = () => {
+    setSearchTerm('')
+    setSelectedCategory('All')
+    setCurrentPage(1)
+  }
+
+  const products = paginatedData?.data || []
+  const pagination = paginatedData?.pagination
 
   return (
     <div className="min-h-screen bg-gray-50 py-4 sm:py-6 lg:py-8">
@@ -102,6 +130,7 @@ export default function ProductsPage() {
                 <option value="name">Name (A-Z)</option>
                 <option value="price-low">Price (Low to High)</option>
                 <option value="price-high">Price (High to Low)</option>
+                <option value="newest">Newest First</option>
               </select>
             </div>
           </div>
@@ -110,9 +139,11 @@ export default function ProductsPage() {
         {/* Results Summary */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
           <div className="text-sm sm:text-base text-gray-600">
-            <p className="mb-1 sm:mb-0">
-              Showing {filteredAndSortedProducts.length} of {products.length} products
-            </p>
+            {pagination && (
+              <p className="mb-1 sm:mb-0">
+                Showing {((pagination.currentPage - 1) * pagination.limit) + 1}-{Math.min(pagination.currentPage * pagination.limit, pagination.totalItems)} of {pagination.totalItems} products
+              </p>
+            )}
             {(searchTerm || selectedCategory !== 'All') && (
               <p className="text-xs sm:text-sm">
                 {searchTerm && (
@@ -133,10 +164,7 @@ export default function ProductsPage() {
           {/* Clear Filters */}
           {(searchTerm || selectedCategory !== 'All') && (
             <button
-              onClick={() => {
-                setSearchTerm('')
-                setSelectedCategory('All')
-              }}
+              onClick={handleClearFilters}
               className="self-start sm:self-auto text-pink-600 hover:text-pink-700 text-sm font-medium py-2 px-3 rounded-lg hover:bg-pink-50 transition-colors touch-manipulation"
             >
               Clear Filters
@@ -144,14 +172,50 @@ export default function ProductsPage() {
           )}
         </div>
 
-        {/* Products Grid */}
-        {filteredAndSortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {filteredAndSortedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <div className="inline-flex items-center">
+              <svg className="animate-spin -ml-1 mr-3 h-8 w-8 text-pink-600" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span className="text-gray-600">Loading products...</span>
+            </div>
           </div>
-        ) : (
+        )}
+
+        {/* Products Grid */}
+        {!loading && products.length > 0 && (
+          <>
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {pagination && pagination.totalPages > 1 && (
+              <div className="mt-12">
+                <Pagination
+                  currentPage={pagination.currentPage}
+                  totalPages={pagination.totalPages}
+                  onPageChange={handlePageChange}
+                />
+                
+                {/* Page Info */}
+                <div className="text-center mt-4">
+                  <p className="text-sm text-gray-600">
+                    Page {pagination.currentPage} of {pagination.totalPages}
+                  </p>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* No Results */}
+        {!loading && products.length === 0 && (
           <div className="text-center py-12">
             <div className="max-w-md mx-auto">
               <svg className="mx-auto h-24 w-24 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,24 +226,12 @@ export default function ProductsPage() {
                 Try adjusting your search terms or filters to find what you're looking for.
               </p>
               <button
-                onClick={() => {
-                  setSearchTerm('')
-                  setSelectedCategory('All')
-                }}
+                onClick={handleClearFilters}
                 className="bg-pink-600 hover:bg-pink-700 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200"
               >
                 Clear All Filters
               </button>
             </div>
-          </div>
-        )}
-
-        {/* Load More (future feature) */}
-        {filteredAndSortedProducts.length > 0 && (
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-4">
-              Showing all {filteredAndSortedProducts.length} products
-            </p>
           </div>
         )}
       </div>
