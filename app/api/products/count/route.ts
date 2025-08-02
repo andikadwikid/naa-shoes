@@ -8,9 +8,13 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search')
     const featured = searchParams.get('featured')
 
+    // Build where conditions properly to avoid circular references
     const whereConditions: any = {
       isActive: true
     }
+
+    // Array to collect all conditions that need to be combined with AND
+    const andConditions: any[] = []
 
     // Filter by category
     if (category && category !== 'All') {
@@ -21,24 +25,28 @@ export async function GET(request: NextRequest) {
 
     // Filter by search
     if (search) {
-      whereConditions.AND = [
-        whereConditions,
-        {
-          OR: [
-            { name: { contains: search, mode: 'insensitive' } },
-            { description: { contains: search, mode: 'insensitive' } },
-            { category: { name: { contains: search, mode: 'insensitive' } } }
-          ]
-        }
-      ]
+      andConditions.push({
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+          { category: { name: { contains: search, mode: 'insensitive' } } }
+        ]
+      })
     }
 
     // Filter for featured products
     if (featured === 'true') {
-      whereConditions.OR = [
-        { isNew: true },
-        { isOnSale: true }
-      ]
+      andConditions.push({
+        OR: [
+          { isNew: true },
+          { isOnSale: true }
+        ]
+      })
+    }
+
+    // Combine all conditions
+    if (andConditions.length > 0) {
+      whereConditions.AND = andConditions
     }
 
     const count = await prisma.product.count({
