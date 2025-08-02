@@ -262,6 +262,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'sandals',
+      brand: 'hm',
       colors: ['Pink', 'White'],
       image: 'https://images.unsplash.com/photo-1594618378082-0e69b9c0bf27?w=400&h=400&fit=crop'
     },
