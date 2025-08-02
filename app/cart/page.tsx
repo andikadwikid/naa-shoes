@@ -4,17 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '../../hooks/useCart'
 import { generateWhatsAppLink, getWhatsAppConfig } from '../../lib/whatsapp'
+import { formatCurrency } from '../../lib/utils'
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart()
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(price)
-  }
 
   const handleQuantityChange = (productId: number, size: number, color: string, newQuantity: number) => {
     if (newQuantity >= 1) {
@@ -22,38 +15,16 @@ export default function CartPage() {
     }
   }
 
-  const generateWhatsAppLink = () => {
-    // Generate pesan berdasarkan cart items
-    let message = `${WHATSAPP_CONFIG.messageTemplate.greeting} ${WHATSAPP_CONFIG.storeName}:\n\n`
-
-    // Detail produk
-    message += `📦 *DETAIL PESANAN:*\n`
-    state.items.forEach((item, index) => {
-      message += `\n${index + 1}. *${item.product.name}*\n`
-      message += `   👟 Size: ${item.selectedSize}\n`
-      message += `   🎨 Color: ${item.selectedColor}\n`
-      message += `   📦 Qty: ${item.quantity}\n`
-      message += `   💰 ${formatPrice(item.product.price)} x ${item.quantity} = *${formatPrice(item.product.price * item.quantity)}*\n`
-    })
-
-    // Summary
-    message += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n`
-    message += `📋 *RINGKASAN:*\n`
-    message += `Total Items: ${state.totalItems}\n`
-    message += `💸 *Total Price: ${formatPrice(getTotalPrice())}*\n\n`
-    message += `${WHATSAPP_CONFIG.messageTemplate.closing}`
-
-    // Encode message untuk URL
-    const encodedMessage = encodeURIComponent(message)
-
-    // Generate WhatsApp link
-    return `https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodedMessage}`
-  }
-
   const handleCheckout = () => {
     if (state.items.length === 0) return
 
-    const whatsappLink = generateWhatsAppLink()
+    const config = getWhatsAppConfig()
+    const whatsappLink = generateWhatsAppLink(
+      state.items,
+      state.totalItems,
+      getTotalPrice(),
+      config
+    )
     window.open(whatsappLink, '_blank')
   }
 
@@ -136,7 +107,7 @@ export default function CartPage() {
                           Size: {item.selectedSize} | Color: {item.selectedColor}
                         </p>
                         <p className="text-lg font-bold text-pink-600">
-                          {formatPrice(item.product.price)}
+                          {formatCurrency(item.product.price)}
                         </p>
                       </div>
 
@@ -193,7 +164,7 @@ export default function CartPage() {
                       {/* Item Total */}
                       <div className="text-right">
                         <p className="text-lg font-bold text-gray-900">
-                          {formatPrice(item.product.price * item.quantity)}
+                          {formatCurrency(item.product.price * item.quantity)}
                         </p>
                       </div>
                     </div>
@@ -226,7 +197,7 @@ export default function CartPage() {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal ({state.totalItems} items)</span>
-                  <span className="font-medium">{formatPrice(getTotalPrice())}</span>
+                  <span className="font-medium">{formatCurrency(getTotalPrice())}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
@@ -235,7 +206,7 @@ export default function CartPage() {
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span className="text-pink-600">{formatPrice(getTotalPrice())}</span>
+                    <span className="text-pink-600">{formatCurrency(getTotalPrice())}</span>
                   </div>
                 </div>
               </div>
