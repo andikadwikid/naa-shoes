@@ -37,7 +37,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
       </div>
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <ProductForm 
+        <ProductForm
           product={{
             id: product.id,
             name: product.name,
@@ -45,6 +45,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
             price: product.price,
             originalPrice: product.originalPrice,
             categoryId: product.categoryId,
+            brandId: product.brandId,
             isNew: product.isNew,
             isOnSale: product.isOnSale,
             isActive: product.isActive,
