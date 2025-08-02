@@ -285,6 +285,7 @@ async function main() {
       originalPrice: 750000,
       isOnSale: true,
       category: 'sneakers',
+      brand: 'adidas',
       colors: ['Black', 'White'],
       image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400&h=400&fit=crop'
     },
@@ -296,6 +297,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'flats',
+      brand: 'charles-keith',
       colors: ['Nude', 'Brown'],
       image: 'https://images.unsplash.com/photo-1502391709512-fde5963d88a5?w=400&h=400&fit=crop'
     },
@@ -307,6 +309,7 @@ async function main() {
       originalPrice: null,
       isOnSale: false,
       category: 'boots',
+      brand: 'mango',
       colors: ['Brown', 'Black'],
       image: 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=400&h=400&fit=crop'
     },
@@ -318,6 +321,7 @@ async function main() {
       originalPrice: 320000,
       isOnSale: true,
       category: 'sandals',
+      brand: 'hm',
       colors: ['Silver', 'Gold'],
       image: 'https://images.unsplash.com/photo-1564969993608-b8b0e5b0e0e6?w=400&h=400&fit=crop'
     },
