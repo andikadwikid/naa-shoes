@@ -319,7 +319,7 @@ export default function AdminProductsList() {
         </div>
       )}
 
-      {/* Products Grid */}
+      {/* Products Display */}
       {!loading && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           {products.length === 0 ? (
@@ -356,91 +356,205 @@ export default function AdminProductsList() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
-                {products.map((product) => (
-                  <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {/* Product Image */}
-                    <div className="relative aspect-square">
-                      {product.images[0] ? (
-                        <Image
-                          src={product.images[0].url}
-                          alt={product.name}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      )}
-                      
-                      {/* Status Badges */}
-                      <div className="absolute top-2 left-2 right-2 flex justify-between">
-                        <div className="flex gap-1">
-                          {product.isNew && (
-                            <span className="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                              NEW
-                            </span>
-                          )}
-                          {product.isOnSale && (
-                            <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                              SALE
-                            </span>
-                          )}
-                        </div>
-                        <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                          product.isActive 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {product.isActive ? 'Active' : 'Inactive'}
-                        </span>
-                      </div>
-                    </div>
+              {/* Grid View */}
+              {viewMode === 'grid' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+                  {products.map((product) => (
+                    <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                      {/* Product Image */}
+                      <div className="relative aspect-square">
+                        {product.images[0] ? (
+                          <Image
+                            src={product.images[0].url}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                        )}
 
-                    {/* Product Info */}
-                    <div className="p-4">
-                      <div className="mb-2">
-                        <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1">
-                          {product.name}
-                        </h3>
-                        <p className="text-sm text-gray-500">{product.category.name}</p>
-                      </div>
-
-                      <div className="mb-3">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-lg text-gray-900">
-                            Rp {product.price.toLocaleString('id-ID')}
+                        {/* Status Badges */}
+                        <div className="absolute top-2 left-2 right-2 flex justify-between">
+                          <div className="flex gap-1">
+                            {product.isNew && (
+                              <span className="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                                NEW
+                              </span>
+                            )}
+                            {product.isOnSale && (
+                              <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                                SALE
+                              </span>
+                            )}
+                          </div>
+                          <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                            product.isActive
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-red-100 text-red-800'
+                          }`}>
+                            {product.isActive ? 'Active' : 'Inactive'}
                           </span>
-                          {product.originalPrice && (
-                            <span className="text-sm text-gray-500 line-through">
-                              Rp {product.originalPrice.toLocaleString('id-ID')}
-                            </span>
-                          )}
                         </div>
                       </div>
 
-                      {/* Stock Info */}
-                      <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                        <span>
-                          {product.colors.length} color{product.colors.length !== 1 ? 's' : ''}
-                        </span>
-                        <span>
-                          {product.sizes.length} size{product.sizes.length !== 1 ? 's' : ''}
-                        </span>
-                        <span>
-                          Stock: {product.sizes.reduce((total, size) => total + size.stock, 0)}
-                        </span>
-                      </div>
+                      {/* Product Info */}
+                      <div className="p-4">
+                        <div className="mb-2">
+                          <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1">
+                            {product.name}
+                          </h3>
+                          <p className="text-sm text-gray-500">{product.category.name}</p>
+                        </div>
 
-                      {/* Actions */}
-                      <ProductActions product={product} />
+                        <div className="mb-3">
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-lg text-gray-900">
+                              Rp {product.price.toLocaleString('id-ID')}
+                            </span>
+                            {product.originalPrice && (
+                              <span className="text-sm text-gray-500 line-through">
+                                Rp {product.originalPrice.toLocaleString('id-ID')}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Stock Info */}
+                        <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+                          <span>
+                            {product.colors.length} color{product.colors.length !== 1 ? 's' : ''}
+                          </span>
+                          <span>
+                            {product.sizes.length} size{product.sizes.length !== 1 ? 's' : ''}
+                          </span>
+                          <span>
+                            Stock: {product.sizes.reduce((total, size) => total + size.stock, 0)}
+                          </span>
+                        </div>
+
+                        {/* Actions */}
+                        <ProductActions product={product} />
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Table View */}
+              {viewMode === 'table' && (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Product
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Category
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Price
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Stock
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {products.map((product) => (
+                        <tr key={product.id} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <div className="flex-shrink-0 h-12 w-12">
+                                {product.images[0] ? (
+                                  <Image
+                                    className="h-12 w-12 rounded-lg object-cover"
+                                    src={product.images[0].url}
+                                    alt={product.name}
+                                    width={48}
+                                    height={48}
+                                  />
+                                ) : (
+                                  <div className="h-12 w-12 bg-gray-200 rounded-lg flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900 max-w-xs truncate">
+                                  {product.name}
+                                </div>
+                                <div className="flex gap-1 mt-1">
+                                  {product.isNew && (
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                      NEW
+                                    </span>
+                                  )}
+                                  {product.isOnSale && (
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                                      SALE
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {product.category.name}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <div>
+                              <div className="font-medium">
+                                Rp {product.price.toLocaleString('id-ID')}
+                              </div>
+                              {product.originalPrice && (
+                                <div className="text-xs text-gray-500 line-through">
+                                  Rp {product.originalPrice.toLocaleString('id-ID')}
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <div>
+                              <div className="font-medium">
+                                {product.sizes.reduce((total, size) => total + size.stock, 0)} units
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {product.colors.length} colors, {product.sizes.length} sizes
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                              product.isActive
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-red-100 text-red-800'
+                            }`}>
+                              {product.isActive ? 'Active' : 'Inactive'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <ProductActions product={product} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
 
               {/* Pagination */}
               {pagination && pagination.totalPages > 1 && (
@@ -450,7 +564,7 @@ export default function AdminProductsList() {
                     totalPages={pagination.totalPages}
                     onPageChange={handlePageChange}
                   />
-                  
+
                   {/* Page Info */}
                   <div className="text-center mt-4">
                     <p className="text-sm text-gray-600">
