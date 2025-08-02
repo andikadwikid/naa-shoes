@@ -123,7 +123,7 @@ const productsData: Product[] = [
     id: 11,
     name: "Crystal Platform Heels",
     price: 1450000,
-    image: "https://images.unsplash.com/photo-1596702953748-d63ffa6467eb?w=400&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop",
     category: "High Heels",
     description: "Platform heels dengan detail crystal yang mewah untuk acara spesial.",
     colors: ["Silver", "Gold", "Clear"],
