@@ -445,7 +445,14 @@ export default function AdminProductsList() {
                           <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1">
                             {product.name}
                           </h3>
-                          <p className="text-sm text-gray-500">{product.category.name}</p>
+                          <div className="flex items-center justify-between text-sm text-gray-500">
+                            <span>{product.category.name}</span>
+                            {product.brand && (
+                              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                                {product.brand.name}
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                         <div className="mb-3">
