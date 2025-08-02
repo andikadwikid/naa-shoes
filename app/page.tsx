@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import ProductCard from "../components/ProductCard"
-import { featuredProducts } from "../services/products"
+import { getFeaturedProducts } from "../services/api-products"
 
 export const metadata: Metadata = {
   title: "NAA Shoes - Sepatu Wanita Terbaru | Sneakers, Heels, Boots Online",
