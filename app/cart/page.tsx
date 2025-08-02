@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCart } from '../context/CartContext'
-import { WHATSAPP_CONFIG } from '../config/whatsapp'
+import { useCart } from '../../hooks/useCart'
+import { generateWhatsAppLink, getWhatsAppConfig } from '../../lib/whatsapp'
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart()

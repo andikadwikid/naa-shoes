@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import ProductCard from "./components/ProductCard"
-import { featuredProducts } from "./data/products"
+import ProductCard from "../components/ProductCard"
+import { featuredProducts } from "../services/products"
 
 export default function Home() {
   return (
