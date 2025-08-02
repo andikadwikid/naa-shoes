@@ -172,6 +172,7 @@ export async function POST(request: NextRequest) {
         price: parseFloat(price),
         originalPrice: originalPrice ? parseFloat(originalPrice) : null,
         categoryId: parseInt(categoryId),
+        brandId: brandId ? parseInt(brandId) : null,
         isNew: isNew || false,
         isOnSale: isOnSale || false,
         material,
