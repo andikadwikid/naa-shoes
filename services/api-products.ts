@@ -94,14 +94,12 @@ function convertAPIProductToProduct(apiProduct: APIProduct) {
 // Get all categories from API
 export const getCategories = async (): Promise<string[]> => {
   try {
-    const response = await fetch('/api/admin/categories')
+    const response = await fetch('/api/categories')
     if (!response.ok) {
       throw new Error('Failed to fetch categories')
     }
     const categories: Category[] = await response.json()
-    const categoryNames = categories
-      .filter(cat => cat.isActive)
-      .map(cat => cat.name)
+    const categoryNames = categories.map(cat => cat.name)
     return ['All', ...categoryNames]
   } catch (error) {
     console.error('Error fetching categories:', error)
@@ -113,14 +111,12 @@ export const getCategories = async (): Promise<string[]> => {
 // Get products from API
 export const getProducts = async (): Promise<any[]> => {
   try {
-    const response = await fetch('/api/admin/products')
+    const response = await fetch('/api/products')
     if (!response.ok) {
       throw new Error('Failed to fetch products')
     }
     const apiProducts: APIProduct[] = await response.json()
-    return apiProducts
-      .filter(product => product.isActive)
-      .map(convertAPIProductToProduct)
+    return apiProducts.map(convertAPIProductToProduct)
   } catch (error) {
     console.error('Error fetching products:', error)
     return []
@@ -139,7 +135,7 @@ export const getPaginatedProducts = async (params: PaginationParams): Promise<Pa
       order: getOrder(sortBy)
     })
 
-    const response = await fetch(`/api/admin/products?${queryParams}`)
+    const response = await fetch(`/api/products?${queryParams}`)
     if (!response.ok) {
       throw new Error('Failed to fetch products')
     }
@@ -226,7 +222,7 @@ export const getPaginatedProducts = async (params: PaginationParams): Promise<Pa
 // Get product by ID from API
 export const getProductById = async (id: number): Promise<any | null> => {
   try {
-    const response = await fetch(`/api/admin/products/${id}`)
+    const response = await fetch(`/api/products/${id}`)
     if (!response.ok) {
       if (response.status === 404) {
         return null
@@ -235,11 +231,6 @@ export const getProductById = async (id: number): Promise<any | null> => {
     }
     
     const apiProduct: APIProduct = await response.json()
-    
-    if (!apiProduct.isActive) {
-      return null // Don't show inactive products to customers
-    }
-    
     return convertAPIProductToProduct(apiProduct)
   } catch (error) {
     console.error('Error fetching product by ID:', error)
@@ -250,14 +241,13 @@ export const getProductById = async (id: number): Promise<any | null> => {
 // Get featured products from API
 export const getFeaturedProducts = async (): Promise<any[]> => {
   try {
-    const response = await fetch('/api/admin/products?limit=6&orderBy=createdAt&order=desc')
+    const response = await fetch('/api/products?featured=true&limit=6&orderBy=createdAt&order=desc')
     if (!response.ok) {
       throw new Error('Failed to fetch featured products')
     }
     
     const apiProducts: APIProduct[] = await response.json()
     return apiProducts
-      .filter(product => product.isActive && (product.isNew || product.isOnSale))
       .slice(0, 6)
       .map(convertAPIProductToProduct)
   } catch (error) {
@@ -332,7 +322,6 @@ export const searchProducts = async (query: string): Promise<any[]> => {
     const lowercaseQuery = query.toLowerCase()
     
     const filteredProducts = apiProducts
-      .filter(product => product.isActive)
       .filter(product => 
         product.name.toLowerCase().includes(lowercaseQuery) ||
         (product.description && product.description.toLowerCase().includes(lowercaseQuery)) ||
