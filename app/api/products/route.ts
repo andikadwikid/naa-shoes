@@ -86,10 +86,13 @@ export async function GET(request: NextRequest) {
 
     // Filter for featured products
     if (featured === 'true') {
-      queryOptions.where.OR = [
-        { isNew: true },
-        { isOnSale: true }
-      ]
+      queryOptions.where = {
+        ...queryOptions.where,
+        OR: [
+          { isNew: true },
+          { isOnSale: true }
+        ]
+      }
     }
 
     const products = await prisma.product.findMany(queryOptions)
