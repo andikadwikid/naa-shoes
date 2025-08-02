@@ -48,8 +48,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         }
 
         setProduct(productData)
-        setSelectedSize(productData.sizes[0])
-        setSelectedColor(productData.colors[0])
+        setSelectedSize(productData.sizes?.[0] || 36)
+        setSelectedColor(productData.colors?.[0] || 'Default')
 
         // Load related products (same category, excluding current product)
         const categoryProducts = await getProductsByCategory(productData.category)
@@ -289,7 +289,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             <div>
               <h3 className="text-base font-medium text-gray-900 mb-3">Size</h3>
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                {product.sizes.map((size) => (
+                {(product.sizes || []).map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -309,7 +309,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             <div>
               <h3 className="text-base font-medium text-gray-900 mb-3">Color</h3>
               <div className="grid grid-cols-2 gap-2">
-                {product.colors.map((color) => (
+                {(product.colors || []).map((color) => (
                   <button
                     key={color}
                     onClick={() => setSelectedColor(color)}
