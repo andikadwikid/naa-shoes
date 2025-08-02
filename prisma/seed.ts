@@ -96,6 +96,90 @@ async function main() {
     })
   ])
 
+  // Seed Brands
+  const brands = await Promise.all([
+    prisma.brand.upsert({
+      where: { slug: 'nike' },
+      update: {},
+      create: {
+        name: 'Nike',
+        slug: 'nike',
+        description: 'Just Do It - Global sportswear brand',
+        website: 'https://www.nike.com'
+      }
+    }),
+    prisma.brand.upsert({
+      where: { slug: 'adidas' },
+      update: {},
+      create: {
+        name: 'Adidas',
+        slug: 'adidas',
+        description: 'Impossible is Nothing - German sportswear brand',
+        website: 'https://www.adidas.com'
+      }
+    }),
+    prisma.brand.upsert({
+      where: { slug: 'converse' },
+      update: {},
+      create: {
+        name: 'Converse',
+        slug: 'converse',
+        description: 'Classic sneakers and lifestyle brand',
+        website: 'https://www.converse.com'
+      }
+    }),
+    prisma.brand.upsert({
+      where: { slug: 'zara' },
+      update: {},
+      create: {
+        name: 'Zara',
+        slug: 'zara',
+        description: 'Fashion-forward footwear and clothing',
+        website: 'https://www.zara.com'
+      }
+    }),
+    prisma.brand.upsert({
+      where: { slug: 'hm' },
+      update: {},
+      create: {
+        name: 'H&M',
+        slug: 'hm',
+        description: 'Affordable fashion for everyone',
+        website: 'https://www.hm.com'
+      }
+    }),
+    prisma.brand.upsert({
+      where: { slug: 'mango' },
+      update: {},
+      create: {
+        name: 'Mango',
+        slug: 'mango',
+        description: 'Contemporary fashion brand',
+        website: 'https://www.mango.com'
+      }
+    }),
+    prisma.brand.upsert({
+      where: { slug: 'charles-keith' },
+      update: {},
+      create: {
+        name: 'Charles & Keith',
+        slug: 'charles-keith',
+        description: 'Singapore luxury accessories brand',
+        website: 'https://www.charleskeith.com'
+      }
+    }),
+    prisma.brand.upsert({
+      where: { slug: 'pedro' },
+      update: {},
+      create: {
+        name: 'Pedro',
+        slug: 'pedro',
+        description: 'Contemporary footwear and accessories',
+        website: 'https://www.pedro.com'
+      }
+    })
+  ])
+
   // Seed Sizes
   const sizes = await Promise.all([
     ...Array.from({ length: 10 }, (_, i) => {
