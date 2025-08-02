@@ -22,177 +22,120 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
   }
 
   return (
-    <div className={`group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full flex flex-col transform hover:-translate-y-2 ${className}`}>
+    <div className={`group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col ${className}`}>
+      {/* Product Image */}
       <Link href={`/products/${product.id}`} className="block relative">
-        <div className="relative aspect-square overflow-hidden rounded-t-2xl">
+        <div className="relative aspect-square overflow-hidden">
           <Image
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover group-hover:scale-110 transition-transform duration-700"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
 
-          {/* Overlay gradient for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-          {/* Enhanced badges */}
-          <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
-            {product.isNew && (
-              <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                <span className="flex items-center">
-                  <span className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-pulse"></span>
-                  BARU
+          {/* Status Badges */}
+          <div className="absolute top-3 left-3 right-3 flex justify-between">
+            <div className="flex gap-2">
+              {product.isNew && (
+                <span className="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                  NEW
                 </span>
-              </span>
-            )}
-            {product.isOnSale && (
-              <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm ml-auto">
-                SALE
-              </span>
-            )}
-          </div>
-
-          {/* Favorite heart button */}
-          <button className="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white hover:scale-110">
-            <svg className="w-4 h-4 text-gray-600 hover:text-pink-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-
-          {/* Quick view button */}
-          <div className="absolute inset-x-0 bottom-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-            <button className="w-full bg-white/95 backdrop-blur-sm text-gray-900 font-semibold py-2 px-4 rounded-lg hover:bg-white transition-colors duration-200 shadow-lg">
-              Quick View
-            </button>
+              )}
+              {product.isOnSale && (
+                <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                  SALE
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </Link>
 
-      <div className="p-4 sm:p-6 flex flex-col flex-1">
-        {/* Category badge */}
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-medium bg-gradient-to-r from-pink-100 to-purple-100 text-pink-700 px-3 py-1 rounded-full">
+      {/* Product Info */}
+      <div className="p-4 flex flex-col flex-1">
+        {/* Category & Rating */}
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
             {product.category}
           </span>
-
-          {/* Rating stars */}
-          <div className="flex items-center text-yellow-400 text-xs">
-            <span className="mr-1">★★★★★</span>
-            <span className="text-gray-500 text-xs">(4.9)</span>
+          <div className="flex items-center text-xs text-gray-400">
+            <span className="text-yellow-400 mr-1">★★★★★</span>
+            <span>(4.9)</span>
           </div>
         </div>
 
-        <Link href={`/products/${product.id}`} className="group/link">
-          <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-2 line-clamp-2 group-hover/link:text-transparent group-hover/link:bg-clip-text group-hover/link:bg-gradient-to-r group-hover/link:from-pink-600 group-hover/link:to-purple-600 transition-all duration-300 leading-tight cursor-pointer min-h-[2.5rem] sm:min-h-[3rem]">
+        {/* Product Name */}
+        <Link href={`/products/${product.id}`}>
+          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-pink-600 transition-colors leading-snug h-12">
             {product.name}
           </h3>
         </Link>
 
-        <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed min-h-[2.5rem]">
-          {product.description}
-        </p>
-
-        {/* Price section with better visual hierarchy */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-3">
-              <span className="font-bold text-xl text-gray-900">
-                {formatCurrency(product.price)}
-              </span>
-              {product.originalPrice && (
-                <span className="text-sm text-gray-500 line-through">
-                  {formatCurrency(product.originalPrice)}
-                </span>
-              )}
-            </div>
+        {/* Price */}
+        <div className="mb-3">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-lg text-gray-900">
+              {formatCurrency(product.price)}
+            </span>
             {product.originalPrice && (
-              <span className="text-xs text-green-600 font-medium">
-                Hemat {Math.round((1 - product.price / product.originalPrice) * 100)}%
+              <span className="text-sm text-gray-500 line-through">
+                {formatCurrency(product.originalPrice)}
               </span>
             )}
           </div>
+          {product.originalPrice && (
+            <span className="text-xs text-green-600 font-medium">
+              Hemat {Math.round((1 - product.price / product.originalPrice) * 100)}%
+            </span>
+          )}
         </div>
 
-        {/* Trust indicators */}
-        <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+        {/* Colors & Sizes */}
+        <div className="flex items-center justify-between mb-4 text-xs text-gray-500">
           <div className="flex items-center">
-            <svg className="w-3 h-3 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
-            </svg>
-            <span>Gratis Ongkir</span>
+            <span className="mr-2">Warna:</span>
+            <div className="flex space-x-1">
+              {product.colors.slice(0, 3).map((color, index) => (
+                <div
+                  key={index}
+                  className="w-4 h-4 rounded-full border border-gray-300"
+                  style={{
+                    backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
+                                     color.toLowerCase() === 'black' ? '#000000' :
+                                     color.toLowerCase() === 'pink' ? '#ec4899' :
+                                     color.toLowerCase() === 'rose gold' ? '#e11d48' :
+                                     color.toLowerCase() === 'nude' ? '#d4a574' :
+                                     color.toLowerCase() === 'coral' ? '#f97316' :
+                                     color.toLowerCase() === 'silver' ? '#9ca3af' :
+                                     color.toLowerCase() === 'gold' ? '#fbbf24' :
+                                     color.toLowerCase() === 'brown' ? '#92400e' :
+                                     '#9ca3af'
+                  }}
+                  title={color}
+                />
+              ))}
+              {product.colors.length > 3 && (
+                <span className="text-xs">+{product.colors.length - 3}</span>
+              )}
+            </div>
           </div>
-          <div className="flex items-center">
-            <svg className="w-3 h-3 text-blue-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"/>
-            </svg>
-            <span>Garansi 30hr</span>
-          </div>
+          <span>Size: {product.sizes[0]}-{product.sizes[product.sizes.length - 1]}</span>
         </div>
 
-        <div className="mt-auto space-y-4">
-          {/* Enhanced color selection */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <span className="text-xs font-medium text-gray-700">Warna:</span>
-              <div className="flex space-x-1">
-                {product.colors.slice(0, 3).map((color, index) => (
-                  <div
-                    key={index}
-                    className="w-5 h-5 rounded-full border-2 border-gray-200 hover:border-pink-300 transition-colors cursor-pointer shadow-sm"
-                    style={{
-                      backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' :
-                                       color.toLowerCase() === 'black' ? '#000000' :
-                                       color.toLowerCase() === 'pink' ? '#ec4899' :
-                                       color.toLowerCase() === 'rose gold' ? '#e11d48' :
-                                       color.toLowerCase() === 'nude' ? '#d4a574' :
-                                       color.toLowerCase() === 'coral' ? '#f97316' :
-                                       color.toLowerCase() === 'silver' ? '#9ca3af' :
-                                       color.toLowerCase() === 'gold' ? '#fbbf24' :
-                                       color.toLowerCase() === 'brown' ? '#92400e' :
-                                       '#9ca3af'
-                    }}
-                    title={color}
-                  />
-                ))}
-                {product.colors.length > 3 && (
-                  <div className="w-5 h-5 rounded-full border-2 border-gray-200 bg-gray-100 flex items-center justify-center">
-                    <span className="text-xs text-gray-600 font-medium">+{product.colors.length - 3}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Size indicator */}
-            <div className="text-xs text-gray-500">
-              Size: {product.sizes[0]}-{product.sizes[product.sizes.length - 1]}
-            </div>
-          </div>
-
-          {/* Enhanced CTA buttons */}
-          <div className="flex gap-3">
-            <Link
-              href={`/products/${product.id}`}
-              className="flex-1 group/btn text-center border-2 border-gray-200 text-gray-700 hover:border-pink-300 hover:text-pink-600 text-sm font-semibold py-3 px-4 rounded-xl transition-all duration-300 hover:shadow-md"
-            >
-              <span className="flex items-center justify-center">
-                Lihat Detail
-                <svg className="ml-1 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </span>
-            </Link>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="flex-1 group/add bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white text-sm font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              <span className="flex items-center justify-center">
-                <svg className="w-4 h-4 mr-1 group-hover/add:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Keranjang
-              </span>
-            </button>
-          </div>
+        {/* Action Buttons */}
+        <div className="mt-auto flex gap-2">
+          <Link
+            href={`/products/${product.id}`}
+            className="flex-1 text-center border border-gray-300 text-gray-700 hover:border-pink-500 hover:text-pink-600 text-sm font-medium py-2.5 rounded-lg transition-colors"
+          >
+            Detail
+          </Link>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex-1 bg-pink-600 hover:bg-pink-700 text-white text-sm font-medium py-2.5 rounded-lg transition-colors"
+          >
+            + Keranjang
+          </button>
         </div>
 
         {/* Modal for Size and Color Selection */}
