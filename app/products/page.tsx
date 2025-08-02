@@ -34,23 +34,23 @@ export default function ProductsPage() {
   }, [searchTerm, selectedCategory, sortBy])
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-6 lg:py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">
             All Products
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-base sm:text-lg text-gray-600">
             Temukan sepatu impian Anda dari koleksi lengkap kami
           </p>
         </div>
 
         {/* Filters and Search */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Search */}
-            <div className="relative">
+            <div className="relative sm:col-span-2 lg:col-span-1">
               <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
                 Search Products
               </label>
@@ -61,7 +61,7 @@ export default function ProductsPage() {
                   placeholder="Cari nama sepatu..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent touch-manipulation"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,7 +80,7 @@ export default function ProductsPage() {
                 id="category"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 py-3 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent touch-manipulation"
               >
                 {categories.map(category => (
                   <option key={category} value={category}>{category}</option>
@@ -97,7 +97,7 @@ export default function ProductsPage() {
                 id="sort"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 py-3 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent touch-manipulation"
               >
                 <option value="name">Name (A-Z)</option>
                 <option value="price-low">Price (Low to High)</option>
@@ -108,20 +108,27 @@ export default function ProductsPage() {
         </div>
 
         {/* Results Summary */}
-        <div className="flex items-center justify-between mb-6">
-          <p className="text-gray-600">
-            Showing {filteredAndSortedProducts.length} of {products.length} products
-            {searchTerm && (
-              <span className="ml-1">
-                for "<span className="font-semibold text-pink-600">{searchTerm}</span>"
-              </span>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+          <div className="text-sm sm:text-base text-gray-600">
+            <p className="mb-1 sm:mb-0">
+              Showing {filteredAndSortedProducts.length} of {products.length} products
+            </p>
+            {(searchTerm || selectedCategory !== 'All') && (
+              <p className="text-xs sm:text-sm">
+                {searchTerm && (
+                  <span>
+                    for "<span className="font-semibold text-pink-600">{searchTerm}</span>"
+                  </span>
+                )}
+                {selectedCategory !== 'All' && (
+                  <span className={searchTerm ? 'ml-1' : ''}>
+                    {searchTerm && 'in '}
+                    <span className="font-semibold text-pink-600">{selectedCategory}</span>
+                  </span>
+                )}
+              </p>
             )}
-            {selectedCategory !== 'All' && (
-              <span className="ml-1">
-                in <span className="font-semibold text-pink-600">{selectedCategory}</span>
-              </span>
-            )}
-          </p>
+          </div>
 
           {/* Clear Filters */}
           {(searchTerm || selectedCategory !== 'All') && (
@@ -130,7 +137,7 @@ export default function ProductsPage() {
                 setSearchTerm('')
                 setSelectedCategory('All')
               }}
-              className="text-pink-600 hover:text-pink-700 text-sm font-medium"
+              className="self-start sm:self-auto text-pink-600 hover:text-pink-700 text-sm font-medium py-2 px-3 rounded-lg hover:bg-pink-50 transition-colors touch-manipulation"
             >
               Clear Filters
             </button>
@@ -139,7 +146,7 @@ export default function ProductsPage() {
 
         {/* Products Grid */}
         {filteredAndSortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredAndSortedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
