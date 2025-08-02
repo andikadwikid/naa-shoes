@@ -86,23 +86,32 @@ export default function AdminProductsList() {
     return () => clearTimeout(timer)
   }, [searchTerm])
 
-  // Load categories on mount
+  // Load categories and brands on mount
   useEffect(() => {
-    const loadCategories = async () => {
+    const loadFilters = async () => {
       try {
-        const response = await fetch('/api/categories')
-        if (response.ok) {
-          const categoryList = await response.json()
-          // Extract category names from objects
+        const [categoriesRes, brandsRes] = await Promise.all([
+          fetch('/api/categories'),
+          fetch('/api/brands')
+        ])
+
+        if (categoriesRes.ok) {
+          const categoryList = await categoriesRes.json()
           const categoryNames = categoryList.map((cat: any) => cat.name)
           setCategories(['All', ...categoryNames])
         }
+
+        if (brandsRes.ok) {
+          const brandList = await brandsRes.json()
+          const brandNames = brandList.map((brand: any) => brand.name)
+          setBrands(['All', ...brandNames])
+        }
       } catch (error) {
-        console.error('Error loading categories:', error)
+        console.error('Error loading filters:', error)
       }
     }
 
-    loadCategories()
+    loadFilters()
   }, [])
 
   // Fetch products when filters change
