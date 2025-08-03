@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { prisma } from '../../../../lib/prisma'
 import BrandActions from './BrandActions'
 
+// Force dynamic rendering for admin pages
+export const dynamic = 'force-dynamic'
+
 async function getBrands() {
   return await prisma.brand.findMany({
     orderBy: { name: 'asc' },

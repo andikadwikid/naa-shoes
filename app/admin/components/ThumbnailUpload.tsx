@@ -17,6 +17,7 @@ export default function ThumbnailUpload({
   const [isUploading, setIsUploading] = useState(false)
   const [dragActive, setDragActive] = useState(false)
   const [uploadError, setUploadError] = useState<string>('')
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleDrag = (e: React.DragEvent) => {
@@ -50,6 +51,10 @@ export default function ThumbnailUpload({
       return
     }
 
+    // Create preview URL before upload
+    const preview = URL.createObjectURL(file)
+    setPreviewUrl(preview)
+
     setIsUploading(true)
     setUploadError('')
 
@@ -67,8 +72,15 @@ export default function ThumbnailUpload({
       }
 
       const result = await response.json()
-      
+      console.log('Upload result:', result)
+
       if (result.success && result.images.length > 0) {
+        console.log('Setting thumbnail URL to:', result.images[0].url)
+        // Clean up preview URL
+        if (previewUrl) {
+          URL.revokeObjectURL(previewUrl)
+          setPreviewUrl(null)
+        }
         onChange(result.images[0].url)
       } else {
         setUploadError('Upload failed. Please try again.')
@@ -76,6 +88,11 @@ export default function ThumbnailUpload({
     } catch (error) {
       console.error('Upload error:', error)
       setUploadError('Upload failed. Please try again.')
+      // Clean up preview on error
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl)
+        setPreviewUrl(null)
+      }
     } finally {
       setIsUploading(false)
     }
@@ -109,15 +126,31 @@ export default function ThumbnailUpload({
         Product Thumbnail *
       </label>
       
-      {thumbnailUrl ? (
+      {(thumbnailUrl || previewUrl) ? (
         <div className="relative">
           <div className="aspect-square w-48 relative bg-gray-100 rounded-lg overflow-hidden">
             <Image
-              src={thumbnailUrl}
+              src={previewUrl || thumbnailUrl || ''}
               alt={`${productName} thumbnail`}
               fill
               className="object-cover"
+              unoptimized={!!previewUrl}
+              onError={(e) => {
+                console.error('Image failed to load:', previewUrl || thumbnailUrl)
+                setUploadError(`Failed to load image: ${previewUrl || thumbnailUrl}`)
+              }}
+              onLoad={() => console.log('Image loaded successfully:', previewUrl || thumbnailUrl)}
             />
+
+            {/* Upload progress overlay */}
+            {isUploading && (
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
+                  <span className="text-sm">Uploading...</span>
+                </div>
+              </div>
+            )}
             
             {/* Actions overlay */}
             <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">

@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation'
 import { prisma } from '../../../../../../lib/prisma'
 import BrandForm from '../../BrandForm'
 
+// Force dynamic rendering to avoid database access during build
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   params: Promise<{
     id: string

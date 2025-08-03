@@ -1,9 +1,9 @@
+'use client'
+
 import BlogForm from '../BlogForm'
 
-export const metadata = {
-  title: 'Create New Blog Post - Admin Dashboard',
-  description: 'Create a new blog post'
-}
+// Force dynamic rendering to avoid API calls during build
+export const dynamic = 'force-dynamic'
 
 export default function CreateBlogPage() {
   return (
@@ -14,7 +14,7 @@ export default function CreateBlogPage() {
           Write and publish new content for your blog
         </p>
       </div>
-      
+
       <BlogForm mode="create" />
     </div>
   )

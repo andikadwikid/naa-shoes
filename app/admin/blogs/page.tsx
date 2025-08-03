@@ -1,9 +1,6 @@
-import AdminBlogsList from './AdminBlogsList'
+'use client'
 
-export const metadata = {
-  title: 'Blog Management - Admin Dashboard',
-  description: 'Manage blog posts, authors, and categories'
-}
+import AdminBlogsList from './AdminBlogsList'
 
 export default function AdminBlogsPage() {
   return <AdminBlogsList />

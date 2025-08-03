@@ -48,7 +48,7 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+
     try {
       // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 1000))
@@ -74,12 +74,12 @@ export default function ContactPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      
+
 
 
       <main id="main-content" className="min-h-screen bg-gray-50 py-12" role="main">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Header */}
           <header className="text-center mb-12" role="banner">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -91,18 +91,18 @@ export default function ContactPage() {
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
+
             {/* Contact Form */}
-            <section 
+            <section
               className="bg-white rounded-lg shadow-sm p-8"
               aria-labelledby="contact-form-heading"
               role="region"
             >
               <h2 id="contact-form-heading" className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-              
+
               {/* Success/Error Messages */}
               {submitStatus === 'success' && (
-                <div 
+                <div
                   className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg"
                   role="alert"
                   aria-live="polite"
@@ -117,7 +117,7 @@ export default function ContactPage() {
               )}
 
               {submitStatus === 'error' && (
-                <div 
+                <div
                   className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
                   role="alert"
                   aria-live="polite"
@@ -247,18 +247,18 @@ export default function ContactPage() {
 
             {/* Contact Information */}
             <div className="space-y-8">
-              
+
               {/* Contact Details */}
-              <section 
+              <section
                 className="bg-white rounded-lg shadow-sm p-8"
                 aria-labelledby="contact-info-heading"
                 role="region"
               >
                 <h2 id="contact-info-heading" className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
                 <div className="space-y-6" role="list" aria-label="Contact information">
-                  
+
                   <div className="flex items-start space-x-4" role="listitem">
-                    <div 
+                    <div
                       className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0"
                       role="img"
                       aria-label="Store location"
@@ -279,7 +279,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start space-x-4" role="listitem">
-                    <div 
+                    <div
                       className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0"
                       role="img"
                       aria-label="Phone contact"
@@ -296,7 +296,7 @@ export default function ContactPage() {
                         </a>
                       </p>
                       <p>
-                        <a href="tel:+6281234567890" className="text-gray-600 hover:text-pink-600 transition-colors">
+                        <a href="tel:+6281294556327" className="text-gray-600 hover:text-pink-600 transition-colors">
                           +62 812 3456 7890
                         </a>
                       </p>
@@ -304,7 +304,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start space-x-4" role="listitem">
-                    <div 
+                    <div
                       className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0"
                       role="img"
                       aria-label="Email contact"
@@ -329,7 +329,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start space-x-4" role="listitem">
-                    <div 
+                    <div
                       className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0"
                       role="img"
                       aria-label="Business hours"
@@ -351,36 +351,36 @@ export default function ContactPage() {
               </section>
 
               {/* FAQ Quick Links */}
-              <aside 
+              <aside
                 className="bg-pink-50 rounded-lg p-6"
                 aria-labelledby="quick-help-heading"
                 role="complementary"
               >
                 <h3 id="quick-help-heading" className="text-lg font-semibold text-pink-900 mb-4">Quick Help</h3>
                 <nav className="space-y-2" role="list" aria-label="Quick help links">
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className="block text-pink-700 hover:text-pink-900 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
                     role="listitem"
                   >
                     📦 How to track my order?
                   </a>
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className="block text-pink-700 hover:text-pink-900 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
                     role="listitem"
                   >
                     👠 Size guide and fitting
                   </a>
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className="block text-pink-700 hover:text-pink-900 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
                     role="listitem"
                   >
                     🔄 Return and exchange policy
                   </a>
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className="block text-pink-700 hover:text-pink-900 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded"
                     role="listitem"
                   >

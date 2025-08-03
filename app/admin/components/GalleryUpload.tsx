@@ -29,6 +29,7 @@ export default function GalleryUpload({
   const [isUploading, setIsUploading] = useState(false)
   const [dragActive, setDragActive] = useState(false)
   const [uploadError, setUploadError] = useState<string>('')
+  const [previewImages, setPreviewImages] = useState<{file: File, url: string}[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleDrag = (e: React.DragEvent) => {
@@ -76,6 +77,13 @@ export default function GalleryUpload({
     const remainingSlots = maxImages - images.length
     const filesToUpload = validFiles.slice(0, remainingSlots)
 
+    // Create preview URLs
+    const previews = filesToUpload.map(file => ({
+      file,
+      url: URL.createObjectURL(file)
+    }))
+    setPreviewImages(previews)
+
     setIsUploading(true)
     setUploadError('')
 
@@ -95,21 +103,45 @@ export default function GalleryUpload({
       }
 
       const result = await response.json()
-      
+      console.log('Gallery upload result:', result)
+
       if (result.success) {
         const newImages = result.images.map((img: any) => ({
           ...img,
           altText: img.originalName,
           caption: ''
         }))
-        
-        onChange([...images, ...newImages])
+
+        console.log('Adding new gallery images:', newImages)
+
+        // Validate that uploaded images are accessible
+        const validatedImages = []
+        for (const img of newImages) {
+          try {
+            const response = await fetch(img.url, { method: 'HEAD' })
+            if (response.ok) {
+              validatedImages.push(img)
+            } else {
+              console.warn('Uploaded image not accessible:', img.url)
+            }
+          } catch (error) {
+            console.warn('Error validating uploaded image:', img.url, error)
+          }
+        }
+
+        // Clean up preview URLs
+        previewImages.forEach(preview => URL.revokeObjectURL(preview.url))
+        setPreviewImages([])
+        onChange([...images, ...validatedImages])
       } else {
         setUploadError('Upload failed. Please try again.')
       }
     } catch (error) {
       console.error('Upload error:', error)
       setUploadError('Upload failed. Please try again.')
+      // Clean up preview URLs on error
+      previewImages.forEach(preview => URL.revokeObjectURL(preview.url))
+      setPreviewImages([])
     } finally {
       setIsUploading(false)
     }
@@ -123,7 +155,7 @@ export default function GalleryUpload({
 
   const handleDeleteImage = async (index: number) => {
     const imageToDelete = images[index]
-    
+
     try {
       await fetch(`/api/admin/upload?filename=${imageToDelete.filename}`, {
         method: 'DELETE'
@@ -134,6 +166,20 @@ export default function GalleryUpload({
 
     const newImages = images.filter((_, i) => i !== index)
     onChange(newImages)
+  }
+
+  const handleRemoveBrokenImage = (index: number) => {
+    const newImages = images.filter((_, i) => i !== index)
+    onChange(newImages)
+  }
+
+  const validateImageUrl = async (url: string): Promise<boolean> => {
+    try {
+      const response = await fetch(url, { method: 'HEAD' })
+      return response.ok
+    } catch {
+      return false
+    }
   }
 
   const handleMoveImage = (fromIndex: number, toIndex: number) => {
@@ -234,6 +280,35 @@ export default function GalleryUpload({
         </div>
       )}
 
+      {/* Preview Images During Upload */}
+      {previewImages.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-sm text-gray-600 font-medium">Uploading images...</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {previewImages.map((preview, index) => (
+              <div key={index} className="relative">
+                <div className="aspect-square relative bg-gray-100 rounded-lg overflow-hidden">
+                  <Image
+                    src={preview.url}
+                    alt={`Preview ${index + 1}`}
+                    width={200}
+                    height={200}
+                    className="object-cover w-full h-full"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="text-white text-center">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mx-auto mb-1"></div>
+                      <span className="text-xs">Uploading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Gallery Grid */}
       {images.length > 0 && (
         <div className="space-y-4">
@@ -245,13 +320,41 @@ export default function GalleryUpload({
               <div key={index} className="border border-gray-200 rounded-lg p-4 space-y-3">
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0">
-                    <div className="w-20 h-20 relative bg-gray-100 rounded-lg overflow-hidden">
+                    <div className="w-20 h-20 relative bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
                       <Image
                         src={image.url}
                         alt={image.altText || `Gallery image ${index + 1}`}
-                        fill
-                        className="object-cover"
+                        width={80}
+                        height={80}
+                        className="object-cover w-full h-full"
+                        onError={(e) => {
+                          console.error('Gallery image failed to load:', image.url)
+                          // Hide broken image and show placeholder
+                          const imgElement = e.target as HTMLImageElement
+                          imgElement.style.display = 'none'
+                          const placeholder = imgElement.parentElement?.querySelector('.image-placeholder') as HTMLElement
+                          if (placeholder) {
+                            placeholder.style.display = 'flex'
+                          }
+                        }}
+                        onLoad={() => console.log('Gallery image loaded successfully:', image.url)}
+                        unoptimized
                       />
+                      <div className="image-placeholder absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-500 text-xs" style={{display: 'none'}}>
+                        <div className="text-center">
+                          <svg className="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                          </svg>
+                          <div>Image not found</div>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveBrokenImage(index)}
+                            className="mt-1 text-xs text-red-600 hover:text-red-800 underline"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
