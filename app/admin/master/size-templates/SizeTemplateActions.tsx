@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Edit2, Trash2, Power, PowerOff } from 'lucide-react'
+import { Edit2, Trash2, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -14,17 +14,18 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-interface Product {
+interface SizeTemplate {
   id: number
   name: string
-  isActive: boolean
+  isDefault: boolean
 }
 
-interface ProductActionsProps {
-  product: Product
+interface SizeTemplateActionsProps {
+  template: SizeTemplate
+  onUpdate: () => void
 }
 
-export default function ProductActions({ product }: ProductActionsProps) {
+export default function SizeTemplateActions({ template, onUpdate }: SizeTemplateActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const router = useRouter()
@@ -32,103 +33,90 @@ export default function ProductActions({ product }: ProductActionsProps) {
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
-      const response = await fetch(`/api/admin/products/${product.id}`, {
+      const response = await fetch(`/api/admin/size-templates/${template.id}`, {
         method: 'DELETE',
       })
 
       if (response.ok) {
-        router.refresh()
+        onUpdate()
         setShowConfirmDialog(false)
       } else {
-        alert('Failed to delete product')
+        alert('Failed to delete template')
       }
     } catch (error) {
-      alert('Error deleting product')
+      alert('Error deleting template')
     } finally {
       setIsDeleting(false)
     }
   }
 
-  const handleToggleStatus = async () => {
+  const handleSetDefault = async () => {
     try {
-      const response = await fetch(`/api/admin/products/${product.id}`, {
+      const response = await fetch(`/api/admin/size-templates/${template.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          isActive: !product.isActive
+          isDefault: true
         }),
       })
 
       if (response.ok) {
-        router.refresh()
+        onUpdate()
       } else {
-        alert('Failed to update product status')
+        alert('Failed to set as default template')
       }
     } catch (error) {
-      alert('Error updating product status')
+      alert('Error updating template')
     }
   }
 
   return (
     <>
-      <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
         <Button
           asChild
           variant="outline"
           size="sm"
-          className="w-full h-8 px-3 border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-800 hover:border-blue-300"
+          className="h-8 px-3 border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-800 hover:border-blue-300"
         >
-          <Link href={`/admin/products/${product.id}/edit`}>
+          <Link href={`/admin/master/size-templates/${template.id}/edit`}>
             <Edit2 className="w-3.5 h-3.5 mr-1.5" />
             Edit
           </Link>
         </Button>
 
-        <div className="flex gap-2">
+        {!template.isDefault && (
           <Button
-            onClick={handleToggleStatus}
+            onClick={handleSetDefault}
             variant="outline"
             size="sm"
-            className={`flex-1 h-8 px-3 ${
-              product.isActive
-                ? 'border-orange-200 text-orange-700 hover:bg-orange-50 hover:text-orange-800 hover:border-orange-300'
-                : 'border-emerald-200 text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300'
-            }`}
+            className="h-8 px-3 border-emerald-200 text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300"
           >
-            {product.isActive ? (
-              <>
-                <PowerOff className="w-3.5 h-3.5 mr-1.5" />
-                Deactivate
-              </>
-            ) : (
-              <>
-                <Power className="w-3.5 h-3.5 mr-1.5" />
-                Activate
-              </>
-            )}
+            <Star className="w-3.5 h-3.5 mr-1.5" />
+            Set Default
           </Button>
+        )}
 
-          <Button
-            onClick={() => setShowConfirmDialog(true)}
-            variant="outline"
-            size="sm"
-            className="flex-1 h-8 px-3 border-red-200 text-red-700 hover:bg-red-50 hover:text-red-800 hover:border-red-300"
-          >
-            <Trash2 className="w-3.5 h-3.5 mr-1.5" />
-            Delete
-          </Button>
-        </div>
+        <Button
+          onClick={() => setShowConfirmDialog(true)}
+          variant="outline"
+          size="sm"
+          className="h-8 px-3 border-red-200 text-red-700 hover:bg-red-50 hover:text-red-800 hover:border-red-300"
+        >
+          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
+          Delete
+        </Button>
       </div>
 
       {/* Confirm Delete Dialog */}
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Delete Product</DialogTitle>
+            <DialogTitle>Delete Template</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete "{product.name}"? This action cannot be undone.
+              Are you sure you want to delete "{template.name}"? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

@@ -3,6 +3,16 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Edit2, Trash2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 interface Size {
   id: number
@@ -40,48 +50,67 @@ export default function SizeActions({ size }: SizeActionsProps) {
 
   return (
     <>
-      <div className="flex space-x-2">
-        <Link
-          href={`/admin/master/sizes/${size.id}/edit`}
-          className="bg-blue-100 text-blue-700 hover:bg-blue-200 text-sm font-medium py-1 px-3 rounded transition-colors"
+      <div className="flex items-center gap-2">
+        <Button
+          asChild
+          variant="outline"
+          size="sm"
+          className="h-8 px-3 border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-800 hover:border-blue-300"
         >
-          Edit
-        </Link>
-        <button
+          <Link href={`/admin/master/sizes/${size.id}/edit`}>
+            <Edit2 className="w-3.5 h-3.5 mr-1.5" />
+            Edit
+          </Link>
+        </Button>
+
+        <Button
           onClick={() => setShowConfirmDialog(true)}
-          className="bg-red-100 text-red-700 hover:bg-red-200 text-sm font-medium py-1 px-3 rounded transition-colors"
+          variant="outline"
+          size="sm"
+          className="h-8 px-3 border-red-200 text-red-700 hover:bg-red-50 hover:text-red-800 hover:border-red-300"
         >
+          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
           Delete
-        </button>
+        </Button>
       </div>
 
       {/* Confirm Delete Dialog */}
-      {showConfirmDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Delete Size</h3>
-            <p className="text-sm text-gray-500 mb-6">
+      <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Delete Size</DialogTitle>
+            <DialogDescription>
               Are you sure you want to delete size "{size.value}"? This action cannot be undone.
-            </p>
-            <div className="flex space-x-3">
-              <button
-                onClick={() => setShowConfirmDialog(false)}
-                className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200"
-                disabled={isDeleting}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                disabled={isDeleting}
-                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 disabled:opacity-50"
-              >
-                {isDeleting ? 'Deleting...' : 'Delete'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              onClick={() => setShowConfirmDialog(false)}
+              variant="outline"
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDelete}
+              disabled={isDeleting}
+              variant="destructive"
+            >
+              {isDeleting ? (
+                <>
+                  <div className="w-4 h-4 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

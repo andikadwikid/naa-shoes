@@ -18,11 +18,12 @@ export async function GET(request: NextRequest) {
     const whereConditions: any = {}
     const andConditions: any[] = []
 
-    // Search filter
+    // Search filter with case-insensitive matching
     if (search) {
       andConditions.push({
         name: {
-          contains: search
+          contains: search,
+          mode: 'insensitive'
         }
       })
     }
@@ -94,8 +95,13 @@ export async function GET(request: NextRequest) {
           orderBy: { displayOrder: 'asc' },
           take: 1
         },
-        colors: { include: { color: true } },
-        sizes: { include: { size: true } }
+        productInventories: { 
+          include: { 
+            color: true,
+            size: true 
+          } 
+        },
+        sizeGuides: { include: { size: true } }
       }
     })
 
@@ -131,8 +137,8 @@ export async function POST(request: NextRequest) {
       originalPrice,
       categoryId,
       brandId,
-      colors,
-      sizes,
+      productInventories,
+      sizeGuides,
       thumbnailUrl,
       galleryImages,
       isNew,
@@ -189,23 +195,41 @@ export async function POST(request: NextRequest) {
             displayOrder: index
           }))
         } : undefined,
-        colors: colors ? {
-          create: colors.map((colorId: number) => ({
-            colorId
-          }))
+        productInventories: productInventories ? {
+          create: productInventories
+            .filter((inv: any) => inv.stock > 0) // Only create entries with stock > 0
+            // Remove duplicates based on colorId + sizeId combination
+            .reduce((acc: any[], inv: { colorId: number, sizeId: number, stock: number }) => {
+              const exists = acc.find(item => item.colorId === inv.colorId && item.sizeId === inv.sizeId)
+              if (!exists) {
+                acc.push({
+                  colorId: inv.colorId,
+                  sizeId: inv.sizeId,
+                  stock: inv.stock
+                })
+              }
+              return acc
+            }, [])
         } : undefined,
-        sizes: sizes ? {
-          create: sizes.map((size: { sizeId: number, stock: number }) => ({
-            sizeId: size.sizeId,
-            stock: size.stock || 0
-          }))
+        sizeGuides: sizeGuides ? {
+          create: sizeGuides
+            .filter((guide: any) => guide.centimeters > 0) // Only create guides with valid measurements
+            .map((guide: { sizeId: number, centimeters: number }) => ({
+              sizeId: guide.sizeId,
+              centimeters: parseFloat(guide.centimeters.toString())
+            }))
         } : undefined
       },
       include: {
         category: true,
         galleryImages: { orderBy: { displayOrder: 'asc' } },
-        colors: { include: { color: true } },
-        sizes: { include: { size: true } }
+        productInventories: { 
+          include: { 
+            color: true,
+            size: true 
+          } 
+        },
+        sizeGuides: { include: { size: true } }
       }
     })
 

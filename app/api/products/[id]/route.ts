@@ -24,8 +24,13 @@ export async function GET(
       include: {
         category: true,
         galleryImages: { orderBy: { displayOrder: 'asc' } },
-        colors: { include: { color: true } },
-        sizes: { include: { size: true } }
+        productInventories: { 
+          include: { 
+            color: true,
+            size: true 
+          } 
+        },
+        sizeGuides: { include: { size: true } }
       }
     })
 
@@ -36,7 +41,26 @@ export async function GET(
       )
     }
 
-    return NextResponse.json(product)
+    // Transform product to include legacy structure for backward compatibility
+    const transformedProduct = {
+      ...product,
+      // Legacy fields for backward compatibility
+      colors: [...new Set(product.productInventories?.map(inv => inv.color.name) || [])],
+      sizes: [...new Set(product.productInventories?.map(inv => inv.size.value) || [])].sort((a, b) => a - b),
+      colorStock: product.productInventories ? 
+        [...new Set(product.productInventories.map(inv => inv.color.name))].map(colorName => ({
+          color: colorName,
+          stock: product.productInventories
+            .filter(inv => inv.color.name === colorName)
+            .reduce((total, inv) => total + inv.stock, 0)
+        })) : [],
+      sizeGuide: product.sizeGuides?.map(sg => ({
+        size: sg.size.value,
+        centimeters: sg.centimeters
+      })) || []
+    }
+
+    return NextResponse.json(transformedProduct)
   } catch (error) {
     console.error('Error fetching product:', error)
     return NextResponse.json(

@@ -10,6 +10,7 @@ import { Card, CardContent, CardFooter } from './ui/card'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import AddToCartDialogShadcn from './AddToCartDialogShadcn'
+import StockIndicator from './StockIndicator'
 
 export default function ProductCardShadcn({ product, className = '' }: ProductCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -93,7 +94,7 @@ export default function ProductCardShadcn({ product, className = '' }: ProductCa
           </Link>
 
           {/* Colors Preview - Fixed height container */}
-          <div className="mb-3 min-h-[1.25rem] flex items-center gap-2">
+          <div className="mb-2 min-h-[1.25rem] flex items-center gap-2">
             {product.colors && product.colors.length > 0 ? (
               <>
                 <span className="text-xs text-muted-foreground">Colors:</span>
@@ -115,6 +116,13 @@ export default function ProductCardShadcn({ product, className = '' }: ProductCa
               <span className="text-xs text-muted-foreground opacity-0">No colors</span>
             )}
           </div>
+
+          {/* Stock Indicator */}
+          {product.colorStock && (
+            <div className="mb-3 min-h-[1.25rem] flex items-center">
+              <StockIndicator colorStock={product.colorStock} size="sm" />
+            </div>
+          )}
 
           {/* Size Range - Fixed height container */}
           <div className="mb-3 min-h-[1.25rem] flex items-center">

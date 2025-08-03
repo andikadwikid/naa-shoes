@@ -147,6 +147,24 @@ exports.Prisma.SizeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SizeTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  isActive: 'isActive',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SizeTemplateItemScalarFieldEnum = {
+  id: 'id',
+  centimeters: 'centimeters',
+  sizeTemplateId: 'sizeTemplateId',
+  sizeId: 'sizeId'
+};
+
 exports.Prisma.BrandScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -189,15 +207,17 @@ exports.Prisma.ProductImageScalarFieldEnum = {
   productId: 'productId'
 };
 
-exports.Prisma.ProductColorScalarFieldEnum = {
-  id: 'id',
-  productId: 'productId',
-  colorId: 'colorId'
-};
-
-exports.Prisma.ProductSizeScalarFieldEnum = {
+exports.Prisma.ProductInventoryScalarFieldEnum = {
   id: 'id',
   stock: 'stock',
+  productId: 'productId',
+  colorId: 'colorId',
+  sizeId: 'sizeId'
+};
+
+exports.Prisma.SizeGuideScalarFieldEnum = {
+  id: 'id',
+  centimeters: 'centimeters',
   productId: 'productId',
   sizeId: 'sizeId'
 };
@@ -322,11 +342,13 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Color: 'Color',
   Size: 'Size',
+  SizeTemplate: 'SizeTemplate',
+  SizeTemplateItem: 'SizeTemplateItem',
   Brand: 'Brand',
   Product: 'Product',
   ProductImage: 'ProductImage',
-  ProductColor: 'ProductColor',
-  ProductSize: 'ProductSize',
+  ProductInventory: 'ProductInventory',
+  SizeGuide: 'SizeGuide',
   Customer: 'Customer',
   Order: 'Order',
   OrderItem: 'OrderItem',

@@ -129,6 +129,7 @@ const navigation = [
       { name: "Brands", href: "/admin/master/brands" },
       { name: "Colors", href: "/admin/master/colors" },
       { name: "Sizes", href: "/admin/master/sizes" },
+      { name: "Size Templates", href: "/admin/master/size-templates" },
     ],
   },
   {

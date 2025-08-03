@@ -23,8 +23,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<Pa
         category: true,
         brand: true,
         galleryImages: { orderBy: { displayOrder: 'asc' } },
-        colors: { include: { color: true } },
-        sizes: { include: { size: true } }
+        productInventories: { 
+          include: { 
+            color: true,
+            size: true 
+          } 
+        },
+        sizeGuides: { include: { size: true } }
       }
     })
 
@@ -70,8 +75,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       isActive,
       material,
       weight,
-      colors,
-      sizes,
+      productInventories,
+      sizeGuides,
       thumbnailUrl,
       galleryImages
     } = body
@@ -134,43 +139,52 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
         category: true,
         brand: true,
         galleryImages: { orderBy: { displayOrder: 'asc' } },
-        colors: { include: { color: true } },
-        sizes: { include: { size: true } }
+        productInventories: { 
+          include: { 
+            color: true,
+            size: true 
+          } 
+        },
+        sizeGuides: { include: { size: true } }
       }
     })
 
-    // Handle colors update if provided
-    if (colors && Array.isArray(colors)) {
-      // Delete existing colors
-      await prisma.productColor.deleteMany({
+    // Handle product inventories update if provided
+    if (productInventories && Array.isArray(productInventories)) {
+      // Delete existing inventories
+      await prisma.productInventory.deleteMany({
         where: { productId: id }
       })
 
-      // Add new colors
-      if (colors.length > 0) {
-        await prisma.productColor.createMany({
-          data: colors.map((colorId: number) => ({
+      // Add new inventories (only those with stock > 0)
+      const validInventories = productInventories.filter((inv: any) => inv.stock > 0)
+      if (validInventories.length > 0) {
+        await prisma.productInventory.createMany({
+          data: validInventories.map((inv: { colorId: number, sizeId: number, stock: number }) => ({
             productId: id,
-            colorId
+            colorId: inv.colorId,
+            sizeId: inv.sizeId,
+            stock: inv.stock
           }))
         })
       }
     }
 
-    // Handle sizes update if provided
-    if (sizes && Array.isArray(sizes)) {
-      // Delete existing sizes
-      await prisma.productSize.deleteMany({
+    // Handle size guides update if provided
+    if (sizeGuides && Array.isArray(sizeGuides)) {
+      // Delete existing size guides
+      await prisma.sizeGuide.deleteMany({
         where: { productId: id }
       })
 
-      // Add new sizes
-      if (sizes.length > 0) {
-        await prisma.productSize.createMany({
-          data: sizes.map((size: { sizeId: number, stock: number }) => ({
+      // Add new size guides (only those with valid measurements)
+      const validGuides = sizeGuides.filter((guide: any) => guide.centimeters > 0)
+      if (validGuides.length > 0) {
+        await prisma.sizeGuide.createMany({
+          data: validGuides.map((guide: { sizeId: number, centimeters: number }) => ({
             productId: id,
-            sizeId: size.sizeId,
-            stock: size.stock || 0
+            sizeId: guide.sizeId,
+            centimeters: parseFloat(guide.centimeters.toString())
           }))
         })
       }
@@ -197,7 +211,24 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       }
     }
 
-    return NextResponse.json(product)
+    // Fetch updated product with all relations
+    const updatedProduct = await prisma.product.findUnique({
+      where: { id },
+      include: {
+        category: true,
+        brand: true,
+        galleryImages: { orderBy: { displayOrder: 'asc' } },
+        productInventories: { 
+          include: { 
+            color: true,
+            size: true 
+          } 
+        },
+        sizeGuides: { include: { size: true } }
+      }
+    })
+
+    return NextResponse.json(updatedProduct)
   } catch (error) {
     console.error('Error updating product:', error)
     return NextResponse.json(

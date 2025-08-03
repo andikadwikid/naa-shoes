@@ -12,16 +12,16 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
   const product = await prisma.product.findUnique({
     where: { id: parseInt(id) },
     include: {
-      colors: {
-        include: {
-          color: true
-        }
+      category: true,
+      brand: true,
+      galleryImages: { orderBy: { displayOrder: 'asc' } },
+      productInventories: { 
+        include: { 
+          color: true,
+          size: true 
+        } 
       },
-      sizes: {
-        include: {
-          size: true
-        }
-      }
+      sizeGuides: { include: { size: true } }
     }
   })
 
@@ -44,6 +44,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
             description: product.description,
             price: product.price,
             originalPrice: product.originalPrice,
+            thumbnailUrl: product.thumbnailUrl,
             categoryId: product.categoryId,
             brandId: product.brandId,
             isNew: product.isNew,

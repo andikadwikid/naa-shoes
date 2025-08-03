@@ -58,14 +58,13 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Filter by search (SQLite doesn't fully support mode: 'insensitive', so we'll handle case sensitivity in application)
+    // Filter by search with case-insensitive matching
     if (search) {
-      const searchLower = search.toLowerCase()
       andConditions.push({
         OR: [
-          { name: { contains: search } },
-          { description: { contains: search } },
-          { category: { name: { contains: search } } }
+          { name: { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+          { category: { name: { contains: search, mode: 'insensitive' } } }
         ]
       })
     }
@@ -91,8 +90,13 @@ export async function GET(request: NextRequest) {
       include: {
         category: true,
         galleryImages: { orderBy: { displayOrder: 'asc' } },
-        colors: { include: { color: true } },
-        sizes: { include: { size: true } }
+        productInventories: { 
+          include: { 
+            color: true,
+            size: true 
+          } 
+        },
+        sizeGuides: { include: { size: true } }
       }
     }
 
@@ -106,9 +110,28 @@ export async function GET(request: NextRequest) {
       queryOptions.skip = parseInt(offset)
     }
 
-    const products = await prisma.product.findMany(queryOptions)
+    const products = await prisma.product.findMany(queryOptions) as any[]
 
-    return NextResponse.json(products)
+    // Transform products to include legacy structure for backward compatibility
+    const transformedProducts = products.map((product: any) => ({
+      ...product,
+      // Legacy fields for backward compatibility
+      colors: [...new Set(product.productInventories?.map((inv: any) => inv.color.name) || [])],
+      sizes: ([...new Set(product.productInventories?.map((inv: any) => inv.size.value) || [])] as number[]).sort((a: number, b: number) => a - b),
+      colorStock: product.productInventories ?
+        ([...new Set(product.productInventories.map((inv: any) => inv.color.name))] as string[]).map((colorName: string) => ({
+          color: colorName,
+          stock: product.productInventories
+            .filter((inv: any) => inv.color.name === colorName)
+            .reduce((total: number, inv: any) => total + inv.stock, 0)
+        })) : [],
+      sizeGuide: product.sizeGuides?.map((sg: any) => ({
+        size: sg.size.value,
+        centimeters: sg.centimeters
+      })) || []
+    }))
+
+    return NextResponse.json(transformedProducts)
   } catch (error) {
     console.error('Error fetching products:', error)
     return NextResponse.json(

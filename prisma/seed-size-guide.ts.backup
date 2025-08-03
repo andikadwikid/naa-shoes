@@ -1,0 +1,84 @@
+import { PrismaClient } from '../app/generated/prisma'
+
+const prisma = new PrismaClient()
+
+async function seedSizeGuidesAndColorStock() {
+  console.log('Seeding size guides and color stock...')
+
+  try {
+    // Get all products
+    const products = await prisma.product.findMany({
+      include: {
+        colors: { include: { color: true } },
+        sizes: { include: { size: true } }
+      }
+    })
+
+    console.log(`Found ${products.length} products to update`)
+
+    for (const product of products) {
+      console.log(`Updating product: ${product.name}`)
+
+      // Update color stock for each product color
+      for (const productColor of product.colors) {
+        const randomStock = Math.floor(Math.random() * 50) + 5 // Random stock between 5-55
+        await prisma.productColor.update({
+          where: { id: productColor.id },
+          data: { stock: randomStock }
+        })
+        console.log(`  Updated color ${productColor.color.name} stock to ${randomStock}`)
+      }
+
+      // Create size guides for each product size
+      for (const productSize of product.sizes) {
+        const sizeValue = productSize.size.value
+        // Calculate centimeters based on shoe size formula
+        // Rough formula: EU size = (foot length in cm * 1.5) + 2
+        // So foot length = (EU size - 2) / 1.5
+        const centimeters = Math.round(((sizeValue - 2) / 1.5) * 10) / 10 // Round to 1 decimal
+
+        try {
+          await prisma.sizeGuide.create({
+            data: {
+              productId: product.id,
+              sizeId: productSize.sizeId,
+              centimeters: centimeters
+            }
+          })
+          console.log(`  Created size guide for size ${sizeValue}: ${centimeters}cm`)
+        } catch (error) {
+          // If size guide already exists, update it
+          try {
+            await prisma.sizeGuide.updateMany({
+              where: {
+                productId: product.id,
+                sizeId: productSize.sizeId
+              },
+              data: { centimeters: centimeters }
+            })
+            console.log(`  Updated size guide for size ${sizeValue}: ${centimeters}cm`)
+          } catch (updateError) {
+            console.error(`  Error updating size guide for product ${product.id}, size ${sizeValue}:`, updateError)
+          }
+        }
+      }
+
+      console.log(`✓ Completed product: ${product.name}`)
+    }
+
+    console.log('✅ Size guides and color stock seeding completed!')
+  } catch (error) {
+    console.error('❌ Error seeding size guides and color stock:', error)
+    throw error
+  }
+}
+
+// Run the seed function
+seedSizeGuidesAndColorStock()
+  .catch((e) => {
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })

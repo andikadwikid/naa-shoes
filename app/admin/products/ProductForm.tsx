@@ -39,6 +39,13 @@ interface GalleryImage {
   caption?: string
 }
 
+// New inventory structure for color-size-stock combination
+interface ProductInventoryItem {
+  colorId: number
+  sizeId: number
+  stock: number
+}
+
 interface ProductFormProps {
   product?: {
     id: number
@@ -76,8 +83,11 @@ export default function ProductForm({ product }: ProductFormProps) {
   const [brands, setBrands] = useState<Brand[]>([])
   const [colors, setColors] = useState<Color[]>([])
   const [sizes, setSizes] = useState<Size[]>([])
+  const [sizeTemplates, setSizeTemplates] = useState<any[]>([])
   const [selectedColors, setSelectedColors] = useState<number[]>([])
-  const [selectedSizes, setSelectedSizes] = useState<{sizeId: number, stock: number}[]>([])
+  const [selectedSizes, setSelectedSizes] = useState<number[]>([])
+  const [productInventories, setProductInventories] = useState<ProductInventoryItem[]>([])
+  const [selectedSizeGuides, setSelectedSizeGuides] = useState<{sizeId: number, centimeters: number}[]>([])
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(product?.thumbnailUrl || null)
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -94,28 +104,31 @@ export default function ProductForm({ product }: ProductFormProps) {
 
       try {
         // Load master data
-        const [categoriesRes, brandsRes, colorsRes, sizesRes] = await Promise.all([
+        const [categoriesRes, brandsRes, colorsRes, sizesRes, templatesRes] = await Promise.all([
           fetch('/api/admin/categories'),
           fetch('/api/admin/brands'),
           fetch('/api/admin/colors'),
-          fetch('/api/admin/sizes')
+          fetch('/api/admin/sizes'),
+          fetch('/api/admin/size-templates?include=items')
         ])
 
         if (!categoriesRes.ok || !brandsRes.ok || !colorsRes.ok || !sizesRes.ok) {
           throw new Error('Failed to load master data')
         }
 
-        const [categoriesData, brandsData, colorsData, sizesData] = await Promise.all([
+        const [categoriesData, brandsData, colorsData, sizesData, templatesData] = await Promise.all([
           categoriesRes.json(),
           brandsRes.json(),
           colorsRes.json(),
-          sizesRes.json()
+          sizesRes.json(),
+          templatesRes.ok ? templatesRes.json() : []
         ])
 
         setCategories(categoriesData)
         setBrands(brandsData)
         setColors(colorsData)
         setSizes(sizesData)
+        setSizeTemplates(templatesData)
 
         // Load existing product data if in edit mode
         if (product?.id) {
@@ -123,16 +136,26 @@ export default function ProductForm({ product }: ProductFormProps) {
           if (response.ok) {
             const productData = await response.json()
 
-            // Set existing colors
-            if (productData.colors) {
-              setSelectedColors(productData.colors.map((pc: any) => pc.colorId))
+            // Set existing inventories (color-size-stock combinations)
+            if (productData.productInventories) {
+              setProductInventories(productData.productInventories.map((pi: any) => ({
+                colorId: pi.colorId,
+                sizeId: pi.sizeId,
+                stock: pi.stock
+              })))
+
+              // Extract unique colors and sizes
+              const uniqueColors = [...new Set(productData.productInventories.map((pi: any) => pi.colorId))] as number[]
+              const uniqueSizes = [...new Set(productData.productInventories.map((pi: any) => pi.sizeId))] as number[]
+              setSelectedColors(uniqueColors)
+              setSelectedSizes(uniqueSizes)
             }
 
-            // Set existing sizes with stock
-            if (productData.sizes) {
-              setSelectedSizes(productData.sizes.map((ps: any) => ({
-                sizeId: ps.sizeId,
-                stock: ps.stock
+            // Set existing size guides
+            if (productData.sizeGuides) {
+              setSelectedSizeGuides(productData.sizeGuides.map((sg: any) => ({
+                sizeId: sg.sizeId,
+                centimeters: sg.centimeters
               })))
             }
 
@@ -187,8 +210,8 @@ export default function ProductForm({ product }: ProductFormProps) {
         brandId: formData.brandId ? parseInt(formData.brandId) : null,
         weight: formData.weight ? parseFloat(formData.weight) : null,
         thumbnailUrl,
-        colors: selectedColors,
-        sizes: selectedSizes,
+        productInventories,
+        sizeGuides: selectedSizeGuides,
         galleryImages: galleryImages.map(img => ({
           url: img.url,
           altText: img.altText || formData.name,
@@ -229,26 +252,143 @@ export default function ProductForm({ product }: ProductFormProps) {
   }
 
   const handleColorToggle = (colorId: number) => {
-    setSelectedColors(prev => 
-      prev.includes(colorId) 
-        ? prev.filter(id => id !== colorId)
-        : [...prev, colorId]
-    )
+    setSelectedColors(prev => {
+      const isSelected = prev.includes(colorId)
+      if (isSelected) {
+        // Remove color and all its inventory entries
+        setProductInventories(prevInventories => 
+          prevInventories.filter(pi => pi.colorId !== colorId)
+        )
+        return prev.filter(id => id !== colorId)
+      } else {
+        // Add color and create inventory entries for all selected sizes
+        const newInventories: ProductInventoryItem[] = selectedSizes.map(sizeId => ({
+          colorId,
+          sizeId,
+          stock: 0
+        }))
+        setProductInventories(prev => [...prev, ...newInventories])
+        return [...prev, colorId]
+      }
+    })
   }
 
-  const handleSizeStockChange = (sizeId: number, stock: number) => {
+  const handleSizeToggle = (sizeId: number) => {
     setSelectedSizes(prev => {
-      const existing = prev.find(s => s.sizeId === sizeId)
+      const isSelected = prev.includes(sizeId)
+      if (isSelected) {
+        // Remove size and all its inventory entries
+        setProductInventories(prevInventories => 
+          prevInventories.filter(pi => pi.sizeId !== sizeId)
+        )
+        return prev.filter(id => id !== sizeId)
+      } else {
+        // Add size and create inventory entries for all selected colors
+        const newInventories: ProductInventoryItem[] = selectedColors.map(colorId => ({
+          colorId,
+          sizeId,
+          stock: 0
+        }))
+        setProductInventories(prev => [...prev, ...newInventories])
+        return [...prev, sizeId]
+      }
+    })
+  }
+
+  const handleInventoryStockChange = (colorId: number, sizeId: number, stock: number) => {
+    setProductInventories(prev => {
+      const existing = prev.find(pi => pi.colorId === colorId && pi.sizeId === sizeId)
       if (existing) {
-        if (stock === 0) {
-          return prev.filter(s => s.sizeId !== sizeId)
+        return prev.map(pi => 
+          pi.colorId === colorId && pi.sizeId === sizeId 
+            ? { ...pi, stock } 
+            : pi
+        )
+      } else {
+        return [...prev, { colorId, sizeId, stock }]
+      }
+    })
+  }
+
+  const handleSizeGuideChange = (sizeId: number, centimeters: number) => {
+    setSelectedSizeGuides(prev => {
+      const existing = prev.find(sg => sg.sizeId === sizeId)
+      if (existing) {
+        if (centimeters === 0) {
+          return prev.filter(sg => sg.sizeId !== sizeId)
         }
-        return prev.map(s => s.sizeId === sizeId ? { ...s, stock } : s)
-      } else if (stock > 0) {
-        return [...prev, { sizeId, stock }]
+        return prev.map(sg => sg.sizeId === sizeId ? { ...sg, centimeters } : sg)
+      } else if (centimeters > 0) {
+        return [...prev, { sizeId, centimeters }]
       }
       return prev
     })
+  }
+
+  // Database template functions
+  const calculateStandardSizeGuide = (euSize: number): number => {
+    // Standard EU formula: (EU Size - 2) ÷ 1.5
+    return parseFloat(((euSize - 2) / 1.5).toFixed(1))
+  }
+
+  const handleApplyDatabaseTemplate = (templateId: number) => {
+    const template = sizeTemplates.find(t => t.id === templateId)
+    if (!template || !template.sizeTemplateItems) return
+
+    const newSizeGuides: {sizeId: number, centimeters: number}[] = []
+
+    selectedSizes.forEach(sizeId => {
+      const templateItem = template.sizeTemplateItems.find((item: any) => item.sizeId === sizeId)
+      if (templateItem) {
+        newSizeGuides.push({
+          sizeId,
+          centimeters: templateItem.centimeters
+        })
+      }
+    })
+
+    setSelectedSizeGuides(newSizeGuides)
+    console.log(`✅ Applied "${template.name}" template to ${newSizeGuides.length} sizes`)
+  }
+
+  const handleApplyDefaultTemplate = () => {
+    const defaultTemplate = sizeTemplates.find(t => t.isDefault)
+    if (defaultTemplate) {
+      handleApplyDatabaseTemplate(defaultTemplate.id)
+    } else {
+      // Fallback to standard calculation if no default template
+      const newSizeGuides: {sizeId: number, centimeters: number}[] = []
+      selectedSizes.forEach(sizeId => {
+        const size = sizes.find(s => s.id === sizeId)
+        if (size) {
+          const centimeters = calculateStandardSizeGuide(size.value)
+          newSizeGuides.push({ sizeId, centimeters })
+        }
+      })
+      setSelectedSizeGuides(newSizeGuides)
+      console.log(`✅ Applied standard formula to ${newSizeGuides.length} sizes`)
+    }
+  }
+
+  const handleClearSizeGuides = () => {
+    setSelectedSizeGuides([])
+  }
+
+  const getInventoryStock = (colorId: number, sizeId: number) => {
+    const inventory = productInventories.find(pi => pi.colorId === colorId && pi.sizeId === sizeId)
+    return inventory?.stock || 0
+  }
+
+  const getTotalStockForColor = (colorId: number) => {
+    return productInventories
+      .filter(pi => pi.colorId === colorId)
+      .reduce((total, pi) => total + pi.stock, 0)
+  }
+
+  const getTotalStockForSize = (sizeId: number) => {
+    return productInventories
+      .filter(pi => pi.sizeId === sizeId)
+      .reduce((total, pi) => total + pi.stock, 0)
   }
 
   if (isLoading) {
@@ -438,55 +578,323 @@ export default function ProductForm({ product }: ProductFormProps) {
         />
       </div>
 
-      {/* Colors */}
+      {/* Colors Selection */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Available Colors
         </label>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {colors.map(color => (
-            <label key={color.id} className="flex items-center space-x-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={selectedColors.includes(color.id)}
-                onChange={() => handleColorToggle(color.id)}
-                className="rounded border-gray-300 text-pink-600 focus:ring-pink-500"
-              />
-              <div className="flex items-center space-x-2">
-                <div 
-                  className="w-4 h-4 rounded-full border border-gray-300"
-                  style={{ backgroundColor: color.hexCode }}
-                />
-                <span className="text-sm">{color.name}</span>
+          {colors.map(color => {
+            const isSelected = selectedColors.includes(color.id)
+            const totalStock = getTotalStockForColor(color.id)
+
+            return (
+              <div key={color.id} className="border border-gray-200 rounded-lg p-3">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => handleColorToggle(color.id)}
+                    className="rounded border-gray-300 text-pink-600 focus:ring-pink-500"
+                  />
+                  <div className="flex items-center space-x-2">
+                    <div
+                      className="w-4 h-4 rounded-full border border-gray-300"
+                      style={{ backgroundColor: color.hexCode }}
+                    />
+                    <span className="text-sm font-medium">{color.name}</span>
+                  </div>
+                </label>
+                {isSelected && (
+                  <div className="mt-1 text-xs text-gray-500">
+                    Total stock: {totalStock}
+                  </div>
+                )}
               </div>
-            </label>
-          ))}
+            )
+          })}
         </div>
       </div>
 
-      {/* Sizes & Stock */}
+      {/* Sizes Selection */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Sizes & Stock
+          Available Sizes
         </label>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-          {sizes.map(size => (
-            <div key={size.id} className="space-y-1">
-              <label className="block text-sm font-medium text-gray-700">
-                Size {size.value}
-              </label>
-              <input
-                type="number"
-                min="0"
-                placeholder="Stock"
-                value={selectedSizes.find(s => s.sizeId === size.id)?.stock || ''}
-                onChange={(e) => handleSizeStockChange(size.id, parseInt(e.target.value) || 0)}
-                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-              />
-            </div>
-          ))}
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+          {sizes.map(size => {
+            const isSelected = selectedSizes.includes(size.id)
+            const totalStock = getTotalStockForSize(size.id)
+
+            return (
+              <div key={size.id} className="border border-gray-200 rounded-lg p-2 text-center">
+                <label className="cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => handleSizeToggle(size.id)}
+                    className="sr-only"
+                  />
+                  <div className={`text-sm font-medium py-1 rounded ${
+                    isSelected 
+                      ? 'bg-pink-100 text-pink-700 border-pink-300' 
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}>
+                    {size.value}
+                  </div>
+                </label>
+                {isSelected && (
+                  <div className="text-xs text-gray-500 mt-1">
+                    Stock: {totalStock}
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
+
+      {/* Inventory Matrix (Color x Size x Stock) */}
+      {selectedColors.length > 0 && selectedSizes.length > 0 && (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-4">
+            Inventory Management (Stock per Color-Size Combination)
+          </label>
+          
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-200 rounded-lg">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200">
+                    Color / Size
+                  </th>
+                  {selectedSizes.map(sizeId => {
+                    const size = sizes.find(s => s.id === sizeId)
+                    return (
+                      <th key={sizeId} className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200">
+                        {size?.value}
+                      </th>
+                    )
+                  })}
+                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {selectedColors.map(colorId => {
+                  const color = colors.find(c => c.id === colorId)
+                  const totalForColor = getTotalStockForColor(colorId)
+                  
+                  return (
+                    <tr key={colorId}>
+                      <td className="px-4 py-2 border-r border-gray-200">
+                        <div className="flex items-center space-x-2">
+                          <div
+                            className="w-4 h-4 rounded-full border border-gray-300"
+                            style={{ backgroundColor: color?.hexCode }}
+                          />
+                          <span className="text-sm font-medium">{color?.name}</span>
+                        </div>
+                      </td>
+                      {selectedSizes.map(sizeId => (
+                        <td key={`${colorId}-${sizeId}`} className="px-3 py-2 text-center border-r border-gray-200">
+                          <input
+                            type="number"
+                            min="0"
+                            placeholder="0"
+                            value={getInventoryStock(colorId, sizeId) || ''}
+                            onChange={(e) => handleInventoryStockChange(colorId, sizeId, parseInt(e.target.value) || 0)}
+                            className="w-16 px-2 py-1 text-sm text-center border border-gray-300 rounded focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                          />
+                        </td>
+                      ))}
+                      <td className="px-3 py-2 text-center text-sm font-medium text-gray-700">
+                        {totalForColor}
+                      </td>
+                    </tr>
+                  )
+                })}
+                <tr className="bg-gray-50 font-medium">
+                  <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-200">
+                    Total
+                  </td>
+                  {selectedSizes.map(sizeId => (
+                    <td key={sizeId} className="px-3 py-2 text-center text-sm text-gray-700 border-r border-gray-200">
+                      {getTotalStockForSize(sizeId)}
+                    </td>
+                  ))}
+                  <td className="px-3 py-2 text-center text-sm font-bold text-gray-700">
+                    {productInventories.reduce((total, pi) => total + pi.stock, 0)}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Size Guides with Templates */}
+      {selectedSizes.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Size Guide (Foot Length in Centimeters)
+              </label>
+
+              {/* Progress Indicator */}
+              <div className="flex items-center gap-2">
+                <div className="text-xs text-gray-500">
+                  {selectedSizeGuides.filter(sg => sg.centimeters > 0).length} / {selectedSizes.length} configured
+                </div>
+                <div className="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-green-500 transition-all duration-300"
+                    style={{
+                      width: `${selectedSizes.length > 0 ? (selectedSizeGuides.filter(sg => sg.centimeters > 0).length / selectedSizes.length) * 100 : 0}%`
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Template Actions */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <select
+                onChange={(e) => {
+                  if (e.target.value) {
+                    handleApplyDatabaseTemplate(parseInt(e.target.value))
+                    e.target.value = '' // Reset select
+                  }
+                }}
+                className="text-xs px-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white"
+                title="Choose a template to auto-fill size guides"
+              >
+                <option value="">📐 Choose Template</option>
+                {sizeTemplates.map(template => (
+                  <option key={template.id} value={template.id}>
+                    {template.isDefault ? '⭐ ' : ''}{template.name}
+                    {template.category ? ` (${template.category})` : ''}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                type="button"
+                onClick={handleApplyDefaultTemplate}
+                className="text-xs px-3 py-1.5 bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-colors font-medium"
+                title="Quick apply default template"
+              >
+                ⚡ Apply Default
+              </button>
+
+              <button
+                type="button"
+                onClick={handleClearSizeGuides}
+                className="text-xs px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                title="Clear all size guide values"
+              >
+                🗑️ Clear All
+              </button>
+            </div>
+          </div>
+
+          {/* Size Guide Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {selectedSizes.map(sizeId => {
+              const size = sizes.find(s => s.id === sizeId)
+              const guideValue = selectedSizeGuides.find(sg => sg.sizeId === sizeId)?.centimeters || 0
+
+              return (
+                <div key={sizeId} className="border border-gray-200 rounded-lg p-3 bg-white">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Size {size?.value}
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    placeholder="0.0"
+                    value={guideValue || ''}
+                    onChange={(e) => handleSizeGuideChange(sizeId, parseFloat(e.target.value) || 0)}
+                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  />
+                  <div className="text-xs text-gray-500 mt-1">cm</div>
+
+                  {/* Quick preset buttons for individual sizes */}
+                  <div className="flex gap-1 mt-2">
+                    <button
+                      type="button"
+                      onClick={() => handleSizeGuideChange(sizeId, calculateStandardSizeGuide(size?.value || 0))}
+                      className="text-xs px-1 py-0.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition-colors"
+                      title="Apply standard formula"
+                    >
+                      Std
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSizeGuideChange(sizeId, 0)}
+                      className="text-xs px-1 py-0.5 bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors"
+                      title="Clear this size"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Smart Suggestions & Template Info */}
+          <div className="mt-4 space-y-3">
+            {/* Smart Suggestions based on Category */}
+            {formData.categoryId && (
+              <div className="p-3 bg-green-50 rounded-lg border-l-4 border-green-400">
+                <h4 className="text-sm font-medium text-green-900 mb-1">💡 Smart Suggestion:</h4>
+                <p className="text-xs text-green-800">
+                  {(() => {
+                    const category = categories.find(c => c.id.toString() === formData.categoryId)?.name.toLowerCase()
+                    if (category?.includes('heel') || category?.includes('high')) {
+                      return 'For high heels, consider using "High Heels" template (slightly smaller for better fit)'
+                    } else if (category?.includes('sneaker') || category?.includes('sport')) {
+                      return 'For sneakers, use "Sneakers" template (slightly larger for comfort during activities)'
+                    } else if (category?.includes('boot')) {
+                      return 'For boots, "Boots" template works well (standard sizing with ankle support)'
+                    } else if (category?.includes('flat')) {
+                      return 'For flats, "Standard EU" or "Narrow Fit" templates usually work best'
+                    }
+                    return 'Based on your category, "Standard EU" template is recommended as starting point'
+                  })()}
+                </p>
+              </div>
+            )}
+
+            {/* Template Info */}
+            <div className="p-3 bg-blue-50 rounded-lg">
+              <h4 className="text-sm font-medium text-blue-900 mb-2">📏 Size Guide Templates:</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-blue-800">
+                <div>
+                  <strong>📏 Standard EU:</strong> (Size - 2) ÷ 1.5 <br/>
+                  <strong>👠 Narrow Fit:</strong> Standard - 0.2cm <br/>
+                  <strong>👟 Wide Fit:</strong> Standard + 0.3cm
+                </div>
+                <div>
+                  <strong>💃 High Heels:</strong> Standard - 0.1cm <br/>
+                  <strong>🏃 Sneakers:</strong> Standard + 0.2cm <br/>
+                  <strong>🥾 Boots:</strong> Standard sizing
+                </div>
+              </div>
+              <div className="mt-2 p-2 bg-blue-100 rounded text-xs text-blue-900">
+                <strong>🎯 Pro Tip:</strong> Start with a template, then fine-tune individual sizes.
+                Most customers measure 0.5-1cm longer than their actual foot length for comfort.
+                <br/>
+                <strong>Example:</strong> Size 38 Standard = (38 - 2) ÷ 1.5 = 24.0 cm
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Status Flags */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -36,7 +36,7 @@ model Color {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  productColors ProductColor[]
+  productInventories ProductInventory[]
 
   @@map("colors")
 }
@@ -48,9 +48,40 @@ model Size {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  productSizes ProductSize[]
+  productInventories ProductInventory[]
+  sizeGuides         SizeGuide[]
+  sizeTemplateItems  SizeTemplateItem[]
 
   @@map("sizes")
+}
+
+model SizeTemplate {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  category    String? // Optional category filter (heels, sneakers, boots, etc.)
+  isActive    Boolean  @default(true)
+  isDefault   Boolean  @default(false) // Mark as default template
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  sizeTemplateItems SizeTemplateItem[]
+
+  @@map("size_templates")
+}
+
+model SizeTemplateItem {
+  id         Int   @id @default(autoincrement())
+  centimeters Float // Foot length in centimeters for this size
+
+  sizeTemplateId Int
+  sizeTemplate   SizeTemplate @relation(fields: [sizeTemplateId], references: [id], onDelete: Cascade)
+
+  sizeId Int
+  size   Size @relation(fields: [sizeId], references: [id])
+
+  @@unique([sizeTemplateId, sizeId])
+  @@map("size_template_items")
 }
 
 model Brand {
@@ -94,11 +125,11 @@ model Product {
   brandId Int?
   brand   Brand? @relation(fields: [brandId], references: [id])
 
-  galleryImages ProductImage[] @relation("ProductGallery")
-  colors        ProductColor[]
-  sizes         ProductSize[]
-  reviews       Review[]
-  orderItems    OrderItem[]
+  galleryImages      ProductImage[]     @relation("ProductGallery")
+  productInventories ProductInventory[]
+  sizeGuides         SizeGuide[]
+  reviews            Review[]
+  orderItems         OrderItem[]
 
   @@map("products")
 }
@@ -117,8 +148,10 @@ model ProductImage {
   @@map("product_images")
 }
 
-model ProductColor {
-  id Int @id @default(autoincrement())
+// New ProductInventory model to handle color-size-stock combination
+model ProductInventory {
+  id    Int @id @default(autoincrement())
+  stock Int @default(0) // Stock for this specific color-size combination
 
   productId Int
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -126,13 +159,16 @@ model ProductColor {
   colorId Int
   color   Color @relation(fields: [colorId], references: [id])
 
-  @@unique([productId, colorId])
-  @@map("product_colors")
+  sizeId Int
+  size   Size @relation(fields: [sizeId], references: [id])
+
+  @@unique([productId, colorId, sizeId])
+  @@map("product_inventories")
 }
 
-model ProductSize {
-  id    Int @id @default(autoincrement())
-  stock Int @default(0)
+model SizeGuide {
+  id          Int   @id @default(autoincrement())
+  centimeters Float // Size in centimeters (e.g., 24.0 for 24cm)
 
   productId Int
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -141,7 +177,7 @@ model ProductSize {
   size   Size @relation(fields: [sizeId], references: [id])
 
   @@unique([productId, sizeId])
-  @@map("product_sizes")
+  @@map("size_guides")
 }
 
 // Customer and Order Models

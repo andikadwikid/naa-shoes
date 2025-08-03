@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { Check, Minus, Plus } from 'lucide-react'
-import { Product } from '../types/product'
+import { Product, getAvailableColors, getAvailableSizes, getStockForColorSize, getTotalStockForColor, getColorHexCode } from '../types/product'
 import { useCart } from '../hooks/useCart'
 import { useToast } from '../hooks/useToast'
 import { formatCurrency, cn } from '../lib/utils'
@@ -17,6 +17,8 @@ import {
 } from './ui/dialog'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
+import SizeGuide from './SizeGuide'
+import StockIndicator from './StockIndicator'
 
 interface AddToCartDialogShadcnProps {
   open: boolean
@@ -29,13 +31,22 @@ export default function AddToCartDialogShadcn({
   onOpenChange, 
   product 
 }: AddToCartDialogShadcnProps) {
-  const [selectedSize, setSelectedSize] = useState<number>(product.sizes?.[0] || 36)
-  const [selectedColor, setSelectedColor] = useState<string>(product.colors?.[0] || 'Black')
+  const availableColors = getAvailableColors(product)
+  const availableSizes = getAvailableSizes(product)
+  
+  const [selectedSize, setSelectedSize] = useState<number>(availableSizes[0] || 36)
+  const [selectedColor, setSelectedColor] = useState<string>(availableColors[0] || 'Black')
   const [quantity, setQuantity] = useState(1)
   const { addToCart } = useCart()
   const { showToast } = useToast()
 
   const handleAddToCart = () => {
+    const stock = getStockForColorSize(product, selectedColor, selectedSize)
+    if (stock < quantity) {
+      showToast(`Only ${stock} items available for ${selectedColor} in size ${selectedSize}`, 'error')
+      return
+    }
+
     for (let i = 0; i < quantity; i++) {
       addToCart(product, selectedSize, selectedColor)
     }
@@ -44,26 +55,8 @@ export default function AddToCartDialogShadcn({
     setQuantity(1)
   }
 
-  const getColorPreview = (color: string) => {
-    const colorMap: { [key: string]: string } = {
-      'white': '#ffffff',
-      'black': '#000000',
-      'pink': '#ec4899',
-      'rose gold': '#e11d48',
-      'nude': '#d4a574',
-      'coral': '#f97316',
-      'silver': '#9ca3af',
-      'gold': '#fbbf24',
-      'brown': '#92400e',
-      'red': '#ef4444',
-      'blue': '#3b82f6',
-      'green': '#10b981',
-      'purple': '#8b5cf6',
-      'yellow': '#eab308',
-      'orange': '#f97316',
-    }
-    return colorMap[color.toLowerCase()] || '#9ca3af'
-  }
+  const maxQuantity = getStockForColorSize(product, selectedColor, selectedSize)
+  const isOutOfStock = maxQuantity === 0
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -103,97 +96,137 @@ export default function AddToCartDialogShadcn({
           </div>
         </div>
 
-        {/* Size Selection */}
-        {product.sizes && product.sizes.length > 0 && (
-          <div className="space-y-2">
-            <h5 className="text-sm font-medium text-gray-700">Select Size</h5>
-            <div className="grid grid-cols-3 gap-2">
-              {product.sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={`py-2 px-3 text-sm font-medium rounded-lg border-2 transition-colors ${selectedSize === size
-                    ? 'border-pink-600 bg-pink-50 text-pink-600'
-                    : 'border-gray-300 text-gray-700 hover:border-pink-300'
-                    }`}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Color Selection */}
-        {product.colors && product.colors.length > 0 && (
-          <div className="space-y-2">
-            <h5 className="text-sm font-medium text-gray-700">Select Color</h5>
-            <div className="grid grid-cols-1 gap-1.5">
-              {product.colors.map((color) => (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h5 className="text-sm font-medium text-gray-900">Color: {selectedColor}</h5>
+            <span className="text-xs text-gray-500">
+              {getTotalStockForColor(product, selectedColor)} available
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {availableColors.map((color) => {
+              const totalStock = getTotalStockForColor(product, color)
+              const isSelected = selectedColor === color
+              const isAvailable = totalStock > 0
+              
+              return (
                 <button
                   key={color}
-                  onClick={() => setSelectedColor(color)}
-                  className={`py-2 px-3 text-sm font-medium rounded-lg border-2 transition-colors text-left flex items-center gap-2 ${selectedColor === color
-                    ? 'border-pink-600 bg-pink-50 text-pink-600'
-                    : 'border-gray-300 text-gray-700 hover:border-pink-300'
-                    }`}
+                  onClick={() => {
+                    if (isAvailable) {
+                      setSelectedColor(color)
+                      setQuantity(1) // Reset quantity when color changes
+                    }
+                  }}
+                  disabled={!isAvailable}
+                  className={cn(
+                    "flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all",
+                    isSelected && isAvailable
+                      ? "border-pink-300 bg-pink-50 text-pink-700"
+                      : isAvailable
+                      ? "border-gray-200 bg-white text-gray-700 hover:border-pink-200 hover:bg-pink-50"
+                      : "border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed opacity-60"
+                  )}
                 >
                   <div
-                    className="h-3 w-3 rounded-full border border-gray-300 shadow-sm"
-                    style={{ backgroundColor: getColorPreview(color) }}
+                    className="w-4 h-4 rounded-full border border-gray-300"
+                    style={{ backgroundColor: getColorHexCode(product, color) }}
                   />
-                  {color}
-                  {selectedColor === color && (
-                    <Check className="ml-auto h-3 w-3 text-pink-600" />
-                  )}
+                  <span>{color}</span>
+                  {isSelected && <Check className="w-3 h-3" />}
                 </button>
-              ))}
-            </div>
+              )
+            })}
           </div>
-        )}
+        </div>
+
+        {/* Size Selection */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h5 className="text-sm font-medium text-gray-900">Size: {selectedSize}</h5>
+            <SizeGuide sizeGuide={product.sizeGuide || []} productName={product.name} />
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {availableSizes.map((size) => {
+              const stock = getStockForColorSize(product, selectedColor, size)
+              const isSelected = selectedSize === size
+              const isAvailable = stock > 0
+              
+              return (
+                <button
+                  key={size}
+                  onClick={() => {
+                    if (isAvailable) {
+                      setSelectedSize(size)
+                      setQuantity(1) // Reset quantity when size changes
+                    }
+                  }}
+                  disabled={!isAvailable}
+                  className={cn(
+                    "relative p-3 text-sm font-medium rounded-lg border transition-all",
+                    isSelected && isAvailable
+                      ? "border-pink-300 bg-pink-50 text-pink-700"
+                      : isAvailable
+                      ? "border-gray-200 bg-white text-gray-700 hover:border-pink-200 hover:bg-pink-50"
+                      : "border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed"
+                  )}
+                >
+                  {size}
+                  {isSelected && <Check className="w-3 h-3 absolute top-1 right-1" />}
+                  <div className="text-xs text-gray-500 mt-1">
+                    {stock > 0 ? `${stock} left` : 'Out of stock'}
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
 
         {/* Quantity Selection */}
         <div className="space-y-2">
-          <h5 className="text-sm font-medium text-gray-700">Quantity</h5>
-          <div className="flex items-center justify-center gap-3 bg-gray-50 rounded-lg p-2">
+          <div className="flex items-center justify-between">
+            <h5 className="text-sm font-medium text-gray-900">Quantity</h5>
+            <span className="text-xs text-gray-500">
+              {maxQuantity} available
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              disabled={quantity <= 1}
-              className="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-pink-500 hover:bg-pink-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={quantity <= 1 || isOutOfStock}
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
             >
-              <Minus className="h-3 w-3" />
+              <Minus className="w-4 h-4" />
             </button>
-            <span className="w-8 text-center font-semibold text-base text-gray-900">{quantity}</span>
+            <span className="text-lg font-medium min-w-[2rem] text-center">{quantity}</span>
             <button
-              onClick={() => setQuantity(quantity + 1)}
-              className="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-pink-500 hover:bg-pink-50 transition-colors"
+              onClick={() => setQuantity(Math.min(maxQuantity, quantity + 1))}
+              disabled={quantity >= maxQuantity || isOutOfStock}
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
             >
-              <Plus className="h-3 w-3" />
+              <Plus className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {/* Total Price */}
-        <div className="flex items-center justify-between rounded-lg bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200 p-3 shadow-sm">
-          <span className="font-semibold text-gray-700">Total</span>
-          <span className="text-lg font-bold text-pink-600">
-            {formatCurrency(product.price * quantity)}
-          </span>
-        </div>
-
-        <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:gap-2 pt-2">
-          <button
-            onClick={() => onOpenChange(false)}
-            className="order-2 sm:order-1 flex-1 py-2.5 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleAddToCart}
-            className="order-1 sm:order-2 flex-1 py-2.5 px-4 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors font-medium shadow-md hover:shadow-lg"
-          >
-            Add {quantity} to Cart
-          </button>
+        <DialogFooter className="pt-4 border-t border-gray-100">
+          <div className="flex gap-2 w-full">
+            <Button
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAddToCart}
+              disabled={isOutOfStock}
+              className="flex-1 bg-pink-600 hover:bg-pink-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isOutOfStock ? 'Out of Stock' : `Add ${quantity} to Cart`}
+            </Button>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

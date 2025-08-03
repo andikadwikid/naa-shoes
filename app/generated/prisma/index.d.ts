@@ -29,6 +29,16 @@ export type Color = $Result.DefaultSelection<Prisma.$ColorPayload>
  */
 export type Size = $Result.DefaultSelection<Prisma.$SizePayload>
 /**
+ * Model SizeTemplate
+ * 
+ */
+export type SizeTemplate = $Result.DefaultSelection<Prisma.$SizeTemplatePayload>
+/**
+ * Model SizeTemplateItem
+ * 
+ */
+export type SizeTemplateItem = $Result.DefaultSelection<Prisma.$SizeTemplateItemPayload>
+/**
  * Model Brand
  * 
  */
@@ -44,15 +54,15 @@ export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>
  */
 export type ProductImage = $Result.DefaultSelection<Prisma.$ProductImagePayload>
 /**
- * Model ProductColor
+ * Model ProductInventory
  * 
  */
-export type ProductColor = $Result.DefaultSelection<Prisma.$ProductColorPayload>
+export type ProductInventory = $Result.DefaultSelection<Prisma.$ProductInventoryPayload>
 /**
- * Model ProductSize
+ * Model SizeGuide
  * 
  */
-export type ProductSize = $Result.DefaultSelection<Prisma.$ProductSizePayload>
+export type SizeGuide = $Result.DefaultSelection<Prisma.$SizeGuidePayload>
 /**
  * Model Customer
  * 
@@ -276,6 +286,26 @@ export class PrismaClient<
   get size(): Prisma.SizeDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.sizeTemplate`: Exposes CRUD operations for the **SizeTemplate** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SizeTemplates
+    * const sizeTemplates = await prisma.sizeTemplate.findMany()
+    * ```
+    */
+  get sizeTemplate(): Prisma.SizeTemplateDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sizeTemplateItem`: Exposes CRUD operations for the **SizeTemplateItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SizeTemplateItems
+    * const sizeTemplateItems = await prisma.sizeTemplateItem.findMany()
+    * ```
+    */
+  get sizeTemplateItem(): Prisma.SizeTemplateItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.brand`: Exposes CRUD operations for the **Brand** model.
     * Example usage:
     * ```ts
@@ -306,24 +336,24 @@ export class PrismaClient<
   get productImage(): Prisma.ProductImageDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.productColor`: Exposes CRUD operations for the **ProductColor** model.
+   * `prisma.productInventory`: Exposes CRUD operations for the **ProductInventory** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ProductColors
-    * const productColors = await prisma.productColor.findMany()
+    * // Fetch zero or more ProductInventories
+    * const productInventories = await prisma.productInventory.findMany()
     * ```
     */
-  get productColor(): Prisma.ProductColorDelegate<ExtArgs, ClientOptions>;
+  get productInventory(): Prisma.ProductInventoryDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.productSize`: Exposes CRUD operations for the **ProductSize** model.
+   * `prisma.sizeGuide`: Exposes CRUD operations for the **SizeGuide** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ProductSizes
-    * const productSizes = await prisma.productSize.findMany()
+    * // Fetch zero or more SizeGuides
+    * const sizeGuides = await prisma.sizeGuide.findMany()
     * ```
     */
-  get productSize(): Prisma.ProductSizeDelegate<ExtArgs, ClientOptions>;
+  get sizeGuide(): Prisma.SizeGuideDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.customer`: Exposes CRUD operations for the **Customer** model.
@@ -857,11 +887,13 @@ export namespace Prisma {
     Category: 'Category',
     Color: 'Color',
     Size: 'Size',
+    SizeTemplate: 'SizeTemplate',
+    SizeTemplateItem: 'SizeTemplateItem',
     Brand: 'Brand',
     Product: 'Product',
     ProductImage: 'ProductImage',
-    ProductColor: 'ProductColor',
-    ProductSize: 'ProductSize',
+    ProductInventory: 'ProductInventory',
+    SizeGuide: 'SizeGuide',
     Customer: 'Customer',
     Order: 'Order',
     OrderItem: 'OrderItem',
@@ -889,7 +921,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "category" | "color" | "size" | "brand" | "product" | "productImage" | "productColor" | "productSize" | "customer" | "order" | "orderItem" | "review" | "author" | "blogCategory" | "blogPost" | "tag" | "blogTag"
+      modelProps: "category" | "color" | "size" | "sizeTemplate" | "sizeTemplateItem" | "brand" | "product" | "productImage" | "productInventory" | "sizeGuide" | "customer" | "order" | "orderItem" | "review" | "author" | "blogCategory" | "blogPost" | "tag" | "blogTag"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1115,6 +1147,154 @@ export namespace Prisma {
           }
         }
       }
+      SizeTemplate: {
+        payload: Prisma.$SizeTemplatePayload<ExtArgs>
+        fields: Prisma.SizeTemplateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SizeTemplateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SizeTemplateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>
+          }
+          findFirst: {
+            args: Prisma.SizeTemplateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SizeTemplateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>
+          }
+          findMany: {
+            args: Prisma.SizeTemplateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>[]
+          }
+          create: {
+            args: Prisma.SizeTemplateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>
+          }
+          createMany: {
+            args: Prisma.SizeTemplateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SizeTemplateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>[]
+          }
+          delete: {
+            args: Prisma.SizeTemplateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>
+          }
+          update: {
+            args: Prisma.SizeTemplateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>
+          }
+          deleteMany: {
+            args: Prisma.SizeTemplateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SizeTemplateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SizeTemplateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>[]
+          }
+          upsert: {
+            args: Prisma.SizeTemplateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplatePayload>
+          }
+          aggregate: {
+            args: Prisma.SizeTemplateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSizeTemplate>
+          }
+          groupBy: {
+            args: Prisma.SizeTemplateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SizeTemplateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SizeTemplateCountArgs<ExtArgs>
+            result: $Utils.Optional<SizeTemplateCountAggregateOutputType> | number
+          }
+        }
+      }
+      SizeTemplateItem: {
+        payload: Prisma.$SizeTemplateItemPayload<ExtArgs>
+        fields: Prisma.SizeTemplateItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SizeTemplateItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SizeTemplateItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>
+          }
+          findFirst: {
+            args: Prisma.SizeTemplateItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SizeTemplateItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>
+          }
+          findMany: {
+            args: Prisma.SizeTemplateItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>[]
+          }
+          create: {
+            args: Prisma.SizeTemplateItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>
+          }
+          createMany: {
+            args: Prisma.SizeTemplateItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SizeTemplateItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>[]
+          }
+          delete: {
+            args: Prisma.SizeTemplateItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>
+          }
+          update: {
+            args: Prisma.SizeTemplateItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.SizeTemplateItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SizeTemplateItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SizeTemplateItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>[]
+          }
+          upsert: {
+            args: Prisma.SizeTemplateItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeTemplateItemPayload>
+          }
+          aggregate: {
+            args: Prisma.SizeTemplateItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSizeTemplateItem>
+          }
+          groupBy: {
+            args: Prisma.SizeTemplateItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SizeTemplateItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SizeTemplateItemCountArgs<ExtArgs>
+            result: $Utils.Optional<SizeTemplateItemCountAggregateOutputType> | number
+          }
+        }
+      }
       Brand: {
         payload: Prisma.$BrandPayload<ExtArgs>
         fields: Prisma.BrandFieldRefs
@@ -1337,151 +1517,151 @@ export namespace Prisma {
           }
         }
       }
-      ProductColor: {
-        payload: Prisma.$ProductColorPayload<ExtArgs>
-        fields: Prisma.ProductColorFieldRefs
+      ProductInventory: {
+        payload: Prisma.$ProductInventoryPayload<ExtArgs>
+        fields: Prisma.ProductInventoryFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ProductColorFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload> | null
+            args: Prisma.ProductInventoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ProductColorFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+            args: Prisma.ProductInventoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>
           }
           findFirst: {
-            args: Prisma.ProductColorFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload> | null
+            args: Prisma.ProductInventoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ProductColorFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+            args: Prisma.ProductInventoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>
           }
           findMany: {
-            args: Prisma.ProductColorFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
+            args: Prisma.ProductInventoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>[]
           }
           create: {
-            args: Prisma.ProductColorCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+            args: Prisma.ProductInventoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>
           }
           createMany: {
-            args: Prisma.ProductColorCreateManyArgs<ExtArgs>
+            args: Prisma.ProductInventoryCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ProductColorCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
+            args: Prisma.ProductInventoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>[]
           }
           delete: {
-            args: Prisma.ProductColorDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+            args: Prisma.ProductInventoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>
           }
           update: {
-            args: Prisma.ProductColorUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+            args: Prisma.ProductInventoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>
           }
           deleteMany: {
-            args: Prisma.ProductColorDeleteManyArgs<ExtArgs>
+            args: Prisma.ProductInventoryDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ProductColorUpdateManyArgs<ExtArgs>
+            args: Prisma.ProductInventoryUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ProductColorUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
+            args: Prisma.ProductInventoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>[]
           }
           upsert: {
-            args: Prisma.ProductColorUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+            args: Prisma.ProductInventoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductInventoryPayload>
           }
           aggregate: {
-            args: Prisma.ProductColorAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateProductColor>
+            args: Prisma.ProductInventoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProductInventory>
           }
           groupBy: {
-            args: Prisma.ProductColorGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ProductColorGroupByOutputType>[]
+            args: Prisma.ProductInventoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductInventoryGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ProductColorCountArgs<ExtArgs>
-            result: $Utils.Optional<ProductColorCountAggregateOutputType> | number
+            args: Prisma.ProductInventoryCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductInventoryCountAggregateOutputType> | number
           }
         }
       }
-      ProductSize: {
-        payload: Prisma.$ProductSizePayload<ExtArgs>
-        fields: Prisma.ProductSizeFieldRefs
+      SizeGuide: {
+        payload: Prisma.$SizeGuidePayload<ExtArgs>
+        fields: Prisma.SizeGuideFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ProductSizeFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload> | null
+            args: Prisma.SizeGuideFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ProductSizeFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>
+            args: Prisma.SizeGuideFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>
           }
           findFirst: {
-            args: Prisma.ProductSizeFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload> | null
+            args: Prisma.SizeGuideFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ProductSizeFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>
+            args: Prisma.SizeGuideFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>
           }
           findMany: {
-            args: Prisma.ProductSizeFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>[]
+            args: Prisma.SizeGuideFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>[]
           }
           create: {
-            args: Prisma.ProductSizeCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>
+            args: Prisma.SizeGuideCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>
           }
           createMany: {
-            args: Prisma.ProductSizeCreateManyArgs<ExtArgs>
+            args: Prisma.SizeGuideCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ProductSizeCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>[]
+            args: Prisma.SizeGuideCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>[]
           }
           delete: {
-            args: Prisma.ProductSizeDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>
+            args: Prisma.SizeGuideDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>
           }
           update: {
-            args: Prisma.ProductSizeUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>
+            args: Prisma.SizeGuideUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>
           }
           deleteMany: {
-            args: Prisma.ProductSizeDeleteManyArgs<ExtArgs>
+            args: Prisma.SizeGuideDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ProductSizeUpdateManyArgs<ExtArgs>
+            args: Prisma.SizeGuideUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ProductSizeUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>[]
+            args: Prisma.SizeGuideUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>[]
           }
           upsert: {
-            args: Prisma.ProductSizeUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductSizePayload>
+            args: Prisma.SizeGuideUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SizeGuidePayload>
           }
           aggregate: {
-            args: Prisma.ProductSizeAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateProductSize>
+            args: Prisma.SizeGuideAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSizeGuide>
           }
           groupBy: {
-            args: Prisma.ProductSizeGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ProductSizeGroupByOutputType>[]
+            args: Prisma.SizeGuideGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SizeGuideGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ProductSizeCountArgs<ExtArgs>
-            result: $Utils.Optional<ProductSizeCountAggregateOutputType> | number
+            args: Prisma.SizeGuideCountArgs<ExtArgs>
+            result: $Utils.Optional<SizeGuideCountAggregateOutputType> | number
           }
         }
       }
@@ -2246,11 +2426,13 @@ export namespace Prisma {
     category?: CategoryOmit
     color?: ColorOmit
     size?: SizeOmit
+    sizeTemplate?: SizeTemplateOmit
+    sizeTemplateItem?: SizeTemplateItemOmit
     brand?: BrandOmit
     product?: ProductOmit
     productImage?: ProductImageOmit
-    productColor?: ProductColorOmit
-    productSize?: ProductSizeOmit
+    productInventory?: ProductInventoryOmit
+    sizeGuide?: SizeGuideOmit
     customer?: CustomerOmit
     order?: OrderOmit
     orderItem?: OrderItemOmit
@@ -2390,11 +2572,11 @@ export namespace Prisma {
    */
 
   export type ColorCountOutputType = {
-    productColors: number
+    productInventories: number
   }
 
   export type ColorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    productColors?: boolean | ColorCountOutputTypeCountProductColorsArgs
+    productInventories?: boolean | ColorCountOutputTypeCountProductInventoriesArgs
   }
 
   // Custom InputTypes
@@ -2411,8 +2593,8 @@ export namespace Prisma {
   /**
    * ColorCountOutputType without action
    */
-  export type ColorCountOutputTypeCountProductColorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductColorWhereInput
+  export type ColorCountOutputTypeCountProductInventoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductInventoryWhereInput
   }
 
 
@@ -2421,11 +2603,15 @@ export namespace Prisma {
    */
 
   export type SizeCountOutputType = {
-    productSizes: number
+    productInventories: number
+    sizeGuides: number
+    sizeTemplateItems: number
   }
 
   export type SizeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    productSizes?: boolean | SizeCountOutputTypeCountProductSizesArgs
+    productInventories?: boolean | SizeCountOutputTypeCountProductInventoriesArgs
+    sizeGuides?: boolean | SizeCountOutputTypeCountSizeGuidesArgs
+    sizeTemplateItems?: boolean | SizeCountOutputTypeCountSizeTemplateItemsArgs
   }
 
   // Custom InputTypes
@@ -2442,8 +2628,53 @@ export namespace Prisma {
   /**
    * SizeCountOutputType without action
    */
-  export type SizeCountOutputTypeCountProductSizesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductSizeWhereInput
+  export type SizeCountOutputTypeCountProductInventoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductInventoryWhereInput
+  }
+
+  /**
+   * SizeCountOutputType without action
+   */
+  export type SizeCountOutputTypeCountSizeGuidesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SizeGuideWhereInput
+  }
+
+  /**
+   * SizeCountOutputType without action
+   */
+  export type SizeCountOutputTypeCountSizeTemplateItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SizeTemplateItemWhereInput
+  }
+
+
+  /**
+   * Count Type SizeTemplateCountOutputType
+   */
+
+  export type SizeTemplateCountOutputType = {
+    sizeTemplateItems: number
+  }
+
+  export type SizeTemplateCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sizeTemplateItems?: boolean | SizeTemplateCountOutputTypeCountSizeTemplateItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SizeTemplateCountOutputType without action
+   */
+  export type SizeTemplateCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateCountOutputType
+     */
+    select?: SizeTemplateCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SizeTemplateCountOutputType without action
+   */
+  export type SizeTemplateCountOutputTypeCountSizeTemplateItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SizeTemplateItemWhereInput
   }
 
 
@@ -2484,16 +2715,16 @@ export namespace Prisma {
 
   export type ProductCountOutputType = {
     galleryImages: number
-    colors: number
-    sizes: number
+    productInventories: number
+    sizeGuides: number
     reviews: number
     orderItems: number
   }
 
   export type ProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     galleryImages?: boolean | ProductCountOutputTypeCountGalleryImagesArgs
-    colors?: boolean | ProductCountOutputTypeCountColorsArgs
-    sizes?: boolean | ProductCountOutputTypeCountSizesArgs
+    productInventories?: boolean | ProductCountOutputTypeCountProductInventoriesArgs
+    sizeGuides?: boolean | ProductCountOutputTypeCountSizeGuidesArgs
     reviews?: boolean | ProductCountOutputTypeCountReviewsArgs
     orderItems?: boolean | ProductCountOutputTypeCountOrderItemsArgs
   }
@@ -2519,15 +2750,15 @@ export namespace Prisma {
   /**
    * ProductCountOutputType without action
    */
-  export type ProductCountOutputTypeCountColorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductColorWhereInput
+  export type ProductCountOutputTypeCountProductInventoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductInventoryWhereInput
   }
 
   /**
    * ProductCountOutputType without action
    */
-  export type ProductCountOutputTypeCountSizesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductSizeWhereInput
+  export type ProductCountOutputTypeCountSizeGuidesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SizeGuideWhereInput
   }
 
   /**
@@ -4080,7 +4311,7 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    productColors?: boolean | Color$productColorsArgs<ExtArgs>
+    productInventories?: boolean | Color$productInventoriesArgs<ExtArgs>
     _count?: boolean | ColorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["color"]>
 
@@ -4113,7 +4344,7 @@ export namespace Prisma {
 
   export type ColorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "hexCode" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["color"]>
   export type ColorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    productColors?: boolean | Color$productColorsArgs<ExtArgs>
+    productInventories?: boolean | Color$productInventoriesArgs<ExtArgs>
     _count?: boolean | ColorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ColorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4122,7 +4353,7 @@ export namespace Prisma {
   export type $ColorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Color"
     objects: {
-      productColors: Prisma.$ProductColorPayload<ExtArgs>[]
+      productInventories: Prisma.$ProductInventoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4525,7 +4756,7 @@ export namespace Prisma {
    */
   export interface Prisma__ColorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    productColors<T extends Color$productColorsArgs<ExtArgs> = {}>(args?: Subset<T, Color$productColorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productInventories<T extends Color$productInventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Color$productInventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4949,27 +5180,27 @@ export namespace Prisma {
   }
 
   /**
-   * Color.productColors
+   * Color.productInventories
    */
-  export type Color$productColorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Color$productInventoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
-    where?: ProductColorWhereInput
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
-    cursor?: ProductColorWhereUniqueInput
+    include?: ProductInventoryInclude<ExtArgs> | null
+    where?: ProductInventoryWhereInput
+    orderBy?: ProductInventoryOrderByWithRelationInput | ProductInventoryOrderByWithRelationInput[]
+    cursor?: ProductInventoryWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+    distinct?: ProductInventoryScalarFieldEnum | ProductInventoryScalarFieldEnum[]
   }
 
   /**
@@ -5193,7 +5424,9 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    productSizes?: boolean | Size$productSizesArgs<ExtArgs>
+    productInventories?: boolean | Size$productInventoriesArgs<ExtArgs>
+    sizeGuides?: boolean | Size$sizeGuidesArgs<ExtArgs>
+    sizeTemplateItems?: boolean | Size$sizeTemplateItemsArgs<ExtArgs>
     _count?: boolean | SizeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["size"]>
 
@@ -5223,7 +5456,9 @@ export namespace Prisma {
 
   export type SizeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["size"]>
   export type SizeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    productSizes?: boolean | Size$productSizesArgs<ExtArgs>
+    productInventories?: boolean | Size$productInventoriesArgs<ExtArgs>
+    sizeGuides?: boolean | Size$sizeGuidesArgs<ExtArgs>
+    sizeTemplateItems?: boolean | Size$sizeTemplateItemsArgs<ExtArgs>
     _count?: boolean | SizeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SizeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5232,7 +5467,9 @@ export namespace Prisma {
   export type $SizePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Size"
     objects: {
-      productSizes: Prisma.$ProductSizePayload<ExtArgs>[]
+      productInventories: Prisma.$ProductInventoryPayload<ExtArgs>[]
+      sizeGuides: Prisma.$SizeGuidePayload<ExtArgs>[]
+      sizeTemplateItems: Prisma.$SizeTemplateItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5634,7 +5871,9 @@ export namespace Prisma {
    */
   export interface Prisma__SizeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    productSizes<T extends Size$productSizesArgs<ExtArgs> = {}>(args?: Subset<T, Size$productSizesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productInventories<T extends Size$productInventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Size$productInventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sizeGuides<T extends Size$sizeGuidesArgs<ExtArgs> = {}>(args?: Subset<T, Size$sizeGuidesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sizeTemplateItems<T extends Size$sizeTemplateItemsArgs<ExtArgs> = {}>(args?: Subset<T, Size$sizeTemplateItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6057,27 +6296,75 @@ export namespace Prisma {
   }
 
   /**
-   * Size.productSizes
+   * Size.productInventories
    */
-  export type Size$productSizesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Size$productInventoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
-    where?: ProductSizeWhereInput
-    orderBy?: ProductSizeOrderByWithRelationInput | ProductSizeOrderByWithRelationInput[]
-    cursor?: ProductSizeWhereUniqueInput
+    include?: ProductInventoryInclude<ExtArgs> | null
+    where?: ProductInventoryWhereInput
+    orderBy?: ProductInventoryOrderByWithRelationInput | ProductInventoryOrderByWithRelationInput[]
+    cursor?: ProductInventoryWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ProductSizeScalarFieldEnum | ProductSizeScalarFieldEnum[]
+    distinct?: ProductInventoryScalarFieldEnum | ProductInventoryScalarFieldEnum[]
+  }
+
+  /**
+   * Size.sizeGuides
+   */
+  export type Size$sizeGuidesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeGuide
+     */
+    select?: SizeGuideSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeGuide
+     */
+    omit?: SizeGuideOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeGuideInclude<ExtArgs> | null
+    where?: SizeGuideWhereInput
+    orderBy?: SizeGuideOrderByWithRelationInput | SizeGuideOrderByWithRelationInput[]
+    cursor?: SizeGuideWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SizeGuideScalarFieldEnum | SizeGuideScalarFieldEnum[]
+  }
+
+  /**
+   * Size.sizeTemplateItems
+   */
+  export type Size$sizeTemplateItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    where?: SizeTemplateItemWhereInput
+    orderBy?: SizeTemplateItemOrderByWithRelationInput | SizeTemplateItemOrderByWithRelationInput[]
+    cursor?: SizeTemplateItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SizeTemplateItemScalarFieldEnum | SizeTemplateItemScalarFieldEnum[]
   }
 
   /**
@@ -6096,6 +6383,2248 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SizeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SizeTemplate
+   */
+
+  export type AggregateSizeTemplate = {
+    _count: SizeTemplateCountAggregateOutputType | null
+    _avg: SizeTemplateAvgAggregateOutputType | null
+    _sum: SizeTemplateSumAggregateOutputType | null
+    _min: SizeTemplateMinAggregateOutputType | null
+    _max: SizeTemplateMaxAggregateOutputType | null
+  }
+
+  export type SizeTemplateAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SizeTemplateSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SizeTemplateMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    category: string | null
+    isActive: boolean | null
+    isDefault: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SizeTemplateMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    category: string | null
+    isActive: boolean | null
+    isDefault: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SizeTemplateCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    category: number
+    isActive: number
+    isDefault: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SizeTemplateAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SizeTemplateSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SizeTemplateMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    category?: true
+    isActive?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SizeTemplateMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    category?: true
+    isActive?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SizeTemplateCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    category?: true
+    isActive?: true
+    isDefault?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SizeTemplateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SizeTemplate to aggregate.
+     */
+    where?: SizeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplates to fetch.
+     */
+    orderBy?: SizeTemplateOrderByWithRelationInput | SizeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SizeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SizeTemplates
+    **/
+    _count?: true | SizeTemplateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SizeTemplateAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SizeTemplateSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SizeTemplateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SizeTemplateMaxAggregateInputType
+  }
+
+  export type GetSizeTemplateAggregateType<T extends SizeTemplateAggregateArgs> = {
+        [P in keyof T & keyof AggregateSizeTemplate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSizeTemplate[P]>
+      : GetScalarType<T[P], AggregateSizeTemplate[P]>
+  }
+
+
+
+
+  export type SizeTemplateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SizeTemplateWhereInput
+    orderBy?: SizeTemplateOrderByWithAggregationInput | SizeTemplateOrderByWithAggregationInput[]
+    by: SizeTemplateScalarFieldEnum[] | SizeTemplateScalarFieldEnum
+    having?: SizeTemplateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SizeTemplateCountAggregateInputType | true
+    _avg?: SizeTemplateAvgAggregateInputType
+    _sum?: SizeTemplateSumAggregateInputType
+    _min?: SizeTemplateMinAggregateInputType
+    _max?: SizeTemplateMaxAggregateInputType
+  }
+
+  export type SizeTemplateGroupByOutputType = {
+    id: number
+    name: string
+    description: string | null
+    category: string | null
+    isActive: boolean
+    isDefault: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: SizeTemplateCountAggregateOutputType | null
+    _avg: SizeTemplateAvgAggregateOutputType | null
+    _sum: SizeTemplateSumAggregateOutputType | null
+    _min: SizeTemplateMinAggregateOutputType | null
+    _max: SizeTemplateMaxAggregateOutputType | null
+  }
+
+  type GetSizeTemplateGroupByPayload<T extends SizeTemplateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SizeTemplateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SizeTemplateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SizeTemplateGroupByOutputType[P]>
+            : GetScalarType<T[P], SizeTemplateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SizeTemplateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sizeTemplateItems?: boolean | SizeTemplate$sizeTemplateItemsArgs<ExtArgs>
+    _count?: boolean | SizeTemplateCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sizeTemplate"]>
+
+  export type SizeTemplateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["sizeTemplate"]>
+
+  export type SizeTemplateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["sizeTemplate"]>
+
+  export type SizeTemplateSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SizeTemplateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "category" | "isActive" | "isDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["sizeTemplate"]>
+  export type SizeTemplateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sizeTemplateItems?: boolean | SizeTemplate$sizeTemplateItemsArgs<ExtArgs>
+    _count?: boolean | SizeTemplateCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SizeTemplateIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SizeTemplateIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SizeTemplatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SizeTemplate"
+    objects: {
+      sizeTemplateItems: Prisma.$SizeTemplateItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      description: string | null
+      category: string | null
+      isActive: boolean
+      isDefault: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["sizeTemplate"]>
+    composites: {}
+  }
+
+  type SizeTemplateGetPayload<S extends boolean | null | undefined | SizeTemplateDefaultArgs> = $Result.GetResult<Prisma.$SizeTemplatePayload, S>
+
+  type SizeTemplateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SizeTemplateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SizeTemplateCountAggregateInputType | true
+    }
+
+  export interface SizeTemplateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SizeTemplate'], meta: { name: 'SizeTemplate' } }
+    /**
+     * Find zero or one SizeTemplate that matches the filter.
+     * @param {SizeTemplateFindUniqueArgs} args - Arguments to find a SizeTemplate
+     * @example
+     * // Get one SizeTemplate
+     * const sizeTemplate = await prisma.sizeTemplate.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SizeTemplateFindUniqueArgs>(args: SelectSubset<T, SizeTemplateFindUniqueArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SizeTemplate that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SizeTemplateFindUniqueOrThrowArgs} args - Arguments to find a SizeTemplate
+     * @example
+     * // Get one SizeTemplate
+     * const sizeTemplate = await prisma.sizeTemplate.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SizeTemplateFindUniqueOrThrowArgs>(args: SelectSubset<T, SizeTemplateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SizeTemplate that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateFindFirstArgs} args - Arguments to find a SizeTemplate
+     * @example
+     * // Get one SizeTemplate
+     * const sizeTemplate = await prisma.sizeTemplate.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SizeTemplateFindFirstArgs>(args?: SelectSubset<T, SizeTemplateFindFirstArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SizeTemplate that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateFindFirstOrThrowArgs} args - Arguments to find a SizeTemplate
+     * @example
+     * // Get one SizeTemplate
+     * const sizeTemplate = await prisma.sizeTemplate.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SizeTemplateFindFirstOrThrowArgs>(args?: SelectSubset<T, SizeTemplateFindFirstOrThrowArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SizeTemplates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SizeTemplates
+     * const sizeTemplates = await prisma.sizeTemplate.findMany()
+     * 
+     * // Get first 10 SizeTemplates
+     * const sizeTemplates = await prisma.sizeTemplate.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sizeTemplateWithIdOnly = await prisma.sizeTemplate.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SizeTemplateFindManyArgs>(args?: SelectSubset<T, SizeTemplateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SizeTemplate.
+     * @param {SizeTemplateCreateArgs} args - Arguments to create a SizeTemplate.
+     * @example
+     * // Create one SizeTemplate
+     * const SizeTemplate = await prisma.sizeTemplate.create({
+     *   data: {
+     *     // ... data to create a SizeTemplate
+     *   }
+     * })
+     * 
+     */
+    create<T extends SizeTemplateCreateArgs>(args: SelectSubset<T, SizeTemplateCreateArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SizeTemplates.
+     * @param {SizeTemplateCreateManyArgs} args - Arguments to create many SizeTemplates.
+     * @example
+     * // Create many SizeTemplates
+     * const sizeTemplate = await prisma.sizeTemplate.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SizeTemplateCreateManyArgs>(args?: SelectSubset<T, SizeTemplateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SizeTemplates and returns the data saved in the database.
+     * @param {SizeTemplateCreateManyAndReturnArgs} args - Arguments to create many SizeTemplates.
+     * @example
+     * // Create many SizeTemplates
+     * const sizeTemplate = await prisma.sizeTemplate.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SizeTemplates and only return the `id`
+     * const sizeTemplateWithIdOnly = await prisma.sizeTemplate.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SizeTemplateCreateManyAndReturnArgs>(args?: SelectSubset<T, SizeTemplateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SizeTemplate.
+     * @param {SizeTemplateDeleteArgs} args - Arguments to delete one SizeTemplate.
+     * @example
+     * // Delete one SizeTemplate
+     * const SizeTemplate = await prisma.sizeTemplate.delete({
+     *   where: {
+     *     // ... filter to delete one SizeTemplate
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SizeTemplateDeleteArgs>(args: SelectSubset<T, SizeTemplateDeleteArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SizeTemplate.
+     * @param {SizeTemplateUpdateArgs} args - Arguments to update one SizeTemplate.
+     * @example
+     * // Update one SizeTemplate
+     * const sizeTemplate = await prisma.sizeTemplate.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SizeTemplateUpdateArgs>(args: SelectSubset<T, SizeTemplateUpdateArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SizeTemplates.
+     * @param {SizeTemplateDeleteManyArgs} args - Arguments to filter SizeTemplates to delete.
+     * @example
+     * // Delete a few SizeTemplates
+     * const { count } = await prisma.sizeTemplate.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SizeTemplateDeleteManyArgs>(args?: SelectSubset<T, SizeTemplateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SizeTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SizeTemplates
+     * const sizeTemplate = await prisma.sizeTemplate.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SizeTemplateUpdateManyArgs>(args: SelectSubset<T, SizeTemplateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SizeTemplates and returns the data updated in the database.
+     * @param {SizeTemplateUpdateManyAndReturnArgs} args - Arguments to update many SizeTemplates.
+     * @example
+     * // Update many SizeTemplates
+     * const sizeTemplate = await prisma.sizeTemplate.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SizeTemplates and only return the `id`
+     * const sizeTemplateWithIdOnly = await prisma.sizeTemplate.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SizeTemplateUpdateManyAndReturnArgs>(args: SelectSubset<T, SizeTemplateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SizeTemplate.
+     * @param {SizeTemplateUpsertArgs} args - Arguments to update or create a SizeTemplate.
+     * @example
+     * // Update or create a SizeTemplate
+     * const sizeTemplate = await prisma.sizeTemplate.upsert({
+     *   create: {
+     *     // ... data to create a SizeTemplate
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SizeTemplate we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SizeTemplateUpsertArgs>(args: SelectSubset<T, SizeTemplateUpsertArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SizeTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateCountArgs} args - Arguments to filter SizeTemplates to count.
+     * @example
+     * // Count the number of SizeTemplates
+     * const count = await prisma.sizeTemplate.count({
+     *   where: {
+     *     // ... the filter for the SizeTemplates we want to count
+     *   }
+     * })
+    **/
+    count<T extends SizeTemplateCountArgs>(
+      args?: Subset<T, SizeTemplateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SizeTemplateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SizeTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SizeTemplateAggregateArgs>(args: Subset<T, SizeTemplateAggregateArgs>): Prisma.PrismaPromise<GetSizeTemplateAggregateType<T>>
+
+    /**
+     * Group by SizeTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SizeTemplateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SizeTemplateGroupByArgs['orderBy'] }
+        : { orderBy?: SizeTemplateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SizeTemplateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSizeTemplateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SizeTemplate model
+   */
+  readonly fields: SizeTemplateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SizeTemplate.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SizeTemplateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sizeTemplateItems<T extends SizeTemplate$sizeTemplateItemsArgs<ExtArgs> = {}>(args?: Subset<T, SizeTemplate$sizeTemplateItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SizeTemplate model
+   */
+  interface SizeTemplateFieldRefs {
+    readonly id: FieldRef<"SizeTemplate", 'Int'>
+    readonly name: FieldRef<"SizeTemplate", 'String'>
+    readonly description: FieldRef<"SizeTemplate", 'String'>
+    readonly category: FieldRef<"SizeTemplate", 'String'>
+    readonly isActive: FieldRef<"SizeTemplate", 'Boolean'>
+    readonly isDefault: FieldRef<"SizeTemplate", 'Boolean'>
+    readonly createdAt: FieldRef<"SizeTemplate", 'DateTime'>
+    readonly updatedAt: FieldRef<"SizeTemplate", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SizeTemplate findUnique
+   */
+  export type SizeTemplateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplate to fetch.
+     */
+    where: SizeTemplateWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplate findUniqueOrThrow
+   */
+  export type SizeTemplateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplate to fetch.
+     */
+    where: SizeTemplateWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplate findFirst
+   */
+  export type SizeTemplateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplate to fetch.
+     */
+    where?: SizeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplates to fetch.
+     */
+    orderBy?: SizeTemplateOrderByWithRelationInput | SizeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SizeTemplates.
+     */
+    cursor?: SizeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SizeTemplates.
+     */
+    distinct?: SizeTemplateScalarFieldEnum | SizeTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * SizeTemplate findFirstOrThrow
+   */
+  export type SizeTemplateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplate to fetch.
+     */
+    where?: SizeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplates to fetch.
+     */
+    orderBy?: SizeTemplateOrderByWithRelationInput | SizeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SizeTemplates.
+     */
+    cursor?: SizeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SizeTemplates.
+     */
+    distinct?: SizeTemplateScalarFieldEnum | SizeTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * SizeTemplate findMany
+   */
+  export type SizeTemplateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplates to fetch.
+     */
+    where?: SizeTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplates to fetch.
+     */
+    orderBy?: SizeTemplateOrderByWithRelationInput | SizeTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SizeTemplates.
+     */
+    cursor?: SizeTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplates.
+     */
+    skip?: number
+    distinct?: SizeTemplateScalarFieldEnum | SizeTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * SizeTemplate create
+   */
+  export type SizeTemplateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SizeTemplate.
+     */
+    data: XOR<SizeTemplateCreateInput, SizeTemplateUncheckedCreateInput>
+  }
+
+  /**
+   * SizeTemplate createMany
+   */
+  export type SizeTemplateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SizeTemplates.
+     */
+    data: SizeTemplateCreateManyInput | SizeTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SizeTemplate createManyAndReturn
+   */
+  export type SizeTemplateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to create many SizeTemplates.
+     */
+    data: SizeTemplateCreateManyInput | SizeTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SizeTemplate update
+   */
+  export type SizeTemplateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SizeTemplate.
+     */
+    data: XOR<SizeTemplateUpdateInput, SizeTemplateUncheckedUpdateInput>
+    /**
+     * Choose, which SizeTemplate to update.
+     */
+    where: SizeTemplateWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplate updateMany
+   */
+  export type SizeTemplateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SizeTemplates.
+     */
+    data: XOR<SizeTemplateUpdateManyMutationInput, SizeTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which SizeTemplates to update
+     */
+    where?: SizeTemplateWhereInput
+    /**
+     * Limit how many SizeTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SizeTemplate updateManyAndReturn
+   */
+  export type SizeTemplateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to update SizeTemplates.
+     */
+    data: XOR<SizeTemplateUpdateManyMutationInput, SizeTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which SizeTemplates to update
+     */
+    where?: SizeTemplateWhereInput
+    /**
+     * Limit how many SizeTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SizeTemplate upsert
+   */
+  export type SizeTemplateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SizeTemplate to update in case it exists.
+     */
+    where: SizeTemplateWhereUniqueInput
+    /**
+     * In case the SizeTemplate found by the `where` argument doesn't exist, create a new SizeTemplate with this data.
+     */
+    create: XOR<SizeTemplateCreateInput, SizeTemplateUncheckedCreateInput>
+    /**
+     * In case the SizeTemplate was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SizeTemplateUpdateInput, SizeTemplateUncheckedUpdateInput>
+  }
+
+  /**
+   * SizeTemplate delete
+   */
+  export type SizeTemplateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+    /**
+     * Filter which SizeTemplate to delete.
+     */
+    where: SizeTemplateWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplate deleteMany
+   */
+  export type SizeTemplateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SizeTemplates to delete
+     */
+    where?: SizeTemplateWhereInput
+    /**
+     * Limit how many SizeTemplates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SizeTemplate.sizeTemplateItems
+   */
+  export type SizeTemplate$sizeTemplateItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    where?: SizeTemplateItemWhereInput
+    orderBy?: SizeTemplateItemOrderByWithRelationInput | SizeTemplateItemOrderByWithRelationInput[]
+    cursor?: SizeTemplateItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SizeTemplateItemScalarFieldEnum | SizeTemplateItemScalarFieldEnum[]
+  }
+
+  /**
+   * SizeTemplate without action
+   */
+  export type SizeTemplateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplate
+     */
+    select?: SizeTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplate
+     */
+    omit?: SizeTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SizeTemplateItem
+   */
+
+  export type AggregateSizeTemplateItem = {
+    _count: SizeTemplateItemCountAggregateOutputType | null
+    _avg: SizeTemplateItemAvgAggregateOutputType | null
+    _sum: SizeTemplateItemSumAggregateOutputType | null
+    _min: SizeTemplateItemMinAggregateOutputType | null
+    _max: SizeTemplateItemMaxAggregateOutputType | null
+  }
+
+  export type SizeTemplateItemAvgAggregateOutputType = {
+    id: number | null
+    centimeters: number | null
+    sizeTemplateId: number | null
+    sizeId: number | null
+  }
+
+  export type SizeTemplateItemSumAggregateOutputType = {
+    id: number | null
+    centimeters: number | null
+    sizeTemplateId: number | null
+    sizeId: number | null
+  }
+
+  export type SizeTemplateItemMinAggregateOutputType = {
+    id: number | null
+    centimeters: number | null
+    sizeTemplateId: number | null
+    sizeId: number | null
+  }
+
+  export type SizeTemplateItemMaxAggregateOutputType = {
+    id: number | null
+    centimeters: number | null
+    sizeTemplateId: number | null
+    sizeId: number | null
+  }
+
+  export type SizeTemplateItemCountAggregateOutputType = {
+    id: number
+    centimeters: number
+    sizeTemplateId: number
+    sizeId: number
+    _all: number
+  }
+
+
+  export type SizeTemplateItemAvgAggregateInputType = {
+    id?: true
+    centimeters?: true
+    sizeTemplateId?: true
+    sizeId?: true
+  }
+
+  export type SizeTemplateItemSumAggregateInputType = {
+    id?: true
+    centimeters?: true
+    sizeTemplateId?: true
+    sizeId?: true
+  }
+
+  export type SizeTemplateItemMinAggregateInputType = {
+    id?: true
+    centimeters?: true
+    sizeTemplateId?: true
+    sizeId?: true
+  }
+
+  export type SizeTemplateItemMaxAggregateInputType = {
+    id?: true
+    centimeters?: true
+    sizeTemplateId?: true
+    sizeId?: true
+  }
+
+  export type SizeTemplateItemCountAggregateInputType = {
+    id?: true
+    centimeters?: true
+    sizeTemplateId?: true
+    sizeId?: true
+    _all?: true
+  }
+
+  export type SizeTemplateItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SizeTemplateItem to aggregate.
+     */
+    where?: SizeTemplateItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplateItems to fetch.
+     */
+    orderBy?: SizeTemplateItemOrderByWithRelationInput | SizeTemplateItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SizeTemplateItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplateItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplateItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SizeTemplateItems
+    **/
+    _count?: true | SizeTemplateItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SizeTemplateItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SizeTemplateItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SizeTemplateItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SizeTemplateItemMaxAggregateInputType
+  }
+
+  export type GetSizeTemplateItemAggregateType<T extends SizeTemplateItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateSizeTemplateItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSizeTemplateItem[P]>
+      : GetScalarType<T[P], AggregateSizeTemplateItem[P]>
+  }
+
+
+
+
+  export type SizeTemplateItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SizeTemplateItemWhereInput
+    orderBy?: SizeTemplateItemOrderByWithAggregationInput | SizeTemplateItemOrderByWithAggregationInput[]
+    by: SizeTemplateItemScalarFieldEnum[] | SizeTemplateItemScalarFieldEnum
+    having?: SizeTemplateItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SizeTemplateItemCountAggregateInputType | true
+    _avg?: SizeTemplateItemAvgAggregateInputType
+    _sum?: SizeTemplateItemSumAggregateInputType
+    _min?: SizeTemplateItemMinAggregateInputType
+    _max?: SizeTemplateItemMaxAggregateInputType
+  }
+
+  export type SizeTemplateItemGroupByOutputType = {
+    id: number
+    centimeters: number
+    sizeTemplateId: number
+    sizeId: number
+    _count: SizeTemplateItemCountAggregateOutputType | null
+    _avg: SizeTemplateItemAvgAggregateOutputType | null
+    _sum: SizeTemplateItemSumAggregateOutputType | null
+    _min: SizeTemplateItemMinAggregateOutputType | null
+    _max: SizeTemplateItemMaxAggregateOutputType | null
+  }
+
+  type GetSizeTemplateItemGroupByPayload<T extends SizeTemplateItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SizeTemplateItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SizeTemplateItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SizeTemplateItemGroupByOutputType[P]>
+            : GetScalarType<T[P], SizeTemplateItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SizeTemplateItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    centimeters?: boolean
+    sizeTemplateId?: boolean
+    sizeId?: boolean
+    sizeTemplate?: boolean | SizeTemplateDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sizeTemplateItem"]>
+
+  export type SizeTemplateItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    centimeters?: boolean
+    sizeTemplateId?: boolean
+    sizeId?: boolean
+    sizeTemplate?: boolean | SizeTemplateDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sizeTemplateItem"]>
+
+  export type SizeTemplateItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    centimeters?: boolean
+    sizeTemplateId?: boolean
+    sizeId?: boolean
+    sizeTemplate?: boolean | SizeTemplateDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sizeTemplateItem"]>
+
+  export type SizeTemplateItemSelectScalar = {
+    id?: boolean
+    centimeters?: boolean
+    sizeTemplateId?: boolean
+    sizeId?: boolean
+  }
+
+  export type SizeTemplateItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "centimeters" | "sizeTemplateId" | "sizeId", ExtArgs["result"]["sizeTemplateItem"]>
+  export type SizeTemplateItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sizeTemplate?: boolean | SizeTemplateDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }
+  export type SizeTemplateItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sizeTemplate?: boolean | SizeTemplateDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }
+  export type SizeTemplateItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sizeTemplate?: boolean | SizeTemplateDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }
+
+  export type $SizeTemplateItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SizeTemplateItem"
+    objects: {
+      sizeTemplate: Prisma.$SizeTemplatePayload<ExtArgs>
+      size: Prisma.$SizePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      centimeters: number
+      sizeTemplateId: number
+      sizeId: number
+    }, ExtArgs["result"]["sizeTemplateItem"]>
+    composites: {}
+  }
+
+  type SizeTemplateItemGetPayload<S extends boolean | null | undefined | SizeTemplateItemDefaultArgs> = $Result.GetResult<Prisma.$SizeTemplateItemPayload, S>
+
+  type SizeTemplateItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SizeTemplateItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SizeTemplateItemCountAggregateInputType | true
+    }
+
+  export interface SizeTemplateItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SizeTemplateItem'], meta: { name: 'SizeTemplateItem' } }
+    /**
+     * Find zero or one SizeTemplateItem that matches the filter.
+     * @param {SizeTemplateItemFindUniqueArgs} args - Arguments to find a SizeTemplateItem
+     * @example
+     * // Get one SizeTemplateItem
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SizeTemplateItemFindUniqueArgs>(args: SelectSubset<T, SizeTemplateItemFindUniqueArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SizeTemplateItem that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SizeTemplateItemFindUniqueOrThrowArgs} args - Arguments to find a SizeTemplateItem
+     * @example
+     * // Get one SizeTemplateItem
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SizeTemplateItemFindUniqueOrThrowArgs>(args: SelectSubset<T, SizeTemplateItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SizeTemplateItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateItemFindFirstArgs} args - Arguments to find a SizeTemplateItem
+     * @example
+     * // Get one SizeTemplateItem
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SizeTemplateItemFindFirstArgs>(args?: SelectSubset<T, SizeTemplateItemFindFirstArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SizeTemplateItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateItemFindFirstOrThrowArgs} args - Arguments to find a SizeTemplateItem
+     * @example
+     * // Get one SizeTemplateItem
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SizeTemplateItemFindFirstOrThrowArgs>(args?: SelectSubset<T, SizeTemplateItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SizeTemplateItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SizeTemplateItems
+     * const sizeTemplateItems = await prisma.sizeTemplateItem.findMany()
+     * 
+     * // Get first 10 SizeTemplateItems
+     * const sizeTemplateItems = await prisma.sizeTemplateItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sizeTemplateItemWithIdOnly = await prisma.sizeTemplateItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SizeTemplateItemFindManyArgs>(args?: SelectSubset<T, SizeTemplateItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SizeTemplateItem.
+     * @param {SizeTemplateItemCreateArgs} args - Arguments to create a SizeTemplateItem.
+     * @example
+     * // Create one SizeTemplateItem
+     * const SizeTemplateItem = await prisma.sizeTemplateItem.create({
+     *   data: {
+     *     // ... data to create a SizeTemplateItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends SizeTemplateItemCreateArgs>(args: SelectSubset<T, SizeTemplateItemCreateArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SizeTemplateItems.
+     * @param {SizeTemplateItemCreateManyArgs} args - Arguments to create many SizeTemplateItems.
+     * @example
+     * // Create many SizeTemplateItems
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SizeTemplateItemCreateManyArgs>(args?: SelectSubset<T, SizeTemplateItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SizeTemplateItems and returns the data saved in the database.
+     * @param {SizeTemplateItemCreateManyAndReturnArgs} args - Arguments to create many SizeTemplateItems.
+     * @example
+     * // Create many SizeTemplateItems
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SizeTemplateItems and only return the `id`
+     * const sizeTemplateItemWithIdOnly = await prisma.sizeTemplateItem.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SizeTemplateItemCreateManyAndReturnArgs>(args?: SelectSubset<T, SizeTemplateItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SizeTemplateItem.
+     * @param {SizeTemplateItemDeleteArgs} args - Arguments to delete one SizeTemplateItem.
+     * @example
+     * // Delete one SizeTemplateItem
+     * const SizeTemplateItem = await prisma.sizeTemplateItem.delete({
+     *   where: {
+     *     // ... filter to delete one SizeTemplateItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SizeTemplateItemDeleteArgs>(args: SelectSubset<T, SizeTemplateItemDeleteArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SizeTemplateItem.
+     * @param {SizeTemplateItemUpdateArgs} args - Arguments to update one SizeTemplateItem.
+     * @example
+     * // Update one SizeTemplateItem
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SizeTemplateItemUpdateArgs>(args: SelectSubset<T, SizeTemplateItemUpdateArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SizeTemplateItems.
+     * @param {SizeTemplateItemDeleteManyArgs} args - Arguments to filter SizeTemplateItems to delete.
+     * @example
+     * // Delete a few SizeTemplateItems
+     * const { count } = await prisma.sizeTemplateItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SizeTemplateItemDeleteManyArgs>(args?: SelectSubset<T, SizeTemplateItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SizeTemplateItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SizeTemplateItems
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SizeTemplateItemUpdateManyArgs>(args: SelectSubset<T, SizeTemplateItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SizeTemplateItems and returns the data updated in the database.
+     * @param {SizeTemplateItemUpdateManyAndReturnArgs} args - Arguments to update many SizeTemplateItems.
+     * @example
+     * // Update many SizeTemplateItems
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SizeTemplateItems and only return the `id`
+     * const sizeTemplateItemWithIdOnly = await prisma.sizeTemplateItem.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SizeTemplateItemUpdateManyAndReturnArgs>(args: SelectSubset<T, SizeTemplateItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SizeTemplateItem.
+     * @param {SizeTemplateItemUpsertArgs} args - Arguments to update or create a SizeTemplateItem.
+     * @example
+     * // Update or create a SizeTemplateItem
+     * const sizeTemplateItem = await prisma.sizeTemplateItem.upsert({
+     *   create: {
+     *     // ... data to create a SizeTemplateItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SizeTemplateItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SizeTemplateItemUpsertArgs>(args: SelectSubset<T, SizeTemplateItemUpsertArgs<ExtArgs>>): Prisma__SizeTemplateItemClient<$Result.GetResult<Prisma.$SizeTemplateItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SizeTemplateItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateItemCountArgs} args - Arguments to filter SizeTemplateItems to count.
+     * @example
+     * // Count the number of SizeTemplateItems
+     * const count = await prisma.sizeTemplateItem.count({
+     *   where: {
+     *     // ... the filter for the SizeTemplateItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends SizeTemplateItemCountArgs>(
+      args?: Subset<T, SizeTemplateItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SizeTemplateItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SizeTemplateItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SizeTemplateItemAggregateArgs>(args: Subset<T, SizeTemplateItemAggregateArgs>): Prisma.PrismaPromise<GetSizeTemplateItemAggregateType<T>>
+
+    /**
+     * Group by SizeTemplateItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SizeTemplateItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SizeTemplateItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SizeTemplateItemGroupByArgs['orderBy'] }
+        : { orderBy?: SizeTemplateItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SizeTemplateItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSizeTemplateItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SizeTemplateItem model
+   */
+  readonly fields: SizeTemplateItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SizeTemplateItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SizeTemplateItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sizeTemplate<T extends SizeTemplateDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SizeTemplateDefaultArgs<ExtArgs>>): Prisma__SizeTemplateClient<$Result.GetResult<Prisma.$SizeTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    size<T extends SizeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SizeDefaultArgs<ExtArgs>>): Prisma__SizeClient<$Result.GetResult<Prisma.$SizePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SizeTemplateItem model
+   */
+  interface SizeTemplateItemFieldRefs {
+    readonly id: FieldRef<"SizeTemplateItem", 'Int'>
+    readonly centimeters: FieldRef<"SizeTemplateItem", 'Float'>
+    readonly sizeTemplateId: FieldRef<"SizeTemplateItem", 'Int'>
+    readonly sizeId: FieldRef<"SizeTemplateItem", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SizeTemplateItem findUnique
+   */
+  export type SizeTemplateItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplateItem to fetch.
+     */
+    where: SizeTemplateItemWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplateItem findUniqueOrThrow
+   */
+  export type SizeTemplateItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplateItem to fetch.
+     */
+    where: SizeTemplateItemWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplateItem findFirst
+   */
+  export type SizeTemplateItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplateItem to fetch.
+     */
+    where?: SizeTemplateItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplateItems to fetch.
+     */
+    orderBy?: SizeTemplateItemOrderByWithRelationInput | SizeTemplateItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SizeTemplateItems.
+     */
+    cursor?: SizeTemplateItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplateItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplateItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SizeTemplateItems.
+     */
+    distinct?: SizeTemplateItemScalarFieldEnum | SizeTemplateItemScalarFieldEnum[]
+  }
+
+  /**
+   * SizeTemplateItem findFirstOrThrow
+   */
+  export type SizeTemplateItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplateItem to fetch.
+     */
+    where?: SizeTemplateItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplateItems to fetch.
+     */
+    orderBy?: SizeTemplateItemOrderByWithRelationInput | SizeTemplateItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SizeTemplateItems.
+     */
+    cursor?: SizeTemplateItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplateItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplateItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SizeTemplateItems.
+     */
+    distinct?: SizeTemplateItemScalarFieldEnum | SizeTemplateItemScalarFieldEnum[]
+  }
+
+  /**
+   * SizeTemplateItem findMany
+   */
+  export type SizeTemplateItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * Filter, which SizeTemplateItems to fetch.
+     */
+    where?: SizeTemplateItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SizeTemplateItems to fetch.
+     */
+    orderBy?: SizeTemplateItemOrderByWithRelationInput | SizeTemplateItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SizeTemplateItems.
+     */
+    cursor?: SizeTemplateItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SizeTemplateItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SizeTemplateItems.
+     */
+    skip?: number
+    distinct?: SizeTemplateItemScalarFieldEnum | SizeTemplateItemScalarFieldEnum[]
+  }
+
+  /**
+   * SizeTemplateItem create
+   */
+  export type SizeTemplateItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SizeTemplateItem.
+     */
+    data: XOR<SizeTemplateItemCreateInput, SizeTemplateItemUncheckedCreateInput>
+  }
+
+  /**
+   * SizeTemplateItem createMany
+   */
+  export type SizeTemplateItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SizeTemplateItems.
+     */
+    data: SizeTemplateItemCreateManyInput | SizeTemplateItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SizeTemplateItem createManyAndReturn
+   */
+  export type SizeTemplateItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * The data used to create many SizeTemplateItems.
+     */
+    data: SizeTemplateItemCreateManyInput | SizeTemplateItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SizeTemplateItem update
+   */
+  export type SizeTemplateItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SizeTemplateItem.
+     */
+    data: XOR<SizeTemplateItemUpdateInput, SizeTemplateItemUncheckedUpdateInput>
+    /**
+     * Choose, which SizeTemplateItem to update.
+     */
+    where: SizeTemplateItemWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplateItem updateMany
+   */
+  export type SizeTemplateItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SizeTemplateItems.
+     */
+    data: XOR<SizeTemplateItemUpdateManyMutationInput, SizeTemplateItemUncheckedUpdateManyInput>
+    /**
+     * Filter which SizeTemplateItems to update
+     */
+    where?: SizeTemplateItemWhereInput
+    /**
+     * Limit how many SizeTemplateItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SizeTemplateItem updateManyAndReturn
+   */
+  export type SizeTemplateItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * The data used to update SizeTemplateItems.
+     */
+    data: XOR<SizeTemplateItemUpdateManyMutationInput, SizeTemplateItemUncheckedUpdateManyInput>
+    /**
+     * Filter which SizeTemplateItems to update
+     */
+    where?: SizeTemplateItemWhereInput
+    /**
+     * Limit how many SizeTemplateItems to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SizeTemplateItem upsert
+   */
+  export type SizeTemplateItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SizeTemplateItem to update in case it exists.
+     */
+    where: SizeTemplateItemWhereUniqueInput
+    /**
+     * In case the SizeTemplateItem found by the `where` argument doesn't exist, create a new SizeTemplateItem with this data.
+     */
+    create: XOR<SizeTemplateItemCreateInput, SizeTemplateItemUncheckedCreateInput>
+    /**
+     * In case the SizeTemplateItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SizeTemplateItemUpdateInput, SizeTemplateItemUncheckedUpdateInput>
+  }
+
+  /**
+   * SizeTemplateItem delete
+   */
+  export type SizeTemplateItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
+    /**
+     * Filter which SizeTemplateItem to delete.
+     */
+    where: SizeTemplateItemWhereUniqueInput
+  }
+
+  /**
+   * SizeTemplateItem deleteMany
+   */
+  export type SizeTemplateItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SizeTemplateItems to delete
+     */
+    where?: SizeTemplateItemWhereInput
+    /**
+     * Limit how many SizeTemplateItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SizeTemplateItem without action
+   */
+  export type SizeTemplateItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SizeTemplateItem
+     */
+    select?: SizeTemplateItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SizeTemplateItem
+     */
+    omit?: SizeTemplateItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SizeTemplateItemInclude<ExtArgs> | null
   }
 
 
@@ -7572,8 +10101,8 @@ export namespace Prisma {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     brand?: boolean | Product$brandArgs<ExtArgs>
     galleryImages?: boolean | Product$galleryImagesArgs<ExtArgs>
-    colors?: boolean | Product$colorsArgs<ExtArgs>
-    sizes?: boolean | Product$sizesArgs<ExtArgs>
+    productInventories?: boolean | Product$productInventoriesArgs<ExtArgs>
+    sizeGuides?: boolean | Product$sizeGuidesArgs<ExtArgs>
     reviews?: boolean | Product$reviewsArgs<ExtArgs>
     orderItems?: boolean | Product$orderItemsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -7648,8 +10177,8 @@ export namespace Prisma {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     brand?: boolean | Product$brandArgs<ExtArgs>
     galleryImages?: boolean | Product$galleryImagesArgs<ExtArgs>
-    colors?: boolean | Product$colorsArgs<ExtArgs>
-    sizes?: boolean | Product$sizesArgs<ExtArgs>
+    productInventories?: boolean | Product$productInventoriesArgs<ExtArgs>
+    sizeGuides?: boolean | Product$sizeGuidesArgs<ExtArgs>
     reviews?: boolean | Product$reviewsArgs<ExtArgs>
     orderItems?: boolean | Product$orderItemsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -7669,8 +10198,8 @@ export namespace Prisma {
       category: Prisma.$CategoryPayload<ExtArgs>
       brand: Prisma.$BrandPayload<ExtArgs> | null
       galleryImages: Prisma.$ProductImagePayload<ExtArgs>[]
-      colors: Prisma.$ProductColorPayload<ExtArgs>[]
-      sizes: Prisma.$ProductSizePayload<ExtArgs>[]
+      productInventories: Prisma.$ProductInventoryPayload<ExtArgs>[]
+      sizeGuides: Prisma.$SizeGuidePayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
     }
@@ -8089,8 +10618,8 @@ export namespace Prisma {
     category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     brand<T extends Product$brandArgs<ExtArgs> = {}>(args?: Subset<T, Product$brandArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     galleryImages<T extends Product$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, Product$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    colors<T extends Product$colorsArgs<ExtArgs> = {}>(args?: Subset<T, Product$colorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    sizes<T extends Product$sizesArgs<ExtArgs> = {}>(args?: Subset<T, Product$sizesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    productInventories<T extends Product$productInventoriesArgs<ExtArgs> = {}>(args?: Subset<T, Product$productInventoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sizeGuides<T extends Product$sizeGuidesArgs<ExtArgs> = {}>(args?: Subset<T, Product$sizeGuidesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Product$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Product$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     orderItems<T extends Product$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Product$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -8578,51 +11107,51 @@ export namespace Prisma {
   }
 
   /**
-   * Product.colors
+   * Product.productInventories
    */
-  export type Product$colorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Product$productInventoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
-    where?: ProductColorWhereInput
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
-    cursor?: ProductColorWhereUniqueInput
+    include?: ProductInventoryInclude<ExtArgs> | null
+    where?: ProductInventoryWhereInput
+    orderBy?: ProductInventoryOrderByWithRelationInput | ProductInventoryOrderByWithRelationInput[]
+    cursor?: ProductInventoryWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+    distinct?: ProductInventoryScalarFieldEnum | ProductInventoryScalarFieldEnum[]
   }
 
   /**
-   * Product.sizes
+   * Product.sizeGuides
    */
-  export type Product$sizesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Product$sizeGuidesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
-    where?: ProductSizeWhereInput
-    orderBy?: ProductSizeOrderByWithRelationInput | ProductSizeOrderByWithRelationInput[]
-    cursor?: ProductSizeWhereUniqueInput
+    include?: SizeGuideInclude<ExtArgs> | null
+    where?: SizeGuideWhereInput
+    orderBy?: SizeGuideOrderByWithRelationInput | SizeGuideOrderByWithRelationInput[]
+    cursor?: SizeGuideWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ProductSizeScalarFieldEnum | ProductSizeScalarFieldEnum[]
+    distinct?: SizeGuideScalarFieldEnum | SizeGuideScalarFieldEnum[]
   }
 
   /**
@@ -9819,375 +12348,414 @@ export namespace Prisma {
 
 
   /**
-   * Model ProductColor
+   * Model ProductInventory
    */
 
-  export type AggregateProductColor = {
-    _count: ProductColorCountAggregateOutputType | null
-    _avg: ProductColorAvgAggregateOutputType | null
-    _sum: ProductColorSumAggregateOutputType | null
-    _min: ProductColorMinAggregateOutputType | null
-    _max: ProductColorMaxAggregateOutputType | null
+  export type AggregateProductInventory = {
+    _count: ProductInventoryCountAggregateOutputType | null
+    _avg: ProductInventoryAvgAggregateOutputType | null
+    _sum: ProductInventorySumAggregateOutputType | null
+    _min: ProductInventoryMinAggregateOutputType | null
+    _max: ProductInventoryMaxAggregateOutputType | null
   }
 
-  export type ProductColorAvgAggregateOutputType = {
+  export type ProductInventoryAvgAggregateOutputType = {
     id: number | null
+    stock: number | null
     productId: number | null
     colorId: number | null
+    sizeId: number | null
   }
 
-  export type ProductColorSumAggregateOutputType = {
+  export type ProductInventorySumAggregateOutputType = {
     id: number | null
+    stock: number | null
     productId: number | null
     colorId: number | null
+    sizeId: number | null
   }
 
-  export type ProductColorMinAggregateOutputType = {
+  export type ProductInventoryMinAggregateOutputType = {
     id: number | null
+    stock: number | null
     productId: number | null
     colorId: number | null
+    sizeId: number | null
   }
 
-  export type ProductColorMaxAggregateOutputType = {
+  export type ProductInventoryMaxAggregateOutputType = {
     id: number | null
+    stock: number | null
     productId: number | null
     colorId: number | null
+    sizeId: number | null
   }
 
-  export type ProductColorCountAggregateOutputType = {
+  export type ProductInventoryCountAggregateOutputType = {
     id: number
+    stock: number
     productId: number
     colorId: number
+    sizeId: number
     _all: number
   }
 
 
-  export type ProductColorAvgAggregateInputType = {
+  export type ProductInventoryAvgAggregateInputType = {
     id?: true
+    stock?: true
     productId?: true
     colorId?: true
+    sizeId?: true
   }
 
-  export type ProductColorSumAggregateInputType = {
+  export type ProductInventorySumAggregateInputType = {
     id?: true
+    stock?: true
     productId?: true
     colorId?: true
+    sizeId?: true
   }
 
-  export type ProductColorMinAggregateInputType = {
+  export type ProductInventoryMinAggregateInputType = {
     id?: true
+    stock?: true
     productId?: true
     colorId?: true
+    sizeId?: true
   }
 
-  export type ProductColorMaxAggregateInputType = {
+  export type ProductInventoryMaxAggregateInputType = {
     id?: true
+    stock?: true
     productId?: true
     colorId?: true
+    sizeId?: true
   }
 
-  export type ProductColorCountAggregateInputType = {
+  export type ProductInventoryCountAggregateInputType = {
     id?: true
+    stock?: true
     productId?: true
     colorId?: true
+    sizeId?: true
     _all?: true
   }
 
-  export type ProductColorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ProductColor to aggregate.
+     * Filter which ProductInventory to aggregate.
      */
-    where?: ProductColorWhereInput
+    where?: ProductInventoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductColors to fetch.
+     * Determine the order of ProductInventories to fetch.
      */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    orderBy?: ProductInventoryOrderByWithRelationInput | ProductInventoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ProductColorWhereUniqueInput
+    cursor?: ProductInventoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductColors from the position of the cursor.
+     * Take `±n` ProductInventories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductColors.
+     * Skip the first `n` ProductInventories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned ProductColors
+     * Count returned ProductInventories
     **/
-    _count?: true | ProductColorCountAggregateInputType
+    _count?: true | ProductInventoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ProductColorAvgAggregateInputType
+    _avg?: ProductInventoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ProductColorSumAggregateInputType
+    _sum?: ProductInventorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ProductColorMinAggregateInputType
+    _min?: ProductInventoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ProductColorMaxAggregateInputType
+    _max?: ProductInventoryMaxAggregateInputType
   }
 
-  export type GetProductColorAggregateType<T extends ProductColorAggregateArgs> = {
-        [P in keyof T & keyof AggregateProductColor]: P extends '_count' | 'count'
+  export type GetProductInventoryAggregateType<T extends ProductInventoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateProductInventory]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateProductColor[P]>
-      : GetScalarType<T[P], AggregateProductColor[P]>
+        : GetScalarType<T[P], AggregateProductInventory[P]>
+      : GetScalarType<T[P], AggregateProductInventory[P]>
   }
 
 
 
 
-  export type ProductColorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductColorWhereInput
-    orderBy?: ProductColorOrderByWithAggregationInput | ProductColorOrderByWithAggregationInput[]
-    by: ProductColorScalarFieldEnum[] | ProductColorScalarFieldEnum
-    having?: ProductColorScalarWhereWithAggregatesInput
+  export type ProductInventoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductInventoryWhereInput
+    orderBy?: ProductInventoryOrderByWithAggregationInput | ProductInventoryOrderByWithAggregationInput[]
+    by: ProductInventoryScalarFieldEnum[] | ProductInventoryScalarFieldEnum
+    having?: ProductInventoryScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ProductColorCountAggregateInputType | true
-    _avg?: ProductColorAvgAggregateInputType
-    _sum?: ProductColorSumAggregateInputType
-    _min?: ProductColorMinAggregateInputType
-    _max?: ProductColorMaxAggregateInputType
+    _count?: ProductInventoryCountAggregateInputType | true
+    _avg?: ProductInventoryAvgAggregateInputType
+    _sum?: ProductInventorySumAggregateInputType
+    _min?: ProductInventoryMinAggregateInputType
+    _max?: ProductInventoryMaxAggregateInputType
   }
 
-  export type ProductColorGroupByOutputType = {
+  export type ProductInventoryGroupByOutputType = {
     id: number
+    stock: number
     productId: number
     colorId: number
-    _count: ProductColorCountAggregateOutputType | null
-    _avg: ProductColorAvgAggregateOutputType | null
-    _sum: ProductColorSumAggregateOutputType | null
-    _min: ProductColorMinAggregateOutputType | null
-    _max: ProductColorMaxAggregateOutputType | null
+    sizeId: number
+    _count: ProductInventoryCountAggregateOutputType | null
+    _avg: ProductInventoryAvgAggregateOutputType | null
+    _sum: ProductInventorySumAggregateOutputType | null
+    _min: ProductInventoryMinAggregateOutputType | null
+    _max: ProductInventoryMaxAggregateOutputType | null
   }
 
-  type GetProductColorGroupByPayload<T extends ProductColorGroupByArgs> = Prisma.PrismaPromise<
+  type GetProductInventoryGroupByPayload<T extends ProductInventoryGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ProductColorGroupByOutputType, T['by']> &
+      PickEnumerable<ProductInventoryGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ProductColorGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ProductInventoryGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ProductColorGroupByOutputType[P]>
-            : GetScalarType<T[P], ProductColorGroupByOutputType[P]>
+              : GetScalarType<T[P], ProductInventoryGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductInventoryGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ProductColorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductInventorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    stock?: boolean
     productId?: boolean
     colorId?: boolean
+    sizeId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
     color?: boolean | ColorDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productColor"]>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productInventory"]>
 
-  export type ProductColorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductInventorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    stock?: boolean
     productId?: boolean
     colorId?: boolean
+    sizeId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
     color?: boolean | ColorDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productColor"]>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productInventory"]>
 
-  export type ProductColorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductInventorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    stock?: boolean
     productId?: boolean
     colorId?: boolean
+    sizeId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
     color?: boolean | ColorDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productColor"]>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productInventory"]>
 
-  export type ProductColorSelectScalar = {
+  export type ProductInventorySelectScalar = {
     id?: boolean
+    stock?: boolean
     productId?: boolean
     colorId?: boolean
+    sizeId?: boolean
   }
 
-  export type ProductColorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "colorId", ExtArgs["result"]["productColor"]>
-  export type ProductColorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "stock" | "productId" | "colorId" | "sizeId", ExtArgs["result"]["productInventory"]>
+  export type ProductInventoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
     color?: boolean | ColorDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
   }
-  export type ProductColorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
     color?: boolean | ColorDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
   }
-  export type ProductColorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
     color?: boolean | ColorDefaultArgs<ExtArgs>
+    size?: boolean | SizeDefaultArgs<ExtArgs>
   }
 
-  export type $ProductColorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ProductColor"
+  export type $ProductInventoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProductInventory"
     objects: {
       product: Prisma.$ProductPayload<ExtArgs>
       color: Prisma.$ColorPayload<ExtArgs>
+      size: Prisma.$SizePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      stock: number
       productId: number
       colorId: number
-    }, ExtArgs["result"]["productColor"]>
+      sizeId: number
+    }, ExtArgs["result"]["productInventory"]>
     composites: {}
   }
 
-  type ProductColorGetPayload<S extends boolean | null | undefined | ProductColorDefaultArgs> = $Result.GetResult<Prisma.$ProductColorPayload, S>
+  type ProductInventoryGetPayload<S extends boolean | null | undefined | ProductInventoryDefaultArgs> = $Result.GetResult<Prisma.$ProductInventoryPayload, S>
 
-  type ProductColorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ProductColorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ProductColorCountAggregateInputType | true
+  type ProductInventoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductInventoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductInventoryCountAggregateInputType | true
     }
 
-  export interface ProductColorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductColor'], meta: { name: 'ProductColor' } }
+  export interface ProductInventoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductInventory'], meta: { name: 'ProductInventory' } }
     /**
-     * Find zero or one ProductColor that matches the filter.
-     * @param {ProductColorFindUniqueArgs} args - Arguments to find a ProductColor
+     * Find zero or one ProductInventory that matches the filter.
+     * @param {ProductInventoryFindUniqueArgs} args - Arguments to find a ProductInventory
      * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findUnique({
+     * // Get one ProductInventory
+     * const productInventory = await prisma.productInventory.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ProductColorFindUniqueArgs>(args: SelectSubset<T, ProductColorFindUniqueArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ProductInventoryFindUniqueArgs>(args: SelectSubset<T, ProductInventoryFindUniqueArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ProductColor that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ProductInventory that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ProductColorFindUniqueOrThrowArgs} args - Arguments to find a ProductColor
+     * @param {ProductInventoryFindUniqueOrThrowArgs} args - Arguments to find a ProductInventory
      * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findUniqueOrThrow({
+     * // Get one ProductInventory
+     * const productInventory = await prisma.productInventory.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ProductColorFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductColorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ProductInventoryFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductInventoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ProductColor that matches the filter.
+     * Find the first ProductInventory that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorFindFirstArgs} args - Arguments to find a ProductColor
+     * @param {ProductInventoryFindFirstArgs} args - Arguments to find a ProductInventory
      * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findFirst({
+     * // Get one ProductInventory
+     * const productInventory = await prisma.productInventory.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ProductColorFindFirstArgs>(args?: SelectSubset<T, ProductColorFindFirstArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ProductInventoryFindFirstArgs>(args?: SelectSubset<T, ProductInventoryFindFirstArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ProductColor that matches the filter or
+     * Find the first ProductInventory that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorFindFirstOrThrowArgs} args - Arguments to find a ProductColor
+     * @param {ProductInventoryFindFirstOrThrowArgs} args - Arguments to find a ProductInventory
      * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findFirstOrThrow({
+     * // Get one ProductInventory
+     * const productInventory = await prisma.productInventory.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ProductColorFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductColorFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ProductInventoryFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductInventoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more ProductColors that matches the filter.
+     * Find zero or more ProductInventories that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ProductInventoryFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all ProductColors
-     * const productColors = await prisma.productColor.findMany()
+     * // Get all ProductInventories
+     * const productInventories = await prisma.productInventory.findMany()
      * 
-     * // Get first 10 ProductColors
-     * const productColors = await prisma.productColor.findMany({ take: 10 })
+     * // Get first 10 ProductInventories
+     * const productInventories = await prisma.productInventory.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const productColorWithIdOnly = await prisma.productColor.findMany({ select: { id: true } })
+     * const productInventoryWithIdOnly = await prisma.productInventory.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ProductColorFindManyArgs>(args?: SelectSubset<T, ProductColorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ProductInventoryFindManyArgs>(args?: SelectSubset<T, ProductInventoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a ProductColor.
-     * @param {ProductColorCreateArgs} args - Arguments to create a ProductColor.
+     * Create a ProductInventory.
+     * @param {ProductInventoryCreateArgs} args - Arguments to create a ProductInventory.
      * @example
-     * // Create one ProductColor
-     * const ProductColor = await prisma.productColor.create({
+     * // Create one ProductInventory
+     * const ProductInventory = await prisma.productInventory.create({
      *   data: {
-     *     // ... data to create a ProductColor
+     *     // ... data to create a ProductInventory
      *   }
      * })
      * 
      */
-    create<T extends ProductColorCreateArgs>(args: SelectSubset<T, ProductColorCreateArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ProductInventoryCreateArgs>(args: SelectSubset<T, ProductInventoryCreateArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many ProductColors.
-     * @param {ProductColorCreateManyArgs} args - Arguments to create many ProductColors.
+     * Create many ProductInventories.
+     * @param {ProductInventoryCreateManyArgs} args - Arguments to create many ProductInventories.
      * @example
-     * // Create many ProductColors
-     * const productColor = await prisma.productColor.createMany({
+     * // Create many ProductInventories
+     * const productInventory = await prisma.productInventory.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ProductColorCreateManyArgs>(args?: SelectSubset<T, ProductColorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ProductInventoryCreateManyArgs>(args?: SelectSubset<T, ProductInventoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many ProductColors and returns the data saved in the database.
-     * @param {ProductColorCreateManyAndReturnArgs} args - Arguments to create many ProductColors.
+     * Create many ProductInventories and returns the data saved in the database.
+     * @param {ProductInventoryCreateManyAndReturnArgs} args - Arguments to create many ProductInventories.
      * @example
-     * // Create many ProductColors
-     * const productColor = await prisma.productColor.createManyAndReturn({
+     * // Create many ProductInventories
+     * const productInventory = await prisma.productInventory.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many ProductColors and only return the `id`
-     * const productColorWithIdOnly = await prisma.productColor.createManyAndReturn({
+     * // Create many ProductInventories and only return the `id`
+     * const productInventoryWithIdOnly = await prisma.productInventory.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -10197,28 +12765,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ProductColorCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductColorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ProductInventoryCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductInventoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a ProductColor.
-     * @param {ProductColorDeleteArgs} args - Arguments to delete one ProductColor.
+     * Delete a ProductInventory.
+     * @param {ProductInventoryDeleteArgs} args - Arguments to delete one ProductInventory.
      * @example
-     * // Delete one ProductColor
-     * const ProductColor = await prisma.productColor.delete({
+     * // Delete one ProductInventory
+     * const ProductInventory = await prisma.productInventory.delete({
      *   where: {
-     *     // ... filter to delete one ProductColor
+     *     // ... filter to delete one ProductInventory
      *   }
      * })
      * 
      */
-    delete<T extends ProductColorDeleteArgs>(args: SelectSubset<T, ProductColorDeleteArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ProductInventoryDeleteArgs>(args: SelectSubset<T, ProductInventoryDeleteArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one ProductColor.
-     * @param {ProductColorUpdateArgs} args - Arguments to update one ProductColor.
+     * Update one ProductInventory.
+     * @param {ProductInventoryUpdateArgs} args - Arguments to update one ProductInventory.
      * @example
-     * // Update one ProductColor
-     * const productColor = await prisma.productColor.update({
+     * // Update one ProductInventory
+     * const productInventory = await prisma.productInventory.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10228,30 +12796,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ProductColorUpdateArgs>(args: SelectSubset<T, ProductColorUpdateArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ProductInventoryUpdateArgs>(args: SelectSubset<T, ProductInventoryUpdateArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more ProductColors.
-     * @param {ProductColorDeleteManyArgs} args - Arguments to filter ProductColors to delete.
+     * Delete zero or more ProductInventories.
+     * @param {ProductInventoryDeleteManyArgs} args - Arguments to filter ProductInventories to delete.
      * @example
-     * // Delete a few ProductColors
-     * const { count } = await prisma.productColor.deleteMany({
+     * // Delete a few ProductInventories
+     * const { count } = await prisma.productInventory.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ProductColorDeleteManyArgs>(args?: SelectSubset<T, ProductColorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ProductInventoryDeleteManyArgs>(args?: SelectSubset<T, ProductInventoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ProductColors.
+     * Update zero or more ProductInventories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ProductInventoryUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many ProductColors
-     * const productColor = await prisma.productColor.updateMany({
+     * // Update many ProductInventories
+     * const productInventory = await prisma.productInventory.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10261,14 +12829,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ProductColorUpdateManyArgs>(args: SelectSubset<T, ProductColorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ProductInventoryUpdateManyArgs>(args: SelectSubset<T, ProductInventoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ProductColors and returns the data updated in the database.
-     * @param {ProductColorUpdateManyAndReturnArgs} args - Arguments to update many ProductColors.
+     * Update zero or more ProductInventories and returns the data updated in the database.
+     * @param {ProductInventoryUpdateManyAndReturnArgs} args - Arguments to update many ProductInventories.
      * @example
-     * // Update many ProductColors
-     * const productColor = await prisma.productColor.updateManyAndReturn({
+     * // Update many ProductInventories
+     * const productInventory = await prisma.productInventory.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10277,8 +12845,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more ProductColors and only return the `id`
-     * const productColorWithIdOnly = await prisma.productColor.updateManyAndReturn({
+     * // Update zero or more ProductInventories and only return the `id`
+     * const productInventoryWithIdOnly = await prisma.productInventory.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -10291,56 +12859,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ProductColorUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductColorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ProductInventoryUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductInventoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one ProductColor.
-     * @param {ProductColorUpsertArgs} args - Arguments to update or create a ProductColor.
+     * Create or update one ProductInventory.
+     * @param {ProductInventoryUpsertArgs} args - Arguments to update or create a ProductInventory.
      * @example
-     * // Update or create a ProductColor
-     * const productColor = await prisma.productColor.upsert({
+     * // Update or create a ProductInventory
+     * const productInventory = await prisma.productInventory.upsert({
      *   create: {
-     *     // ... data to create a ProductColor
+     *     // ... data to create a ProductInventory
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the ProductColor we want to update
+     *     // ... the filter for the ProductInventory we want to update
      *   }
      * })
      */
-    upsert<T extends ProductColorUpsertArgs>(args: SelectSubset<T, ProductColorUpsertArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ProductInventoryUpsertArgs>(args: SelectSubset<T, ProductInventoryUpsertArgs<ExtArgs>>): Prisma__ProductInventoryClient<$Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of ProductColors.
+     * Count the number of ProductInventories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorCountArgs} args - Arguments to filter ProductColors to count.
+     * @param {ProductInventoryCountArgs} args - Arguments to filter ProductInventories to count.
      * @example
-     * // Count the number of ProductColors
-     * const count = await prisma.productColor.count({
+     * // Count the number of ProductInventories
+     * const count = await prisma.productInventory.count({
      *   where: {
-     *     // ... the filter for the ProductColors we want to count
+     *     // ... the filter for the ProductInventories we want to count
      *   }
      * })
     **/
-    count<T extends ProductColorCountArgs>(
-      args?: Subset<T, ProductColorCountArgs>,
+    count<T extends ProductInventoryCountArgs>(
+      args?: Subset<T, ProductInventoryCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ProductColorCountAggregateOutputType>
+          : GetScalarType<T['select'], ProductInventoryCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a ProductColor.
+     * Allows you to perform aggregations operations on a ProductInventory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ProductInventoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -10360,13 +12928,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ProductColorAggregateArgs>(args: Subset<T, ProductColorAggregateArgs>): Prisma.PrismaPromise<GetProductColorAggregateType<T>>
+    aggregate<T extends ProductInventoryAggregateArgs>(args: Subset<T, ProductInventoryAggregateArgs>): Prisma.PrismaPromise<GetProductInventoryAggregateType<T>>
 
     /**
-     * Group by ProductColor.
+     * Group by ProductInventory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorGroupByArgs} args - Group by arguments.
+     * @param {ProductInventoryGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -10381,14 +12949,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ProductColorGroupByArgs,
+      T extends ProductInventoryGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ProductColorGroupByArgs['orderBy'] }
-        : { orderBy?: ProductColorGroupByArgs['orderBy'] },
+        ? { orderBy: ProductInventoryGroupByArgs['orderBy'] }
+        : { orderBy?: ProductInventoryGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -10437,23 +13005,24 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ProductColorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductColorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ProductInventoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductInventoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the ProductColor model
+   * Fields of the ProductInventory model
    */
-  readonly fields: ProductColorFieldRefs;
+  readonly fields: ProductInventoryFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for ProductColor.
+   * The delegate class that acts as a "Promise-like" for ProductInventory.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ProductColorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ProductInventoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     color<T extends ColorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ColorDefaultArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    size<T extends SizeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SizeDefaultArgs<ExtArgs>>): Prisma__SizeClient<$Result.GetResult<Prisma.$SizePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10480,812 +13049,814 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the ProductColor model
+   * Fields of the ProductInventory model
    */
-  interface ProductColorFieldRefs {
-    readonly id: FieldRef<"ProductColor", 'Int'>
-    readonly productId: FieldRef<"ProductColor", 'Int'>
-    readonly colorId: FieldRef<"ProductColor", 'Int'>
+  interface ProductInventoryFieldRefs {
+    readonly id: FieldRef<"ProductInventory", 'Int'>
+    readonly stock: FieldRef<"ProductInventory", 'Int'>
+    readonly productId: FieldRef<"ProductInventory", 'Int'>
+    readonly colorId: FieldRef<"ProductInventory", 'Int'>
+    readonly sizeId: FieldRef<"ProductInventory", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * ProductColor findUnique
+   * ProductInventory findUnique
    */
-  export type ProductColorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * Filter, which ProductColor to fetch.
+     * Filter, which ProductInventory to fetch.
      */
-    where: ProductColorWhereUniqueInput
+    where: ProductInventoryWhereUniqueInput
   }
 
   /**
-   * ProductColor findUniqueOrThrow
+   * ProductInventory findUniqueOrThrow
    */
-  export type ProductColorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * Filter, which ProductColor to fetch.
+     * Filter, which ProductInventory to fetch.
      */
-    where: ProductColorWhereUniqueInput
+    where: ProductInventoryWhereUniqueInput
   }
 
   /**
-   * ProductColor findFirst
+   * ProductInventory findFirst
    */
-  export type ProductColorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * Filter, which ProductColor to fetch.
+     * Filter, which ProductInventory to fetch.
      */
-    where?: ProductColorWhereInput
+    where?: ProductInventoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductColors to fetch.
+     * Determine the order of ProductInventories to fetch.
      */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    orderBy?: ProductInventoryOrderByWithRelationInput | ProductInventoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ProductColors.
+     * Sets the position for searching for ProductInventories.
      */
-    cursor?: ProductColorWhereUniqueInput
+    cursor?: ProductInventoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductColors from the position of the cursor.
+     * Take `±n` ProductInventories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductColors.
+     * Skip the first `n` ProductInventories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ProductColors.
+     * Filter by unique combinations of ProductInventories.
      */
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+    distinct?: ProductInventoryScalarFieldEnum | ProductInventoryScalarFieldEnum[]
   }
 
   /**
-   * ProductColor findFirstOrThrow
+   * ProductInventory findFirstOrThrow
    */
-  export type ProductColorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * Filter, which ProductColor to fetch.
+     * Filter, which ProductInventory to fetch.
      */
-    where?: ProductColorWhereInput
+    where?: ProductInventoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductColors to fetch.
+     * Determine the order of ProductInventories to fetch.
      */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    orderBy?: ProductInventoryOrderByWithRelationInput | ProductInventoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ProductColors.
+     * Sets the position for searching for ProductInventories.
      */
-    cursor?: ProductColorWhereUniqueInput
+    cursor?: ProductInventoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductColors from the position of the cursor.
+     * Take `±n` ProductInventories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductColors.
+     * Skip the first `n` ProductInventories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ProductColors.
+     * Filter by unique combinations of ProductInventories.
      */
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+    distinct?: ProductInventoryScalarFieldEnum | ProductInventoryScalarFieldEnum[]
   }
 
   /**
-   * ProductColor findMany
+   * ProductInventory findMany
    */
-  export type ProductColorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * Filter, which ProductColors to fetch.
+     * Filter, which ProductInventories to fetch.
      */
-    where?: ProductColorWhereInput
+    where?: ProductInventoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductColors to fetch.
+     * Determine the order of ProductInventories to fetch.
      */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    orderBy?: ProductInventoryOrderByWithRelationInput | ProductInventoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing ProductColors.
+     * Sets the position for listing ProductInventories.
      */
-    cursor?: ProductColorWhereUniqueInput
+    cursor?: ProductInventoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductColors from the position of the cursor.
+     * Take `±n` ProductInventories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductColors.
+     * Skip the first `n` ProductInventories.
      */
     skip?: number
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+    distinct?: ProductInventoryScalarFieldEnum | ProductInventoryScalarFieldEnum[]
   }
 
   /**
-   * ProductColor create
+   * ProductInventory create
    */
-  export type ProductColorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * The data needed to create a ProductColor.
+     * The data needed to create a ProductInventory.
      */
-    data: XOR<ProductColorCreateInput, ProductColorUncheckedCreateInput>
+    data: XOR<ProductInventoryCreateInput, ProductInventoryUncheckedCreateInput>
   }
 
   /**
-   * ProductColor createMany
+   * ProductInventory createMany
    */
-  export type ProductColorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many ProductColors.
+     * The data used to create many ProductInventories.
      */
-    data: ProductColorCreateManyInput | ProductColorCreateManyInput[]
+    data: ProductInventoryCreateManyInput | ProductInventoryCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * ProductColor createManyAndReturn
+   * ProductInventory createManyAndReturn
    */
-  export type ProductColorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ProductInventorySelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
-     * The data used to create many ProductColors.
+     * The data used to create many ProductInventories.
      */
-    data: ProductColorCreateManyInput | ProductColorCreateManyInput[]
+    data: ProductInventoryCreateManyInput | ProductInventoryCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ProductInventoryIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ProductColor update
+   * ProductInventory update
    */
-  export type ProductColorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * The data needed to update a ProductColor.
+     * The data needed to update a ProductInventory.
      */
-    data: XOR<ProductColorUpdateInput, ProductColorUncheckedUpdateInput>
+    data: XOR<ProductInventoryUpdateInput, ProductInventoryUncheckedUpdateInput>
     /**
-     * Choose, which ProductColor to update.
+     * Choose, which ProductInventory to update.
      */
-    where: ProductColorWhereUniqueInput
+    where: ProductInventoryWhereUniqueInput
   }
 
   /**
-   * ProductColor updateMany
+   * ProductInventory updateMany
    */
-  export type ProductColorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update ProductColors.
+     * The data used to update ProductInventories.
      */
-    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyInput>
+    data: XOR<ProductInventoryUpdateManyMutationInput, ProductInventoryUncheckedUpdateManyInput>
     /**
-     * Filter which ProductColors to update
+     * Filter which ProductInventories to update
      */
-    where?: ProductColorWhereInput
+    where?: ProductInventoryWhereInput
     /**
-     * Limit how many ProductColors to update.
+     * Limit how many ProductInventories to update.
      */
     limit?: number
   }
 
   /**
-   * ProductColor updateManyAndReturn
+   * ProductInventory updateManyAndReturn
    */
-  export type ProductColorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ProductInventorySelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
-     * The data used to update ProductColors.
+     * The data used to update ProductInventories.
      */
-    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyInput>
+    data: XOR<ProductInventoryUpdateManyMutationInput, ProductInventoryUncheckedUpdateManyInput>
     /**
-     * Filter which ProductColors to update
+     * Filter which ProductInventories to update
      */
-    where?: ProductColorWhereInput
+    where?: ProductInventoryWhereInput
     /**
-     * Limit how many ProductColors to update.
+     * Limit how many ProductInventories to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ProductInventoryIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ProductColor upsert
+   * ProductInventory upsert
    */
-  export type ProductColorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * The filter to search for the ProductColor to update in case it exists.
+     * The filter to search for the ProductInventory to update in case it exists.
      */
-    where: ProductColorWhereUniqueInput
+    where: ProductInventoryWhereUniqueInput
     /**
-     * In case the ProductColor found by the `where` argument doesn't exist, create a new ProductColor with this data.
+     * In case the ProductInventory found by the `where` argument doesn't exist, create a new ProductInventory with this data.
      */
-    create: XOR<ProductColorCreateInput, ProductColorUncheckedCreateInput>
+    create: XOR<ProductInventoryCreateInput, ProductInventoryUncheckedCreateInput>
     /**
-     * In case the ProductColor was found with the provided `where` argument, update it with this data.
+     * In case the ProductInventory was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ProductColorUpdateInput, ProductColorUncheckedUpdateInput>
+    update: XOR<ProductInventoryUpdateInput, ProductInventoryUncheckedUpdateInput>
   }
 
   /**
-   * ProductColor delete
+   * ProductInventory delete
    */
-  export type ProductColorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
     /**
-     * Filter which ProductColor to delete.
+     * Filter which ProductInventory to delete.
      */
-    where: ProductColorWhereUniqueInput
+    where: ProductInventoryWhereUniqueInput
   }
 
   /**
-   * ProductColor deleteMany
+   * ProductInventory deleteMany
    */
-  export type ProductColorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ProductColors to delete
+     * Filter which ProductInventories to delete
      */
-    where?: ProductColorWhereInput
+    where?: ProductInventoryWhereInput
     /**
-     * Limit how many ProductColors to delete.
+     * Limit how many ProductInventories to delete.
      */
     limit?: number
   }
 
   /**
-   * ProductColor without action
+   * ProductInventory without action
    */
-  export type ProductColorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductInventoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductColor
+     * Select specific fields to fetch from the ProductInventory
      */
-    select?: ProductColorSelect<ExtArgs> | null
+    select?: ProductInventorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductColor
+     * Omit specific fields from the ProductInventory
      */
-    omit?: ProductColorOmit<ExtArgs> | null
+    omit?: ProductInventoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductColorInclude<ExtArgs> | null
+    include?: ProductInventoryInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model ProductSize
+   * Model SizeGuide
    */
 
-  export type AggregateProductSize = {
-    _count: ProductSizeCountAggregateOutputType | null
-    _avg: ProductSizeAvgAggregateOutputType | null
-    _sum: ProductSizeSumAggregateOutputType | null
-    _min: ProductSizeMinAggregateOutputType | null
-    _max: ProductSizeMaxAggregateOutputType | null
+  export type AggregateSizeGuide = {
+    _count: SizeGuideCountAggregateOutputType | null
+    _avg: SizeGuideAvgAggregateOutputType | null
+    _sum: SizeGuideSumAggregateOutputType | null
+    _min: SizeGuideMinAggregateOutputType | null
+    _max: SizeGuideMaxAggregateOutputType | null
   }
 
-  export type ProductSizeAvgAggregateOutputType = {
+  export type SizeGuideAvgAggregateOutputType = {
     id: number | null
-    stock: number | null
+    centimeters: number | null
     productId: number | null
     sizeId: number | null
   }
 
-  export type ProductSizeSumAggregateOutputType = {
+  export type SizeGuideSumAggregateOutputType = {
     id: number | null
-    stock: number | null
+    centimeters: number | null
     productId: number | null
     sizeId: number | null
   }
 
-  export type ProductSizeMinAggregateOutputType = {
+  export type SizeGuideMinAggregateOutputType = {
     id: number | null
-    stock: number | null
+    centimeters: number | null
     productId: number | null
     sizeId: number | null
   }
 
-  export type ProductSizeMaxAggregateOutputType = {
+  export type SizeGuideMaxAggregateOutputType = {
     id: number | null
-    stock: number | null
+    centimeters: number | null
     productId: number | null
     sizeId: number | null
   }
 
-  export type ProductSizeCountAggregateOutputType = {
+  export type SizeGuideCountAggregateOutputType = {
     id: number
-    stock: number
+    centimeters: number
     productId: number
     sizeId: number
     _all: number
   }
 
 
-  export type ProductSizeAvgAggregateInputType = {
+  export type SizeGuideAvgAggregateInputType = {
     id?: true
-    stock?: true
+    centimeters?: true
     productId?: true
     sizeId?: true
   }
 
-  export type ProductSizeSumAggregateInputType = {
+  export type SizeGuideSumAggregateInputType = {
     id?: true
-    stock?: true
+    centimeters?: true
     productId?: true
     sizeId?: true
   }
 
-  export type ProductSizeMinAggregateInputType = {
+  export type SizeGuideMinAggregateInputType = {
     id?: true
-    stock?: true
+    centimeters?: true
     productId?: true
     sizeId?: true
   }
 
-  export type ProductSizeMaxAggregateInputType = {
+  export type SizeGuideMaxAggregateInputType = {
     id?: true
-    stock?: true
+    centimeters?: true
     productId?: true
     sizeId?: true
   }
 
-  export type ProductSizeCountAggregateInputType = {
+  export type SizeGuideCountAggregateInputType = {
     id?: true
-    stock?: true
+    centimeters?: true
     productId?: true
     sizeId?: true
     _all?: true
   }
 
-  export type ProductSizeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ProductSize to aggregate.
+     * Filter which SizeGuide to aggregate.
      */
-    where?: ProductSizeWhereInput
+    where?: SizeGuideWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductSizes to fetch.
+     * Determine the order of SizeGuides to fetch.
      */
-    orderBy?: ProductSizeOrderByWithRelationInput | ProductSizeOrderByWithRelationInput[]
+    orderBy?: SizeGuideOrderByWithRelationInput | SizeGuideOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ProductSizeWhereUniqueInput
+    cursor?: SizeGuideWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductSizes from the position of the cursor.
+     * Take `±n` SizeGuides from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductSizes.
+     * Skip the first `n` SizeGuides.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned ProductSizes
+     * Count returned SizeGuides
     **/
-    _count?: true | ProductSizeCountAggregateInputType
+    _count?: true | SizeGuideCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ProductSizeAvgAggregateInputType
+    _avg?: SizeGuideAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ProductSizeSumAggregateInputType
+    _sum?: SizeGuideSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ProductSizeMinAggregateInputType
+    _min?: SizeGuideMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ProductSizeMaxAggregateInputType
+    _max?: SizeGuideMaxAggregateInputType
   }
 
-  export type GetProductSizeAggregateType<T extends ProductSizeAggregateArgs> = {
-        [P in keyof T & keyof AggregateProductSize]: P extends '_count' | 'count'
+  export type GetSizeGuideAggregateType<T extends SizeGuideAggregateArgs> = {
+        [P in keyof T & keyof AggregateSizeGuide]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateProductSize[P]>
-      : GetScalarType<T[P], AggregateProductSize[P]>
+        : GetScalarType<T[P], AggregateSizeGuide[P]>
+      : GetScalarType<T[P], AggregateSizeGuide[P]>
   }
 
 
 
 
-  export type ProductSizeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductSizeWhereInput
-    orderBy?: ProductSizeOrderByWithAggregationInput | ProductSizeOrderByWithAggregationInput[]
-    by: ProductSizeScalarFieldEnum[] | ProductSizeScalarFieldEnum
-    having?: ProductSizeScalarWhereWithAggregatesInput
+  export type SizeGuideGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SizeGuideWhereInput
+    orderBy?: SizeGuideOrderByWithAggregationInput | SizeGuideOrderByWithAggregationInput[]
+    by: SizeGuideScalarFieldEnum[] | SizeGuideScalarFieldEnum
+    having?: SizeGuideScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ProductSizeCountAggregateInputType | true
-    _avg?: ProductSizeAvgAggregateInputType
-    _sum?: ProductSizeSumAggregateInputType
-    _min?: ProductSizeMinAggregateInputType
-    _max?: ProductSizeMaxAggregateInputType
+    _count?: SizeGuideCountAggregateInputType | true
+    _avg?: SizeGuideAvgAggregateInputType
+    _sum?: SizeGuideSumAggregateInputType
+    _min?: SizeGuideMinAggregateInputType
+    _max?: SizeGuideMaxAggregateInputType
   }
 
-  export type ProductSizeGroupByOutputType = {
+  export type SizeGuideGroupByOutputType = {
     id: number
-    stock: number
+    centimeters: number
     productId: number
     sizeId: number
-    _count: ProductSizeCountAggregateOutputType | null
-    _avg: ProductSizeAvgAggregateOutputType | null
-    _sum: ProductSizeSumAggregateOutputType | null
-    _min: ProductSizeMinAggregateOutputType | null
-    _max: ProductSizeMaxAggregateOutputType | null
+    _count: SizeGuideCountAggregateOutputType | null
+    _avg: SizeGuideAvgAggregateOutputType | null
+    _sum: SizeGuideSumAggregateOutputType | null
+    _min: SizeGuideMinAggregateOutputType | null
+    _max: SizeGuideMaxAggregateOutputType | null
   }
 
-  type GetProductSizeGroupByPayload<T extends ProductSizeGroupByArgs> = Prisma.PrismaPromise<
+  type GetSizeGuideGroupByPayload<T extends SizeGuideGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ProductSizeGroupByOutputType, T['by']> &
+      PickEnumerable<SizeGuideGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ProductSizeGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SizeGuideGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ProductSizeGroupByOutputType[P]>
-            : GetScalarType<T[P], ProductSizeGroupByOutputType[P]>
+              : GetScalarType<T[P], SizeGuideGroupByOutputType[P]>
+            : GetScalarType<T[P], SizeGuideGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ProductSizeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SizeGuideSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    stock?: boolean
+    centimeters?: boolean
     productId?: boolean
     sizeId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
     size?: boolean | SizeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productSize"]>
+  }, ExtArgs["result"]["sizeGuide"]>
 
-  export type ProductSizeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SizeGuideSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    stock?: boolean
+    centimeters?: boolean
     productId?: boolean
     sizeId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
     size?: boolean | SizeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productSize"]>
+  }, ExtArgs["result"]["sizeGuide"]>
 
-  export type ProductSizeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SizeGuideSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    stock?: boolean
+    centimeters?: boolean
     productId?: boolean
     sizeId?: boolean
     product?: boolean | ProductDefaultArgs<ExtArgs>
     size?: boolean | SizeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productSize"]>
+  }, ExtArgs["result"]["sizeGuide"]>
 
-  export type ProductSizeSelectScalar = {
+  export type SizeGuideSelectScalar = {
     id?: boolean
-    stock?: boolean
+    centimeters?: boolean
     productId?: boolean
     sizeId?: boolean
   }
 
-  export type ProductSizeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "stock" | "productId" | "sizeId", ExtArgs["result"]["productSize"]>
-  export type ProductSizeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "centimeters" | "productId" | "sizeId", ExtArgs["result"]["sizeGuide"]>
+  export type SizeGuideInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
     size?: boolean | SizeDefaultArgs<ExtArgs>
   }
-  export type ProductSizeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
     size?: boolean | SizeDefaultArgs<ExtArgs>
   }
-  export type ProductSizeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | ProductDefaultArgs<ExtArgs>
     size?: boolean | SizeDefaultArgs<ExtArgs>
   }
 
-  export type $ProductSizePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ProductSize"
+  export type $SizeGuidePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SizeGuide"
     objects: {
       product: Prisma.$ProductPayload<ExtArgs>
       size: Prisma.$SizePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      stock: number
+      centimeters: number
       productId: number
       sizeId: number
-    }, ExtArgs["result"]["productSize"]>
+    }, ExtArgs["result"]["sizeGuide"]>
     composites: {}
   }
 
-  type ProductSizeGetPayload<S extends boolean | null | undefined | ProductSizeDefaultArgs> = $Result.GetResult<Prisma.$ProductSizePayload, S>
+  type SizeGuideGetPayload<S extends boolean | null | undefined | SizeGuideDefaultArgs> = $Result.GetResult<Prisma.$SizeGuidePayload, S>
 
-  type ProductSizeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ProductSizeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ProductSizeCountAggregateInputType | true
+  type SizeGuideCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SizeGuideFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SizeGuideCountAggregateInputType | true
     }
 
-  export interface ProductSizeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductSize'], meta: { name: 'ProductSize' } }
+  export interface SizeGuideDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SizeGuide'], meta: { name: 'SizeGuide' } }
     /**
-     * Find zero or one ProductSize that matches the filter.
-     * @param {ProductSizeFindUniqueArgs} args - Arguments to find a ProductSize
+     * Find zero or one SizeGuide that matches the filter.
+     * @param {SizeGuideFindUniqueArgs} args - Arguments to find a SizeGuide
      * @example
-     * // Get one ProductSize
-     * const productSize = await prisma.productSize.findUnique({
+     * // Get one SizeGuide
+     * const sizeGuide = await prisma.sizeGuide.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ProductSizeFindUniqueArgs>(args: SelectSubset<T, ProductSizeFindUniqueArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends SizeGuideFindUniqueArgs>(args: SelectSubset<T, SizeGuideFindUniqueArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ProductSize that matches the filter or throw an error with `error.code='P2025'`
+     * Find one SizeGuide that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ProductSizeFindUniqueOrThrowArgs} args - Arguments to find a ProductSize
+     * @param {SizeGuideFindUniqueOrThrowArgs} args - Arguments to find a SizeGuide
      * @example
-     * // Get one ProductSize
-     * const productSize = await prisma.productSize.findUniqueOrThrow({
+     * // Get one SizeGuide
+     * const sizeGuide = await prisma.sizeGuide.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ProductSizeFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductSizeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends SizeGuideFindUniqueOrThrowArgs>(args: SelectSubset<T, SizeGuideFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ProductSize that matches the filter.
+     * Find the first SizeGuide that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductSizeFindFirstArgs} args - Arguments to find a ProductSize
+     * @param {SizeGuideFindFirstArgs} args - Arguments to find a SizeGuide
      * @example
-     * // Get one ProductSize
-     * const productSize = await prisma.productSize.findFirst({
+     * // Get one SizeGuide
+     * const sizeGuide = await prisma.sizeGuide.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ProductSizeFindFirstArgs>(args?: SelectSubset<T, ProductSizeFindFirstArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends SizeGuideFindFirstArgs>(args?: SelectSubset<T, SizeGuideFindFirstArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ProductSize that matches the filter or
+     * Find the first SizeGuide that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductSizeFindFirstOrThrowArgs} args - Arguments to find a ProductSize
+     * @param {SizeGuideFindFirstOrThrowArgs} args - Arguments to find a SizeGuide
      * @example
-     * // Get one ProductSize
-     * const productSize = await prisma.productSize.findFirstOrThrow({
+     * // Get one SizeGuide
+     * const sizeGuide = await prisma.sizeGuide.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ProductSizeFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductSizeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends SizeGuideFindFirstOrThrowArgs>(args?: SelectSubset<T, SizeGuideFindFirstOrThrowArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more ProductSizes that matches the filter.
+     * Find zero or more SizeGuides that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductSizeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SizeGuideFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all ProductSizes
-     * const productSizes = await prisma.productSize.findMany()
+     * // Get all SizeGuides
+     * const sizeGuides = await prisma.sizeGuide.findMany()
      * 
-     * // Get first 10 ProductSizes
-     * const productSizes = await prisma.productSize.findMany({ take: 10 })
+     * // Get first 10 SizeGuides
+     * const sizeGuides = await prisma.sizeGuide.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const productSizeWithIdOnly = await prisma.productSize.findMany({ select: { id: true } })
+     * const sizeGuideWithIdOnly = await prisma.sizeGuide.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ProductSizeFindManyArgs>(args?: SelectSubset<T, ProductSizeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends SizeGuideFindManyArgs>(args?: SelectSubset<T, SizeGuideFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a ProductSize.
-     * @param {ProductSizeCreateArgs} args - Arguments to create a ProductSize.
+     * Create a SizeGuide.
+     * @param {SizeGuideCreateArgs} args - Arguments to create a SizeGuide.
      * @example
-     * // Create one ProductSize
-     * const ProductSize = await prisma.productSize.create({
+     * // Create one SizeGuide
+     * const SizeGuide = await prisma.sizeGuide.create({
      *   data: {
-     *     // ... data to create a ProductSize
+     *     // ... data to create a SizeGuide
      *   }
      * })
      * 
      */
-    create<T extends ProductSizeCreateArgs>(args: SelectSubset<T, ProductSizeCreateArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends SizeGuideCreateArgs>(args: SelectSubset<T, SizeGuideCreateArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many ProductSizes.
-     * @param {ProductSizeCreateManyArgs} args - Arguments to create many ProductSizes.
+     * Create many SizeGuides.
+     * @param {SizeGuideCreateManyArgs} args - Arguments to create many SizeGuides.
      * @example
-     * // Create many ProductSizes
-     * const productSize = await prisma.productSize.createMany({
+     * // Create many SizeGuides
+     * const sizeGuide = await prisma.sizeGuide.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ProductSizeCreateManyArgs>(args?: SelectSubset<T, ProductSizeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SizeGuideCreateManyArgs>(args?: SelectSubset<T, SizeGuideCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many ProductSizes and returns the data saved in the database.
-     * @param {ProductSizeCreateManyAndReturnArgs} args - Arguments to create many ProductSizes.
+     * Create many SizeGuides and returns the data saved in the database.
+     * @param {SizeGuideCreateManyAndReturnArgs} args - Arguments to create many SizeGuides.
      * @example
-     * // Create many ProductSizes
-     * const productSize = await prisma.productSize.createManyAndReturn({
+     * // Create many SizeGuides
+     * const sizeGuide = await prisma.sizeGuide.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many ProductSizes and only return the `id`
-     * const productSizeWithIdOnly = await prisma.productSize.createManyAndReturn({
+     * // Create many SizeGuides and only return the `id`
+     * const sizeGuideWithIdOnly = await prisma.sizeGuide.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -11295,28 +13866,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ProductSizeCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductSizeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends SizeGuideCreateManyAndReturnArgs>(args?: SelectSubset<T, SizeGuideCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a ProductSize.
-     * @param {ProductSizeDeleteArgs} args - Arguments to delete one ProductSize.
+     * Delete a SizeGuide.
+     * @param {SizeGuideDeleteArgs} args - Arguments to delete one SizeGuide.
      * @example
-     * // Delete one ProductSize
-     * const ProductSize = await prisma.productSize.delete({
+     * // Delete one SizeGuide
+     * const SizeGuide = await prisma.sizeGuide.delete({
      *   where: {
-     *     // ... filter to delete one ProductSize
+     *     // ... filter to delete one SizeGuide
      *   }
      * })
      * 
      */
-    delete<T extends ProductSizeDeleteArgs>(args: SelectSubset<T, ProductSizeDeleteArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends SizeGuideDeleteArgs>(args: SelectSubset<T, SizeGuideDeleteArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one ProductSize.
-     * @param {ProductSizeUpdateArgs} args - Arguments to update one ProductSize.
+     * Update one SizeGuide.
+     * @param {SizeGuideUpdateArgs} args - Arguments to update one SizeGuide.
      * @example
-     * // Update one ProductSize
-     * const productSize = await prisma.productSize.update({
+     * // Update one SizeGuide
+     * const sizeGuide = await prisma.sizeGuide.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -11326,30 +13897,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ProductSizeUpdateArgs>(args: SelectSubset<T, ProductSizeUpdateArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends SizeGuideUpdateArgs>(args: SelectSubset<T, SizeGuideUpdateArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more ProductSizes.
-     * @param {ProductSizeDeleteManyArgs} args - Arguments to filter ProductSizes to delete.
+     * Delete zero or more SizeGuides.
+     * @param {SizeGuideDeleteManyArgs} args - Arguments to filter SizeGuides to delete.
      * @example
-     * // Delete a few ProductSizes
-     * const { count } = await prisma.productSize.deleteMany({
+     * // Delete a few SizeGuides
+     * const { count } = await prisma.sizeGuide.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ProductSizeDeleteManyArgs>(args?: SelectSubset<T, ProductSizeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SizeGuideDeleteManyArgs>(args?: SelectSubset<T, SizeGuideDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ProductSizes.
+     * Update zero or more SizeGuides.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductSizeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SizeGuideUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many ProductSizes
-     * const productSize = await prisma.productSize.updateMany({
+     * // Update many SizeGuides
+     * const sizeGuide = await prisma.sizeGuide.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -11359,14 +13930,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ProductSizeUpdateManyArgs>(args: SelectSubset<T, ProductSizeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SizeGuideUpdateManyArgs>(args: SelectSubset<T, SizeGuideUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ProductSizes and returns the data updated in the database.
-     * @param {ProductSizeUpdateManyAndReturnArgs} args - Arguments to update many ProductSizes.
+     * Update zero or more SizeGuides and returns the data updated in the database.
+     * @param {SizeGuideUpdateManyAndReturnArgs} args - Arguments to update many SizeGuides.
      * @example
-     * // Update many ProductSizes
-     * const productSize = await prisma.productSize.updateManyAndReturn({
+     * // Update many SizeGuides
+     * const sizeGuide = await prisma.sizeGuide.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -11375,8 +13946,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more ProductSizes and only return the `id`
-     * const productSizeWithIdOnly = await prisma.productSize.updateManyAndReturn({
+     * // Update zero or more SizeGuides and only return the `id`
+     * const sizeGuideWithIdOnly = await prisma.sizeGuide.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -11389,56 +13960,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ProductSizeUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductSizeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends SizeGuideUpdateManyAndReturnArgs>(args: SelectSubset<T, SizeGuideUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one ProductSize.
-     * @param {ProductSizeUpsertArgs} args - Arguments to update or create a ProductSize.
+     * Create or update one SizeGuide.
+     * @param {SizeGuideUpsertArgs} args - Arguments to update or create a SizeGuide.
      * @example
-     * // Update or create a ProductSize
-     * const productSize = await prisma.productSize.upsert({
+     * // Update or create a SizeGuide
+     * const sizeGuide = await prisma.sizeGuide.upsert({
      *   create: {
-     *     // ... data to create a ProductSize
+     *     // ... data to create a SizeGuide
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the ProductSize we want to update
+     *     // ... the filter for the SizeGuide we want to update
      *   }
      * })
      */
-    upsert<T extends ProductSizeUpsertArgs>(args: SelectSubset<T, ProductSizeUpsertArgs<ExtArgs>>): Prisma__ProductSizeClient<$Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends SizeGuideUpsertArgs>(args: SelectSubset<T, SizeGuideUpsertArgs<ExtArgs>>): Prisma__SizeGuideClient<$Result.GetResult<Prisma.$SizeGuidePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of ProductSizes.
+     * Count the number of SizeGuides.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductSizeCountArgs} args - Arguments to filter ProductSizes to count.
+     * @param {SizeGuideCountArgs} args - Arguments to filter SizeGuides to count.
      * @example
-     * // Count the number of ProductSizes
-     * const count = await prisma.productSize.count({
+     * // Count the number of SizeGuides
+     * const count = await prisma.sizeGuide.count({
      *   where: {
-     *     // ... the filter for the ProductSizes we want to count
+     *     // ... the filter for the SizeGuides we want to count
      *   }
      * })
     **/
-    count<T extends ProductSizeCountArgs>(
-      args?: Subset<T, ProductSizeCountArgs>,
+    count<T extends SizeGuideCountArgs>(
+      args?: Subset<T, SizeGuideCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ProductSizeCountAggregateOutputType>
+          : GetScalarType<T['select'], SizeGuideCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a ProductSize.
+     * Allows you to perform aggregations operations on a SizeGuide.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductSizeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SizeGuideAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -11458,13 +14029,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ProductSizeAggregateArgs>(args: Subset<T, ProductSizeAggregateArgs>): Prisma.PrismaPromise<GetProductSizeAggregateType<T>>
+    aggregate<T extends SizeGuideAggregateArgs>(args: Subset<T, SizeGuideAggregateArgs>): Prisma.PrismaPromise<GetSizeGuideAggregateType<T>>
 
     /**
-     * Group by ProductSize.
+     * Group by SizeGuide.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductSizeGroupByArgs} args - Group by arguments.
+     * @param {SizeGuideGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -11479,14 +14050,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ProductSizeGroupByArgs,
+      T extends SizeGuideGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ProductSizeGroupByArgs['orderBy'] }
-        : { orderBy?: ProductSizeGroupByArgs['orderBy'] },
+        ? { orderBy: SizeGuideGroupByArgs['orderBy'] }
+        : { orderBy?: SizeGuideGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -11535,20 +14106,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ProductSizeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductSizeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SizeGuideGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSizeGuideGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the ProductSize model
+   * Fields of the SizeGuide model
    */
-  readonly fields: ProductSizeFieldRefs;
+  readonly fields: SizeGuideFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for ProductSize.
+   * The delegate class that acts as a "Promise-like" for SizeGuide.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ProductSizeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SizeGuideClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     size<T extends SizeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SizeDefaultArgs<ExtArgs>>): Prisma__SizeClient<$Result.GetResult<Prisma.$SizePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -11578,424 +14149,424 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the ProductSize model
+   * Fields of the SizeGuide model
    */
-  interface ProductSizeFieldRefs {
-    readonly id: FieldRef<"ProductSize", 'Int'>
-    readonly stock: FieldRef<"ProductSize", 'Int'>
-    readonly productId: FieldRef<"ProductSize", 'Int'>
-    readonly sizeId: FieldRef<"ProductSize", 'Int'>
+  interface SizeGuideFieldRefs {
+    readonly id: FieldRef<"SizeGuide", 'Int'>
+    readonly centimeters: FieldRef<"SizeGuide", 'Float'>
+    readonly productId: FieldRef<"SizeGuide", 'Int'>
+    readonly sizeId: FieldRef<"SizeGuide", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * ProductSize findUnique
+   * SizeGuide findUnique
    */
-  export type ProductSizeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * Filter, which ProductSize to fetch.
+     * Filter, which SizeGuide to fetch.
      */
-    where: ProductSizeWhereUniqueInput
+    where: SizeGuideWhereUniqueInput
   }
 
   /**
-   * ProductSize findUniqueOrThrow
+   * SizeGuide findUniqueOrThrow
    */
-  export type ProductSizeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * Filter, which ProductSize to fetch.
+     * Filter, which SizeGuide to fetch.
      */
-    where: ProductSizeWhereUniqueInput
+    where: SizeGuideWhereUniqueInput
   }
 
   /**
-   * ProductSize findFirst
+   * SizeGuide findFirst
    */
-  export type ProductSizeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * Filter, which ProductSize to fetch.
+     * Filter, which SizeGuide to fetch.
      */
-    where?: ProductSizeWhereInput
+    where?: SizeGuideWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductSizes to fetch.
+     * Determine the order of SizeGuides to fetch.
      */
-    orderBy?: ProductSizeOrderByWithRelationInput | ProductSizeOrderByWithRelationInput[]
+    orderBy?: SizeGuideOrderByWithRelationInput | SizeGuideOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ProductSizes.
+     * Sets the position for searching for SizeGuides.
      */
-    cursor?: ProductSizeWhereUniqueInput
+    cursor?: SizeGuideWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductSizes from the position of the cursor.
+     * Take `±n` SizeGuides from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductSizes.
+     * Skip the first `n` SizeGuides.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ProductSizes.
+     * Filter by unique combinations of SizeGuides.
      */
-    distinct?: ProductSizeScalarFieldEnum | ProductSizeScalarFieldEnum[]
+    distinct?: SizeGuideScalarFieldEnum | SizeGuideScalarFieldEnum[]
   }
 
   /**
-   * ProductSize findFirstOrThrow
+   * SizeGuide findFirstOrThrow
    */
-  export type ProductSizeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * Filter, which ProductSize to fetch.
+     * Filter, which SizeGuide to fetch.
      */
-    where?: ProductSizeWhereInput
+    where?: SizeGuideWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductSizes to fetch.
+     * Determine the order of SizeGuides to fetch.
      */
-    orderBy?: ProductSizeOrderByWithRelationInput | ProductSizeOrderByWithRelationInput[]
+    orderBy?: SizeGuideOrderByWithRelationInput | SizeGuideOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ProductSizes.
+     * Sets the position for searching for SizeGuides.
      */
-    cursor?: ProductSizeWhereUniqueInput
+    cursor?: SizeGuideWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductSizes from the position of the cursor.
+     * Take `±n` SizeGuides from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductSizes.
+     * Skip the first `n` SizeGuides.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ProductSizes.
+     * Filter by unique combinations of SizeGuides.
      */
-    distinct?: ProductSizeScalarFieldEnum | ProductSizeScalarFieldEnum[]
+    distinct?: SizeGuideScalarFieldEnum | SizeGuideScalarFieldEnum[]
   }
 
   /**
-   * ProductSize findMany
+   * SizeGuide findMany
    */
-  export type ProductSizeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * Filter, which ProductSizes to fetch.
+     * Filter, which SizeGuides to fetch.
      */
-    where?: ProductSizeWhereInput
+    where?: SizeGuideWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ProductSizes to fetch.
+     * Determine the order of SizeGuides to fetch.
      */
-    orderBy?: ProductSizeOrderByWithRelationInput | ProductSizeOrderByWithRelationInput[]
+    orderBy?: SizeGuideOrderByWithRelationInput | SizeGuideOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing ProductSizes.
+     * Sets the position for listing SizeGuides.
      */
-    cursor?: ProductSizeWhereUniqueInput
+    cursor?: SizeGuideWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ProductSizes from the position of the cursor.
+     * Take `±n` SizeGuides from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ProductSizes.
+     * Skip the first `n` SizeGuides.
      */
     skip?: number
-    distinct?: ProductSizeScalarFieldEnum | ProductSizeScalarFieldEnum[]
+    distinct?: SizeGuideScalarFieldEnum | SizeGuideScalarFieldEnum[]
   }
 
   /**
-   * ProductSize create
+   * SizeGuide create
    */
-  export type ProductSizeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * The data needed to create a ProductSize.
+     * The data needed to create a SizeGuide.
      */
-    data: XOR<ProductSizeCreateInput, ProductSizeUncheckedCreateInput>
+    data: XOR<SizeGuideCreateInput, SizeGuideUncheckedCreateInput>
   }
 
   /**
-   * ProductSize createMany
+   * SizeGuide createMany
    */
-  export type ProductSizeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many ProductSizes.
+     * The data used to create many SizeGuides.
      */
-    data: ProductSizeCreateManyInput | ProductSizeCreateManyInput[]
+    data: SizeGuideCreateManyInput | SizeGuideCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * ProductSize createManyAndReturn
+   * SizeGuide createManyAndReturn
    */
-  export type ProductSizeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SizeGuideSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
-     * The data used to create many ProductSizes.
+     * The data used to create many SizeGuides.
      */
-    data: ProductSizeCreateManyInput | ProductSizeCreateManyInput[]
+    data: SizeGuideCreateManyInput | SizeGuideCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: SizeGuideIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ProductSize update
+   * SizeGuide update
    */
-  export type ProductSizeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * The data needed to update a ProductSize.
+     * The data needed to update a SizeGuide.
      */
-    data: XOR<ProductSizeUpdateInput, ProductSizeUncheckedUpdateInput>
+    data: XOR<SizeGuideUpdateInput, SizeGuideUncheckedUpdateInput>
     /**
-     * Choose, which ProductSize to update.
+     * Choose, which SizeGuide to update.
      */
-    where: ProductSizeWhereUniqueInput
+    where: SizeGuideWhereUniqueInput
   }
 
   /**
-   * ProductSize updateMany
+   * SizeGuide updateMany
    */
-  export type ProductSizeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update ProductSizes.
+     * The data used to update SizeGuides.
      */
-    data: XOR<ProductSizeUpdateManyMutationInput, ProductSizeUncheckedUpdateManyInput>
+    data: XOR<SizeGuideUpdateManyMutationInput, SizeGuideUncheckedUpdateManyInput>
     /**
-     * Filter which ProductSizes to update
+     * Filter which SizeGuides to update
      */
-    where?: ProductSizeWhereInput
+    where?: SizeGuideWhereInput
     /**
-     * Limit how many ProductSizes to update.
+     * Limit how many SizeGuides to update.
      */
     limit?: number
   }
 
   /**
-   * ProductSize updateManyAndReturn
+   * SizeGuide updateManyAndReturn
    */
-  export type ProductSizeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SizeGuideSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
-     * The data used to update ProductSizes.
+     * The data used to update SizeGuides.
      */
-    data: XOR<ProductSizeUpdateManyMutationInput, ProductSizeUncheckedUpdateManyInput>
+    data: XOR<SizeGuideUpdateManyMutationInput, SizeGuideUncheckedUpdateManyInput>
     /**
-     * Filter which ProductSizes to update
+     * Filter which SizeGuides to update
      */
-    where?: ProductSizeWhereInput
+    where?: SizeGuideWhereInput
     /**
-     * Limit how many ProductSizes to update.
+     * Limit how many SizeGuides to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: SizeGuideIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ProductSize upsert
+   * SizeGuide upsert
    */
-  export type ProductSizeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * The filter to search for the ProductSize to update in case it exists.
+     * The filter to search for the SizeGuide to update in case it exists.
      */
-    where: ProductSizeWhereUniqueInput
+    where: SizeGuideWhereUniqueInput
     /**
-     * In case the ProductSize found by the `where` argument doesn't exist, create a new ProductSize with this data.
+     * In case the SizeGuide found by the `where` argument doesn't exist, create a new SizeGuide with this data.
      */
-    create: XOR<ProductSizeCreateInput, ProductSizeUncheckedCreateInput>
+    create: XOR<SizeGuideCreateInput, SizeGuideUncheckedCreateInput>
     /**
-     * In case the ProductSize was found with the provided `where` argument, update it with this data.
+     * In case the SizeGuide was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ProductSizeUpdateInput, ProductSizeUncheckedUpdateInput>
+    update: XOR<SizeGuideUpdateInput, SizeGuideUncheckedUpdateInput>
   }
 
   /**
-   * ProductSize delete
+   * SizeGuide delete
    */
-  export type ProductSizeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
     /**
-     * Filter which ProductSize to delete.
+     * Filter which SizeGuide to delete.
      */
-    where: ProductSizeWhereUniqueInput
+    where: SizeGuideWhereUniqueInput
   }
 
   /**
-   * ProductSize deleteMany
+   * SizeGuide deleteMany
    */
-  export type ProductSizeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ProductSizes to delete
+     * Filter which SizeGuides to delete
      */
-    where?: ProductSizeWhereInput
+    where?: SizeGuideWhereInput
     /**
-     * Limit how many ProductSizes to delete.
+     * Limit how many SizeGuides to delete.
      */
     limit?: number
   }
 
   /**
-   * ProductSize without action
+   * SizeGuide without action
    */
-  export type ProductSizeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SizeGuideDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProductSize
+     * Select specific fields to fetch from the SizeGuide
      */
-    select?: ProductSizeSelect<ExtArgs> | null
+    select?: SizeGuideSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProductSize
+     * Omit specific fields from the SizeGuide
      */
-    omit?: ProductSizeOmit<ExtArgs> | null
+    omit?: SizeGuideOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProductSizeInclude<ExtArgs> | null
+    include?: SizeGuideInclude<ExtArgs> | null
   }
 
 
@@ -22382,6 +24953,30 @@ export namespace Prisma {
   export type SizeScalarFieldEnum = (typeof SizeScalarFieldEnum)[keyof typeof SizeScalarFieldEnum]
 
 
+  export const SizeTemplateScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    category: 'category',
+    isActive: 'isActive',
+    isDefault: 'isDefault',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SizeTemplateScalarFieldEnum = (typeof SizeTemplateScalarFieldEnum)[keyof typeof SizeTemplateScalarFieldEnum]
+
+
+  export const SizeTemplateItemScalarFieldEnum: {
+    id: 'id',
+    centimeters: 'centimeters',
+    sizeTemplateId: 'sizeTemplateId',
+    sizeId: 'sizeId'
+  };
+
+  export type SizeTemplateItemScalarFieldEnum = (typeof SizeTemplateItemScalarFieldEnum)[keyof typeof SizeTemplateItemScalarFieldEnum]
+
+
   export const BrandScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -22433,23 +25028,25 @@ export namespace Prisma {
   export type ProductImageScalarFieldEnum = (typeof ProductImageScalarFieldEnum)[keyof typeof ProductImageScalarFieldEnum]
 
 
-  export const ProductColorScalarFieldEnum: {
-    id: 'id',
-    productId: 'productId',
-    colorId: 'colorId'
-  };
-
-  export type ProductColorScalarFieldEnum = (typeof ProductColorScalarFieldEnum)[keyof typeof ProductColorScalarFieldEnum]
-
-
-  export const ProductSizeScalarFieldEnum: {
+  export const ProductInventoryScalarFieldEnum: {
     id: 'id',
     stock: 'stock',
+    productId: 'productId',
+    colorId: 'colorId',
+    sizeId: 'sizeId'
+  };
+
+  export type ProductInventoryScalarFieldEnum = (typeof ProductInventoryScalarFieldEnum)[keyof typeof ProductInventoryScalarFieldEnum]
+
+
+  export const SizeGuideScalarFieldEnum: {
+    id: 'id',
+    centimeters: 'centimeters',
     productId: 'productId',
     sizeId: 'sizeId'
   };
 
-  export type ProductSizeScalarFieldEnum = (typeof ProductSizeScalarFieldEnum)[keyof typeof ProductSizeScalarFieldEnum]
+  export type SizeGuideScalarFieldEnum = (typeof SizeGuideScalarFieldEnum)[keyof typeof SizeGuideScalarFieldEnum]
 
 
   export const CustomerScalarFieldEnum: {
@@ -22758,7 +25355,7 @@ export namespace Prisma {
     isActive?: BoolFilter<"Color"> | boolean
     createdAt?: DateTimeFilter<"Color"> | Date | string
     updatedAt?: DateTimeFilter<"Color"> | Date | string
-    productColors?: ProductColorListRelationFilter
+    productInventories?: ProductInventoryListRelationFilter
   }
 
   export type ColorOrderByWithRelationInput = {
@@ -22768,7 +25365,7 @@ export namespace Prisma {
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    productColors?: ProductColorOrderByRelationAggregateInput
+    productInventories?: ProductInventoryOrderByRelationAggregateInput
   }
 
   export type ColorWhereUniqueInput = Prisma.AtLeast<{
@@ -22781,7 +25378,7 @@ export namespace Prisma {
     isActive?: BoolFilter<"Color"> | boolean
     createdAt?: DateTimeFilter<"Color"> | Date | string
     updatedAt?: DateTimeFilter<"Color"> | Date | string
-    productColors?: ProductColorListRelationFilter
+    productInventories?: ProductInventoryListRelationFilter
   }, "id" | "name">
 
   export type ColorOrderByWithAggregationInput = {
@@ -22819,7 +25416,9 @@ export namespace Prisma {
     isActive?: BoolFilter<"Size"> | boolean
     createdAt?: DateTimeFilter<"Size"> | Date | string
     updatedAt?: DateTimeFilter<"Size"> | Date | string
-    productSizes?: ProductSizeListRelationFilter
+    productInventories?: ProductInventoryListRelationFilter
+    sizeGuides?: SizeGuideListRelationFilter
+    sizeTemplateItems?: SizeTemplateItemListRelationFilter
   }
 
   export type SizeOrderByWithRelationInput = {
@@ -22828,7 +25427,9 @@ export namespace Prisma {
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    productSizes?: ProductSizeOrderByRelationAggregateInput
+    productInventories?: ProductInventoryOrderByRelationAggregateInput
+    sizeGuides?: SizeGuideOrderByRelationAggregateInput
+    sizeTemplateItems?: SizeTemplateItemOrderByRelationAggregateInput
   }
 
   export type SizeWhereUniqueInput = Prisma.AtLeast<{
@@ -22840,7 +25441,9 @@ export namespace Prisma {
     isActive?: BoolFilter<"Size"> | boolean
     createdAt?: DateTimeFilter<"Size"> | Date | string
     updatedAt?: DateTimeFilter<"Size"> | Date | string
-    productSizes?: ProductSizeListRelationFilter
+    productInventories?: ProductInventoryListRelationFilter
+    sizeGuides?: SizeGuideListRelationFilter
+    sizeTemplateItems?: SizeTemplateItemListRelationFilter
   }, "id" | "value">
 
   export type SizeOrderByWithAggregationInput = {
@@ -22865,6 +25468,134 @@ export namespace Prisma {
     isActive?: BoolWithAggregatesFilter<"Size"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Size"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Size"> | Date | string
+  }
+
+  export type SizeTemplateWhereInput = {
+    AND?: SizeTemplateWhereInput | SizeTemplateWhereInput[]
+    OR?: SizeTemplateWhereInput[]
+    NOT?: SizeTemplateWhereInput | SizeTemplateWhereInput[]
+    id?: IntFilter<"SizeTemplate"> | number
+    name?: StringFilter<"SizeTemplate"> | string
+    description?: StringNullableFilter<"SizeTemplate"> | string | null
+    category?: StringNullableFilter<"SizeTemplate"> | string | null
+    isActive?: BoolFilter<"SizeTemplate"> | boolean
+    isDefault?: BoolFilter<"SizeTemplate"> | boolean
+    createdAt?: DateTimeFilter<"SizeTemplate"> | Date | string
+    updatedAt?: DateTimeFilter<"SizeTemplate"> | Date | string
+    sizeTemplateItems?: SizeTemplateItemListRelationFilter
+  }
+
+  export type SizeTemplateOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sizeTemplateItems?: SizeTemplateItemOrderByRelationAggregateInput
+  }
+
+  export type SizeTemplateWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: SizeTemplateWhereInput | SizeTemplateWhereInput[]
+    OR?: SizeTemplateWhereInput[]
+    NOT?: SizeTemplateWhereInput | SizeTemplateWhereInput[]
+    description?: StringNullableFilter<"SizeTemplate"> | string | null
+    category?: StringNullableFilter<"SizeTemplate"> | string | null
+    isActive?: BoolFilter<"SizeTemplate"> | boolean
+    isDefault?: BoolFilter<"SizeTemplate"> | boolean
+    createdAt?: DateTimeFilter<"SizeTemplate"> | Date | string
+    updatedAt?: DateTimeFilter<"SizeTemplate"> | Date | string
+    sizeTemplateItems?: SizeTemplateItemListRelationFilter
+  }, "id" | "name">
+
+  export type SizeTemplateOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SizeTemplateCountOrderByAggregateInput
+    _avg?: SizeTemplateAvgOrderByAggregateInput
+    _max?: SizeTemplateMaxOrderByAggregateInput
+    _min?: SizeTemplateMinOrderByAggregateInput
+    _sum?: SizeTemplateSumOrderByAggregateInput
+  }
+
+  export type SizeTemplateScalarWhereWithAggregatesInput = {
+    AND?: SizeTemplateScalarWhereWithAggregatesInput | SizeTemplateScalarWhereWithAggregatesInput[]
+    OR?: SizeTemplateScalarWhereWithAggregatesInput[]
+    NOT?: SizeTemplateScalarWhereWithAggregatesInput | SizeTemplateScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SizeTemplate"> | number
+    name?: StringWithAggregatesFilter<"SizeTemplate"> | string
+    description?: StringNullableWithAggregatesFilter<"SizeTemplate"> | string | null
+    category?: StringNullableWithAggregatesFilter<"SizeTemplate"> | string | null
+    isActive?: BoolWithAggregatesFilter<"SizeTemplate"> | boolean
+    isDefault?: BoolWithAggregatesFilter<"SizeTemplate"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"SizeTemplate"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SizeTemplate"> | Date | string
+  }
+
+  export type SizeTemplateItemWhereInput = {
+    AND?: SizeTemplateItemWhereInput | SizeTemplateItemWhereInput[]
+    OR?: SizeTemplateItemWhereInput[]
+    NOT?: SizeTemplateItemWhereInput | SizeTemplateItemWhereInput[]
+    id?: IntFilter<"SizeTemplateItem"> | number
+    centimeters?: FloatFilter<"SizeTemplateItem"> | number
+    sizeTemplateId?: IntFilter<"SizeTemplateItem"> | number
+    sizeId?: IntFilter<"SizeTemplateItem"> | number
+    sizeTemplate?: XOR<SizeTemplateScalarRelationFilter, SizeTemplateWhereInput>
+    size?: XOR<SizeScalarRelationFilter, SizeWhereInput>
+  }
+
+  export type SizeTemplateItemOrderByWithRelationInput = {
+    id?: SortOrder
+    centimeters?: SortOrder
+    sizeTemplateId?: SortOrder
+    sizeId?: SortOrder
+    sizeTemplate?: SizeTemplateOrderByWithRelationInput
+    size?: SizeOrderByWithRelationInput
+  }
+
+  export type SizeTemplateItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    sizeTemplateId_sizeId?: SizeTemplateItemSizeTemplateIdSizeIdCompoundUniqueInput
+    AND?: SizeTemplateItemWhereInput | SizeTemplateItemWhereInput[]
+    OR?: SizeTemplateItemWhereInput[]
+    NOT?: SizeTemplateItemWhereInput | SizeTemplateItemWhereInput[]
+    centimeters?: FloatFilter<"SizeTemplateItem"> | number
+    sizeTemplateId?: IntFilter<"SizeTemplateItem"> | number
+    sizeId?: IntFilter<"SizeTemplateItem"> | number
+    sizeTemplate?: XOR<SizeTemplateScalarRelationFilter, SizeTemplateWhereInput>
+    size?: XOR<SizeScalarRelationFilter, SizeWhereInput>
+  }, "id" | "sizeTemplateId_sizeId">
+
+  export type SizeTemplateItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    centimeters?: SortOrder
+    sizeTemplateId?: SortOrder
+    sizeId?: SortOrder
+    _count?: SizeTemplateItemCountOrderByAggregateInput
+    _avg?: SizeTemplateItemAvgOrderByAggregateInput
+    _max?: SizeTemplateItemMaxOrderByAggregateInput
+    _min?: SizeTemplateItemMinOrderByAggregateInput
+    _sum?: SizeTemplateItemSumOrderByAggregateInput
+  }
+
+  export type SizeTemplateItemScalarWhereWithAggregatesInput = {
+    AND?: SizeTemplateItemScalarWhereWithAggregatesInput | SizeTemplateItemScalarWhereWithAggregatesInput[]
+    OR?: SizeTemplateItemScalarWhereWithAggregatesInput[]
+    NOT?: SizeTemplateItemScalarWhereWithAggregatesInput | SizeTemplateItemScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SizeTemplateItem"> | number
+    centimeters?: FloatWithAggregatesFilter<"SizeTemplateItem"> | number
+    sizeTemplateId?: IntWithAggregatesFilter<"SizeTemplateItem"> | number
+    sizeId?: IntWithAggregatesFilter<"SizeTemplateItem"> | number
   }
 
   export type BrandWhereInput = {
@@ -22968,8 +25699,8 @@ export namespace Prisma {
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
     galleryImages?: ProductImageListRelationFilter
-    colors?: ProductColorListRelationFilter
-    sizes?: ProductSizeListRelationFilter
+    productInventories?: ProductInventoryListRelationFilter
+    sizeGuides?: SizeGuideListRelationFilter
     reviews?: ReviewListRelationFilter
     orderItems?: OrderItemListRelationFilter
   }
@@ -22995,8 +25726,8 @@ export namespace Prisma {
     category?: CategoryOrderByWithRelationInput
     brand?: BrandOrderByWithRelationInput
     galleryImages?: ProductImageOrderByRelationAggregateInput
-    colors?: ProductColorOrderByRelationAggregateInput
-    sizes?: ProductSizeOrderByRelationAggregateInput
+    productInventories?: ProductInventoryOrderByRelationAggregateInput
+    sizeGuides?: SizeGuideOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
     orderItems?: OrderItemOrderByRelationAggregateInput
   }
@@ -23025,8 +25756,8 @@ export namespace Prisma {
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     brand?: XOR<BrandNullableScalarRelationFilter, BrandWhereInput> | null
     galleryImages?: ProductImageListRelationFilter
-    colors?: ProductColorListRelationFilter
-    sizes?: ProductSizeListRelationFilter
+    productInventories?: ProductInventoryListRelationFilter
+    sizeGuides?: SizeGuideListRelationFilter
     reviews?: ReviewListRelationFilter
     orderItems?: OrderItemListRelationFilter
   }, "id" | "slug">
@@ -23146,111 +25877,124 @@ export namespace Prisma {
     productId?: IntWithAggregatesFilter<"ProductImage"> | number
   }
 
-  export type ProductColorWhereInput = {
-    AND?: ProductColorWhereInput | ProductColorWhereInput[]
-    OR?: ProductColorWhereInput[]
-    NOT?: ProductColorWhereInput | ProductColorWhereInput[]
-    id?: IntFilter<"ProductColor"> | number
-    productId?: IntFilter<"ProductColor"> | number
-    colorId?: IntFilter<"ProductColor"> | number
+  export type ProductInventoryWhereInput = {
+    AND?: ProductInventoryWhereInput | ProductInventoryWhereInput[]
+    OR?: ProductInventoryWhereInput[]
+    NOT?: ProductInventoryWhereInput | ProductInventoryWhereInput[]
+    id?: IntFilter<"ProductInventory"> | number
+    stock?: IntFilter<"ProductInventory"> | number
+    productId?: IntFilter<"ProductInventory"> | number
+    colorId?: IntFilter<"ProductInventory"> | number
+    sizeId?: IntFilter<"ProductInventory"> | number
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     color?: XOR<ColorScalarRelationFilter, ColorWhereInput>
+    size?: XOR<SizeScalarRelationFilter, SizeWhereInput>
   }
 
-  export type ProductColorOrderByWithRelationInput = {
+  export type ProductInventoryOrderByWithRelationInput = {
     id?: SortOrder
+    stock?: SortOrder
     productId?: SortOrder
     colorId?: SortOrder
+    sizeId?: SortOrder
     product?: ProductOrderByWithRelationInput
     color?: ColorOrderByWithRelationInput
+    size?: SizeOrderByWithRelationInput
   }
 
-  export type ProductColorWhereUniqueInput = Prisma.AtLeast<{
+  export type ProductInventoryWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    productId_colorId?: ProductColorProductIdColorIdCompoundUniqueInput
-    AND?: ProductColorWhereInput | ProductColorWhereInput[]
-    OR?: ProductColorWhereInput[]
-    NOT?: ProductColorWhereInput | ProductColorWhereInput[]
-    productId?: IntFilter<"ProductColor"> | number
-    colorId?: IntFilter<"ProductColor"> | number
+    productId_colorId_sizeId?: ProductInventoryProductIdColorIdSizeIdCompoundUniqueInput
+    AND?: ProductInventoryWhereInput | ProductInventoryWhereInput[]
+    OR?: ProductInventoryWhereInput[]
+    NOT?: ProductInventoryWhereInput | ProductInventoryWhereInput[]
+    stock?: IntFilter<"ProductInventory"> | number
+    productId?: IntFilter<"ProductInventory"> | number
+    colorId?: IntFilter<"ProductInventory"> | number
+    sizeId?: IntFilter<"ProductInventory"> | number
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     color?: XOR<ColorScalarRelationFilter, ColorWhereInput>
-  }, "id" | "productId_colorId">
+    size?: XOR<SizeScalarRelationFilter, SizeWhereInput>
+  }, "id" | "productId_colorId_sizeId">
 
-  export type ProductColorOrderByWithAggregationInput = {
+  export type ProductInventoryOrderByWithAggregationInput = {
     id?: SortOrder
+    stock?: SortOrder
     productId?: SortOrder
     colorId?: SortOrder
-    _count?: ProductColorCountOrderByAggregateInput
-    _avg?: ProductColorAvgOrderByAggregateInput
-    _max?: ProductColorMaxOrderByAggregateInput
-    _min?: ProductColorMinOrderByAggregateInput
-    _sum?: ProductColorSumOrderByAggregateInput
+    sizeId?: SortOrder
+    _count?: ProductInventoryCountOrderByAggregateInput
+    _avg?: ProductInventoryAvgOrderByAggregateInput
+    _max?: ProductInventoryMaxOrderByAggregateInput
+    _min?: ProductInventoryMinOrderByAggregateInput
+    _sum?: ProductInventorySumOrderByAggregateInput
   }
 
-  export type ProductColorScalarWhereWithAggregatesInput = {
-    AND?: ProductColorScalarWhereWithAggregatesInput | ProductColorScalarWhereWithAggregatesInput[]
-    OR?: ProductColorScalarWhereWithAggregatesInput[]
-    NOT?: ProductColorScalarWhereWithAggregatesInput | ProductColorScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"ProductColor"> | number
-    productId?: IntWithAggregatesFilter<"ProductColor"> | number
-    colorId?: IntWithAggregatesFilter<"ProductColor"> | number
+  export type ProductInventoryScalarWhereWithAggregatesInput = {
+    AND?: ProductInventoryScalarWhereWithAggregatesInput | ProductInventoryScalarWhereWithAggregatesInput[]
+    OR?: ProductInventoryScalarWhereWithAggregatesInput[]
+    NOT?: ProductInventoryScalarWhereWithAggregatesInput | ProductInventoryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ProductInventory"> | number
+    stock?: IntWithAggregatesFilter<"ProductInventory"> | number
+    productId?: IntWithAggregatesFilter<"ProductInventory"> | number
+    colorId?: IntWithAggregatesFilter<"ProductInventory"> | number
+    sizeId?: IntWithAggregatesFilter<"ProductInventory"> | number
   }
 
-  export type ProductSizeWhereInput = {
-    AND?: ProductSizeWhereInput | ProductSizeWhereInput[]
-    OR?: ProductSizeWhereInput[]
-    NOT?: ProductSizeWhereInput | ProductSizeWhereInput[]
-    id?: IntFilter<"ProductSize"> | number
-    stock?: IntFilter<"ProductSize"> | number
-    productId?: IntFilter<"ProductSize"> | number
-    sizeId?: IntFilter<"ProductSize"> | number
+  export type SizeGuideWhereInput = {
+    AND?: SizeGuideWhereInput | SizeGuideWhereInput[]
+    OR?: SizeGuideWhereInput[]
+    NOT?: SizeGuideWhereInput | SizeGuideWhereInput[]
+    id?: IntFilter<"SizeGuide"> | number
+    centimeters?: FloatFilter<"SizeGuide"> | number
+    productId?: IntFilter<"SizeGuide"> | number
+    sizeId?: IntFilter<"SizeGuide"> | number
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     size?: XOR<SizeScalarRelationFilter, SizeWhereInput>
   }
 
-  export type ProductSizeOrderByWithRelationInput = {
+  export type SizeGuideOrderByWithRelationInput = {
     id?: SortOrder
-    stock?: SortOrder
+    centimeters?: SortOrder
     productId?: SortOrder
     sizeId?: SortOrder
     product?: ProductOrderByWithRelationInput
     size?: SizeOrderByWithRelationInput
   }
 
-  export type ProductSizeWhereUniqueInput = Prisma.AtLeast<{
+  export type SizeGuideWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    productId_sizeId?: ProductSizeProductIdSizeIdCompoundUniqueInput
-    AND?: ProductSizeWhereInput | ProductSizeWhereInput[]
-    OR?: ProductSizeWhereInput[]
-    NOT?: ProductSizeWhereInput | ProductSizeWhereInput[]
-    stock?: IntFilter<"ProductSize"> | number
-    productId?: IntFilter<"ProductSize"> | number
-    sizeId?: IntFilter<"ProductSize"> | number
+    productId_sizeId?: SizeGuideProductIdSizeIdCompoundUniqueInput
+    AND?: SizeGuideWhereInput | SizeGuideWhereInput[]
+    OR?: SizeGuideWhereInput[]
+    NOT?: SizeGuideWhereInput | SizeGuideWhereInput[]
+    centimeters?: FloatFilter<"SizeGuide"> | number
+    productId?: IntFilter<"SizeGuide"> | number
+    sizeId?: IntFilter<"SizeGuide"> | number
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     size?: XOR<SizeScalarRelationFilter, SizeWhereInput>
   }, "id" | "productId_sizeId">
 
-  export type ProductSizeOrderByWithAggregationInput = {
+  export type SizeGuideOrderByWithAggregationInput = {
     id?: SortOrder
-    stock?: SortOrder
+    centimeters?: SortOrder
     productId?: SortOrder
     sizeId?: SortOrder
-    _count?: ProductSizeCountOrderByAggregateInput
-    _avg?: ProductSizeAvgOrderByAggregateInput
-    _max?: ProductSizeMaxOrderByAggregateInput
-    _min?: ProductSizeMinOrderByAggregateInput
-    _sum?: ProductSizeSumOrderByAggregateInput
+    _count?: SizeGuideCountOrderByAggregateInput
+    _avg?: SizeGuideAvgOrderByAggregateInput
+    _max?: SizeGuideMaxOrderByAggregateInput
+    _min?: SizeGuideMinOrderByAggregateInput
+    _sum?: SizeGuideSumOrderByAggregateInput
   }
 
-  export type ProductSizeScalarWhereWithAggregatesInput = {
-    AND?: ProductSizeScalarWhereWithAggregatesInput | ProductSizeScalarWhereWithAggregatesInput[]
-    OR?: ProductSizeScalarWhereWithAggregatesInput[]
-    NOT?: ProductSizeScalarWhereWithAggregatesInput | ProductSizeScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"ProductSize"> | number
-    stock?: IntWithAggregatesFilter<"ProductSize"> | number
-    productId?: IntWithAggregatesFilter<"ProductSize"> | number
-    sizeId?: IntWithAggregatesFilter<"ProductSize"> | number
+  export type SizeGuideScalarWhereWithAggregatesInput = {
+    AND?: SizeGuideScalarWhereWithAggregatesInput | SizeGuideScalarWhereWithAggregatesInput[]
+    OR?: SizeGuideScalarWhereWithAggregatesInput[]
+    NOT?: SizeGuideScalarWhereWithAggregatesInput | SizeGuideScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SizeGuide"> | number
+    centimeters?: FloatWithAggregatesFilter<"SizeGuide"> | number
+    productId?: IntWithAggregatesFilter<"SizeGuide"> | number
+    sizeId?: IntWithAggregatesFilter<"SizeGuide"> | number
   }
 
   export type CustomerWhereInput = {
@@ -23970,7 +26714,7 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    productColors?: ProductColorCreateNestedManyWithoutColorInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutColorInput
   }
 
   export type ColorUncheckedCreateInput = {
@@ -23980,7 +26724,7 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    productColors?: ProductColorUncheckedCreateNestedManyWithoutColorInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutColorInput
   }
 
   export type ColorUpdateInput = {
@@ -23989,7 +26733,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productColors?: ProductColorUpdateManyWithoutColorNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutColorNestedInput
   }
 
   export type ColorUncheckedUpdateInput = {
@@ -23999,7 +26743,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productColors?: ProductColorUncheckedUpdateManyWithoutColorNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutColorNestedInput
   }
 
   export type ColorCreateManyInput = {
@@ -24033,7 +26777,9 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    productSizes?: ProductSizeCreateNestedManyWithoutSizeInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutSizeInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutSizeInput
+    sizeTemplateItems?: SizeTemplateItemCreateNestedManyWithoutSizeInput
   }
 
   export type SizeUncheckedCreateInput = {
@@ -24042,7 +26788,9 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    productSizes?: ProductSizeUncheckedCreateNestedManyWithoutSizeInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutSizeInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutSizeInput
+    sizeTemplateItems?: SizeTemplateItemUncheckedCreateNestedManyWithoutSizeInput
   }
 
   export type SizeUpdateInput = {
@@ -24050,7 +26798,9 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productSizes?: ProductSizeUpdateManyWithoutSizeNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutSizeNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutSizeNestedInput
+    sizeTemplateItems?: SizeTemplateItemUpdateManyWithoutSizeNestedInput
   }
 
   export type SizeUncheckedUpdateInput = {
@@ -24059,7 +26809,9 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    productSizes?: ProductSizeUncheckedUpdateManyWithoutSizeNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutSizeNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutSizeNestedInput
+    sizeTemplateItems?: SizeTemplateItemUncheckedUpdateManyWithoutSizeNestedInput
   }
 
   export type SizeCreateManyInput = {
@@ -24083,6 +26835,128 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SizeTemplateCreateInput = {
+    name: string
+    description?: string | null
+    category?: string | null
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sizeTemplateItems?: SizeTemplateItemCreateNestedManyWithoutSizeTemplateInput
+  }
+
+  export type SizeTemplateUncheckedCreateInput = {
+    id?: number
+    name: string
+    description?: string | null
+    category?: string | null
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sizeTemplateItems?: SizeTemplateItemUncheckedCreateNestedManyWithoutSizeTemplateInput
+  }
+
+  export type SizeTemplateUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sizeTemplateItems?: SizeTemplateItemUpdateManyWithoutSizeTemplateNestedInput
+  }
+
+  export type SizeTemplateUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sizeTemplateItems?: SizeTemplateItemUncheckedUpdateManyWithoutSizeTemplateNestedInput
+  }
+
+  export type SizeTemplateCreateManyInput = {
+    id?: number
+    name: string
+    description?: string | null
+    category?: string | null
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SizeTemplateUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SizeTemplateUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SizeTemplateItemCreateInput = {
+    centimeters: number
+    sizeTemplate: SizeTemplateCreateNestedOneWithoutSizeTemplateItemsInput
+    size: SizeCreateNestedOneWithoutSizeTemplateItemsInput
+  }
+
+  export type SizeTemplateItemUncheckedCreateInput = {
+    id?: number
+    centimeters: number
+    sizeTemplateId: number
+    sizeId: number
+  }
+
+  export type SizeTemplateItemUpdateInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeTemplate?: SizeTemplateUpdateOneRequiredWithoutSizeTemplateItemsNestedInput
+    size?: SizeUpdateOneRequiredWithoutSizeTemplateItemsNestedInput
+  }
+
+  export type SizeTemplateItemUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeTemplateId?: IntFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeTemplateItemCreateManyInput = {
+    id?: number
+    centimeters: number
+    sizeTemplateId: number
+    sizeId: number
+  }
+
+  export type SizeTemplateItemUpdateManyMutationInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type SizeTemplateItemUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeTemplateId?: IntFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
   }
 
   export type BrandCreateInput = {
@@ -24188,8 +27062,8 @@ export namespace Prisma {
     category: CategoryCreateNestedOneWithoutProductsInput
     brand?: BrandCreateNestedOneWithoutProductsInput
     galleryImages?: ProductImageCreateNestedManyWithoutProductInput
-    colors?: ProductColorCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutProductInput
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
@@ -24213,8 +27087,8 @@ export namespace Prisma {
     categoryId: number
     brandId?: number | null
     galleryImages?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    colors?: ProductColorUncheckedCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeUncheckedCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutProductInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
@@ -24237,8 +27111,8 @@ export namespace Prisma {
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     brand?: BrandUpdateOneWithoutProductsNestedInput
     galleryImages?: ProductImageUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutProductNestedInput
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
@@ -24262,8 +27136,8 @@ export namespace Prisma {
     categoryId?: IntFieldUpdateOperationsInput | number
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
     galleryImages?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUncheckedUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUncheckedUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutProductNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
@@ -24391,84 +27265,96 @@ export namespace Prisma {
     productId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type ProductColorCreateInput = {
-    product: ProductCreateNestedOneWithoutColorsInput
-    color: ColorCreateNestedOneWithoutProductColorsInput
-  }
-
-  export type ProductColorUncheckedCreateInput = {
-    id?: number
-    productId: number
-    colorId: number
-  }
-
-  export type ProductColorUpdateInput = {
-    product?: ProductUpdateOneRequiredWithoutColorsNestedInput
-    color?: ColorUpdateOneRequiredWithoutProductColorsNestedInput
-  }
-
-  export type ProductColorUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    productId?: IntFieldUpdateOperationsInput | number
-    colorId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ProductColorCreateManyInput = {
-    id?: number
-    productId: number
-    colorId: number
-  }
-
-  export type ProductColorUpdateManyMutationInput = {
-
-  }
-
-  export type ProductColorUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    productId?: IntFieldUpdateOperationsInput | number
-    colorId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ProductSizeCreateInput = {
+  export type ProductInventoryCreateInput = {
     stock?: number
-    product: ProductCreateNestedOneWithoutSizesInput
-    size: SizeCreateNestedOneWithoutProductSizesInput
+    product: ProductCreateNestedOneWithoutProductInventoriesInput
+    color: ColorCreateNestedOneWithoutProductInventoriesInput
+    size: SizeCreateNestedOneWithoutProductInventoriesInput
   }
 
-  export type ProductSizeUncheckedCreateInput = {
+  export type ProductInventoryUncheckedCreateInput = {
     id?: number
     stock?: number
+    productId: number
+    colorId: number
+    sizeId: number
+  }
+
+  export type ProductInventoryUpdateInput = {
+    stock?: IntFieldUpdateOperationsInput | number
+    product?: ProductUpdateOneRequiredWithoutProductInventoriesNestedInput
+    color?: ColorUpdateOneRequiredWithoutProductInventoriesNestedInput
+    size?: SizeUpdateOneRequiredWithoutProductInventoriesNestedInput
+  }
+
+  export type ProductInventoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    colorId?: IntFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ProductInventoryCreateManyInput = {
+    id?: number
+    stock?: number
+    productId: number
+    colorId: number
+    sizeId: number
+  }
+
+  export type ProductInventoryUpdateManyMutationInput = {
+    stock?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ProductInventoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    colorId?: IntFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeGuideCreateInput = {
+    centimeters: number
+    product: ProductCreateNestedOneWithoutSizeGuidesInput
+    size: SizeCreateNestedOneWithoutSizeGuidesInput
+  }
+
+  export type SizeGuideUncheckedCreateInput = {
+    id?: number
+    centimeters: number
     productId: number
     sizeId: number
   }
 
-  export type ProductSizeUpdateInput = {
-    stock?: IntFieldUpdateOperationsInput | number
-    product?: ProductUpdateOneRequiredWithoutSizesNestedInput
-    size?: SizeUpdateOneRequiredWithoutProductSizesNestedInput
+  export type SizeGuideUpdateInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    product?: ProductUpdateOneRequiredWithoutSizeGuidesNestedInput
+    size?: SizeUpdateOneRequiredWithoutSizeGuidesNestedInput
   }
 
-  export type ProductSizeUncheckedUpdateInput = {
+  export type SizeGuideUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    stock?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
     sizeId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type ProductSizeCreateManyInput = {
+  export type SizeGuideCreateManyInput = {
     id?: number
-    stock?: number
+    centimeters: number
     productId: number
     sizeId: number
   }
 
-  export type ProductSizeUpdateManyMutationInput = {
-    stock?: IntFieldUpdateOperationsInput | number
+  export type SizeGuideUpdateManyMutationInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
   }
 
-  export type ProductSizeUncheckedUpdateManyInput = {
+  export type SizeGuideUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    stock?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
     sizeId?: IntFieldUpdateOperationsInput | number
   }
@@ -25301,13 +28187,13 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type ProductColorListRelationFilter = {
-    every?: ProductColorWhereInput
-    some?: ProductColorWhereInput
-    none?: ProductColorWhereInput
+  export type ProductInventoryListRelationFilter = {
+    every?: ProductInventoryWhereInput
+    some?: ProductInventoryWhereInput
+    none?: ProductInventoryWhereInput
   }
 
-  export type ProductColorOrderByRelationAggregateInput = {
+  export type ProductInventoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25346,13 +28232,23 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type ProductSizeListRelationFilter = {
-    every?: ProductSizeWhereInput
-    some?: ProductSizeWhereInput
-    none?: ProductSizeWhereInput
+  export type SizeGuideListRelationFilter = {
+    every?: SizeGuideWhereInput
+    some?: SizeGuideWhereInput
+    none?: SizeGuideWhereInput
   }
 
-  export type ProductSizeOrderByRelationAggregateInput = {
+  export type SizeTemplateItemListRelationFilter = {
+    every?: SizeTemplateItemWhereInput
+    some?: SizeTemplateItemWhereInput
+    none?: SizeTemplateItemWhereInput
+  }
+
+  export type SizeGuideOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SizeTemplateItemOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25388,6 +28284,124 @@ export namespace Prisma {
   export type SizeSumOrderByAggregateInput = {
     id?: SortOrder
     value?: SortOrder
+  }
+
+  export type SizeTemplateCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SizeTemplateAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SizeTemplateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SizeTemplateMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    isActive?: SortOrder
+    isDefault?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SizeTemplateSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type SizeTemplateScalarRelationFilter = {
+    is?: SizeTemplateWhereInput
+    isNot?: SizeTemplateWhereInput
+  }
+
+  export type SizeScalarRelationFilter = {
+    is?: SizeWhereInput
+    isNot?: SizeWhereInput
+  }
+
+  export type SizeTemplateItemSizeTemplateIdSizeIdCompoundUniqueInput = {
+    sizeTemplateId: number
+    sizeId: number
+  }
+
+  export type SizeTemplateItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    centimeters?: SortOrder
+    sizeTemplateId?: SortOrder
+    sizeId?: SortOrder
+  }
+
+  export type SizeTemplateItemAvgOrderByAggregateInput = {
+    id?: SortOrder
+    centimeters?: SortOrder
+    sizeTemplateId?: SortOrder
+    sizeId?: SortOrder
+  }
+
+  export type SizeTemplateItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    centimeters?: SortOrder
+    sizeTemplateId?: SortOrder
+    sizeId?: SortOrder
+  }
+
+  export type SizeTemplateItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    centimeters?: SortOrder
+    sizeTemplateId?: SortOrder
+    sizeId?: SortOrder
+  }
+
+  export type SizeTemplateItemSumOrderByAggregateInput = {
+    id?: SortOrder
+    centimeters?: SortOrder
+    sizeTemplateId?: SortOrder
+    sizeId?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type BrandCountOrderByAggregateInput = {
@@ -25432,17 +28446,6 @@ export namespace Prisma {
 
   export type BrandSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -25585,22 +28588,6 @@ export namespace Prisma {
     brandId?: SortOrder
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -25685,82 +28672,88 @@ export namespace Prisma {
     isNot?: ColorWhereInput
   }
 
-  export type ProductColorProductIdColorIdCompoundUniqueInput = {
+  export type ProductInventoryProductIdColorIdSizeIdCompoundUniqueInput = {
     productId: number
     colorId: number
+    sizeId: number
   }
 
-  export type ProductColorCountOrderByAggregateInput = {
+  export type ProductInventoryCountOrderByAggregateInput = {
     id?: SortOrder
+    stock?: SortOrder
     productId?: SortOrder
     colorId?: SortOrder
+    sizeId?: SortOrder
   }
 
-  export type ProductColorAvgOrderByAggregateInput = {
+  export type ProductInventoryAvgOrderByAggregateInput = {
     id?: SortOrder
+    stock?: SortOrder
     productId?: SortOrder
     colorId?: SortOrder
+    sizeId?: SortOrder
   }
 
-  export type ProductColorMaxOrderByAggregateInput = {
+  export type ProductInventoryMaxOrderByAggregateInput = {
     id?: SortOrder
+    stock?: SortOrder
     productId?: SortOrder
     colorId?: SortOrder
+    sizeId?: SortOrder
   }
 
-  export type ProductColorMinOrderByAggregateInput = {
+  export type ProductInventoryMinOrderByAggregateInput = {
     id?: SortOrder
+    stock?: SortOrder
     productId?: SortOrder
     colorId?: SortOrder
+    sizeId?: SortOrder
   }
 
-  export type ProductColorSumOrderByAggregateInput = {
+  export type ProductInventorySumOrderByAggregateInput = {
     id?: SortOrder
+    stock?: SortOrder
     productId?: SortOrder
     colorId?: SortOrder
+    sizeId?: SortOrder
   }
 
-  export type SizeScalarRelationFilter = {
-    is?: SizeWhereInput
-    isNot?: SizeWhereInput
-  }
-
-  export type ProductSizeProductIdSizeIdCompoundUniqueInput = {
+  export type SizeGuideProductIdSizeIdCompoundUniqueInput = {
     productId: number
     sizeId: number
   }
 
-  export type ProductSizeCountOrderByAggregateInput = {
+  export type SizeGuideCountOrderByAggregateInput = {
     id?: SortOrder
-    stock?: SortOrder
+    centimeters?: SortOrder
     productId?: SortOrder
     sizeId?: SortOrder
   }
 
-  export type ProductSizeAvgOrderByAggregateInput = {
+  export type SizeGuideAvgOrderByAggregateInput = {
     id?: SortOrder
-    stock?: SortOrder
+    centimeters?: SortOrder
     productId?: SortOrder
     sizeId?: SortOrder
   }
 
-  export type ProductSizeMaxOrderByAggregateInput = {
+  export type SizeGuideMaxOrderByAggregateInput = {
     id?: SortOrder
-    stock?: SortOrder
+    centimeters?: SortOrder
     productId?: SortOrder
     sizeId?: SortOrder
   }
 
-  export type ProductSizeMinOrderByAggregateInput = {
+  export type SizeGuideMinOrderByAggregateInput = {
     id?: SortOrder
-    stock?: SortOrder
+    centimeters?: SortOrder
     productId?: SortOrder
     sizeId?: SortOrder
   }
 
-  export type ProductSizeSumOrderByAggregateInput = {
+  export type SizeGuideSumOrderByAggregateInput = {
     id?: SortOrder
-    stock?: SortOrder
+    centimeters?: SortOrder
     productId?: SortOrder
     sizeId?: SortOrder
   }
@@ -26321,88 +29314,250 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
-  export type ProductColorCreateNestedManyWithoutColorInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+  export type ProductInventoryCreateNestedManyWithoutColorInput = {
+    create?: XOR<ProductInventoryCreateWithoutColorInput, ProductInventoryUncheckedCreateWithoutColorInput> | ProductInventoryCreateWithoutColorInput[] | ProductInventoryUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutColorInput | ProductInventoryCreateOrConnectWithoutColorInput[]
+    createMany?: ProductInventoryCreateManyColorInputEnvelope
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
   }
 
-  export type ProductColorUncheckedCreateNestedManyWithoutColorInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+  export type ProductInventoryUncheckedCreateNestedManyWithoutColorInput = {
+    create?: XOR<ProductInventoryCreateWithoutColorInput, ProductInventoryUncheckedCreateWithoutColorInput> | ProductInventoryCreateWithoutColorInput[] | ProductInventoryUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutColorInput | ProductInventoryCreateOrConnectWithoutColorInput[]
+    createMany?: ProductInventoryCreateManyColorInputEnvelope
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
   }
 
-  export type ProductColorUpdateManyWithoutColorNestedInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    upsert?: ProductColorUpsertWithWhereUniqueWithoutColorInput | ProductColorUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    update?: ProductColorUpdateWithWhereUniqueWithoutColorInput | ProductColorUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: ProductColorUpdateManyWithWhereWithoutColorInput | ProductColorUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
+  export type ProductInventoryUpdateManyWithoutColorNestedInput = {
+    create?: XOR<ProductInventoryCreateWithoutColorInput, ProductInventoryUncheckedCreateWithoutColorInput> | ProductInventoryCreateWithoutColorInput[] | ProductInventoryUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutColorInput | ProductInventoryCreateOrConnectWithoutColorInput[]
+    upsert?: ProductInventoryUpsertWithWhereUniqueWithoutColorInput | ProductInventoryUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: ProductInventoryCreateManyColorInputEnvelope
+    set?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    disconnect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    delete?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    update?: ProductInventoryUpdateWithWhereUniqueWithoutColorInput | ProductInventoryUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: ProductInventoryUpdateManyWithWhereWithoutColorInput | ProductInventoryUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
   }
 
-  export type ProductColorUncheckedUpdateManyWithoutColorNestedInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    upsert?: ProductColorUpsertWithWhereUniqueWithoutColorInput | ProductColorUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    update?: ProductColorUpdateWithWhereUniqueWithoutColorInput | ProductColorUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: ProductColorUpdateManyWithWhereWithoutColorInput | ProductColorUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
+  export type ProductInventoryUncheckedUpdateManyWithoutColorNestedInput = {
+    create?: XOR<ProductInventoryCreateWithoutColorInput, ProductInventoryUncheckedCreateWithoutColorInput> | ProductInventoryCreateWithoutColorInput[] | ProductInventoryUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutColorInput | ProductInventoryCreateOrConnectWithoutColorInput[]
+    upsert?: ProductInventoryUpsertWithWhereUniqueWithoutColorInput | ProductInventoryUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: ProductInventoryCreateManyColorInputEnvelope
+    set?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    disconnect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    delete?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    update?: ProductInventoryUpdateWithWhereUniqueWithoutColorInput | ProductInventoryUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: ProductInventoryUpdateManyWithWhereWithoutColorInput | ProductInventoryUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
   }
 
-  export type ProductSizeCreateNestedManyWithoutSizeInput = {
-    create?: XOR<ProductSizeCreateWithoutSizeInput, ProductSizeUncheckedCreateWithoutSizeInput> | ProductSizeCreateWithoutSizeInput[] | ProductSizeUncheckedCreateWithoutSizeInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutSizeInput | ProductSizeCreateOrConnectWithoutSizeInput[]
-    createMany?: ProductSizeCreateManySizeInputEnvelope
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
+  export type ProductInventoryCreateNestedManyWithoutSizeInput = {
+    create?: XOR<ProductInventoryCreateWithoutSizeInput, ProductInventoryUncheckedCreateWithoutSizeInput> | ProductInventoryCreateWithoutSizeInput[] | ProductInventoryUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutSizeInput | ProductInventoryCreateOrConnectWithoutSizeInput[]
+    createMany?: ProductInventoryCreateManySizeInputEnvelope
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
   }
 
-  export type ProductSizeUncheckedCreateNestedManyWithoutSizeInput = {
-    create?: XOR<ProductSizeCreateWithoutSizeInput, ProductSizeUncheckedCreateWithoutSizeInput> | ProductSizeCreateWithoutSizeInput[] | ProductSizeUncheckedCreateWithoutSizeInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutSizeInput | ProductSizeCreateOrConnectWithoutSizeInput[]
-    createMany?: ProductSizeCreateManySizeInputEnvelope
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
+  export type SizeGuideCreateNestedManyWithoutSizeInput = {
+    create?: XOR<SizeGuideCreateWithoutSizeInput, SizeGuideUncheckedCreateWithoutSizeInput> | SizeGuideCreateWithoutSizeInput[] | SizeGuideUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutSizeInput | SizeGuideCreateOrConnectWithoutSizeInput[]
+    createMany?: SizeGuideCreateManySizeInputEnvelope
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
   }
 
-  export type ProductSizeUpdateManyWithoutSizeNestedInput = {
-    create?: XOR<ProductSizeCreateWithoutSizeInput, ProductSizeUncheckedCreateWithoutSizeInput> | ProductSizeCreateWithoutSizeInput[] | ProductSizeUncheckedCreateWithoutSizeInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutSizeInput | ProductSizeCreateOrConnectWithoutSizeInput[]
-    upsert?: ProductSizeUpsertWithWhereUniqueWithoutSizeInput | ProductSizeUpsertWithWhereUniqueWithoutSizeInput[]
-    createMany?: ProductSizeCreateManySizeInputEnvelope
-    set?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    disconnect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    delete?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    update?: ProductSizeUpdateWithWhereUniqueWithoutSizeInput | ProductSizeUpdateWithWhereUniqueWithoutSizeInput[]
-    updateMany?: ProductSizeUpdateManyWithWhereWithoutSizeInput | ProductSizeUpdateManyWithWhereWithoutSizeInput[]
-    deleteMany?: ProductSizeScalarWhereInput | ProductSizeScalarWhereInput[]
+  export type SizeTemplateItemCreateNestedManyWithoutSizeInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeInput, SizeTemplateItemUncheckedCreateWithoutSizeInput> | SizeTemplateItemCreateWithoutSizeInput[] | SizeTemplateItemUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeInput | SizeTemplateItemCreateOrConnectWithoutSizeInput[]
+    createMany?: SizeTemplateItemCreateManySizeInputEnvelope
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
   }
 
-  export type ProductSizeUncheckedUpdateManyWithoutSizeNestedInput = {
-    create?: XOR<ProductSizeCreateWithoutSizeInput, ProductSizeUncheckedCreateWithoutSizeInput> | ProductSizeCreateWithoutSizeInput[] | ProductSizeUncheckedCreateWithoutSizeInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutSizeInput | ProductSizeCreateOrConnectWithoutSizeInput[]
-    upsert?: ProductSizeUpsertWithWhereUniqueWithoutSizeInput | ProductSizeUpsertWithWhereUniqueWithoutSizeInput[]
-    createMany?: ProductSizeCreateManySizeInputEnvelope
-    set?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    disconnect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    delete?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    update?: ProductSizeUpdateWithWhereUniqueWithoutSizeInput | ProductSizeUpdateWithWhereUniqueWithoutSizeInput[]
-    updateMany?: ProductSizeUpdateManyWithWhereWithoutSizeInput | ProductSizeUpdateManyWithWhereWithoutSizeInput[]
-    deleteMany?: ProductSizeScalarWhereInput | ProductSizeScalarWhereInput[]
+  export type ProductInventoryUncheckedCreateNestedManyWithoutSizeInput = {
+    create?: XOR<ProductInventoryCreateWithoutSizeInput, ProductInventoryUncheckedCreateWithoutSizeInput> | ProductInventoryCreateWithoutSizeInput[] | ProductInventoryUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutSizeInput | ProductInventoryCreateOrConnectWithoutSizeInput[]
+    createMany?: ProductInventoryCreateManySizeInputEnvelope
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+  }
+
+  export type SizeGuideUncheckedCreateNestedManyWithoutSizeInput = {
+    create?: XOR<SizeGuideCreateWithoutSizeInput, SizeGuideUncheckedCreateWithoutSizeInput> | SizeGuideCreateWithoutSizeInput[] | SizeGuideUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutSizeInput | SizeGuideCreateOrConnectWithoutSizeInput[]
+    createMany?: SizeGuideCreateManySizeInputEnvelope
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+  }
+
+  export type SizeTemplateItemUncheckedCreateNestedManyWithoutSizeInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeInput, SizeTemplateItemUncheckedCreateWithoutSizeInput> | SizeTemplateItemCreateWithoutSizeInput[] | SizeTemplateItemUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeInput | SizeTemplateItemCreateOrConnectWithoutSizeInput[]
+    createMany?: SizeTemplateItemCreateManySizeInputEnvelope
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+  }
+
+  export type ProductInventoryUpdateManyWithoutSizeNestedInput = {
+    create?: XOR<ProductInventoryCreateWithoutSizeInput, ProductInventoryUncheckedCreateWithoutSizeInput> | ProductInventoryCreateWithoutSizeInput[] | ProductInventoryUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutSizeInput | ProductInventoryCreateOrConnectWithoutSizeInput[]
+    upsert?: ProductInventoryUpsertWithWhereUniqueWithoutSizeInput | ProductInventoryUpsertWithWhereUniqueWithoutSizeInput[]
+    createMany?: ProductInventoryCreateManySizeInputEnvelope
+    set?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    disconnect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    delete?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    update?: ProductInventoryUpdateWithWhereUniqueWithoutSizeInput | ProductInventoryUpdateWithWhereUniqueWithoutSizeInput[]
+    updateMany?: ProductInventoryUpdateManyWithWhereWithoutSizeInput | ProductInventoryUpdateManyWithWhereWithoutSizeInput[]
+    deleteMany?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
+  }
+
+  export type SizeGuideUpdateManyWithoutSizeNestedInput = {
+    create?: XOR<SizeGuideCreateWithoutSizeInput, SizeGuideUncheckedCreateWithoutSizeInput> | SizeGuideCreateWithoutSizeInput[] | SizeGuideUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutSizeInput | SizeGuideCreateOrConnectWithoutSizeInput[]
+    upsert?: SizeGuideUpsertWithWhereUniqueWithoutSizeInput | SizeGuideUpsertWithWhereUniqueWithoutSizeInput[]
+    createMany?: SizeGuideCreateManySizeInputEnvelope
+    set?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    disconnect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    delete?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    update?: SizeGuideUpdateWithWhereUniqueWithoutSizeInput | SizeGuideUpdateWithWhereUniqueWithoutSizeInput[]
+    updateMany?: SizeGuideUpdateManyWithWhereWithoutSizeInput | SizeGuideUpdateManyWithWhereWithoutSizeInput[]
+    deleteMany?: SizeGuideScalarWhereInput | SizeGuideScalarWhereInput[]
+  }
+
+  export type SizeTemplateItemUpdateManyWithoutSizeNestedInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeInput, SizeTemplateItemUncheckedCreateWithoutSizeInput> | SizeTemplateItemCreateWithoutSizeInput[] | SizeTemplateItemUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeInput | SizeTemplateItemCreateOrConnectWithoutSizeInput[]
+    upsert?: SizeTemplateItemUpsertWithWhereUniqueWithoutSizeInput | SizeTemplateItemUpsertWithWhereUniqueWithoutSizeInput[]
+    createMany?: SizeTemplateItemCreateManySizeInputEnvelope
+    set?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    disconnect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    delete?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    update?: SizeTemplateItemUpdateWithWhereUniqueWithoutSizeInput | SizeTemplateItemUpdateWithWhereUniqueWithoutSizeInput[]
+    updateMany?: SizeTemplateItemUpdateManyWithWhereWithoutSizeInput | SizeTemplateItemUpdateManyWithWhereWithoutSizeInput[]
+    deleteMany?: SizeTemplateItemScalarWhereInput | SizeTemplateItemScalarWhereInput[]
+  }
+
+  export type ProductInventoryUncheckedUpdateManyWithoutSizeNestedInput = {
+    create?: XOR<ProductInventoryCreateWithoutSizeInput, ProductInventoryUncheckedCreateWithoutSizeInput> | ProductInventoryCreateWithoutSizeInput[] | ProductInventoryUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutSizeInput | ProductInventoryCreateOrConnectWithoutSizeInput[]
+    upsert?: ProductInventoryUpsertWithWhereUniqueWithoutSizeInput | ProductInventoryUpsertWithWhereUniqueWithoutSizeInput[]
+    createMany?: ProductInventoryCreateManySizeInputEnvelope
+    set?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    disconnect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    delete?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    update?: ProductInventoryUpdateWithWhereUniqueWithoutSizeInput | ProductInventoryUpdateWithWhereUniqueWithoutSizeInput[]
+    updateMany?: ProductInventoryUpdateManyWithWhereWithoutSizeInput | ProductInventoryUpdateManyWithWhereWithoutSizeInput[]
+    deleteMany?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
+  }
+
+  export type SizeGuideUncheckedUpdateManyWithoutSizeNestedInput = {
+    create?: XOR<SizeGuideCreateWithoutSizeInput, SizeGuideUncheckedCreateWithoutSizeInput> | SizeGuideCreateWithoutSizeInput[] | SizeGuideUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutSizeInput | SizeGuideCreateOrConnectWithoutSizeInput[]
+    upsert?: SizeGuideUpsertWithWhereUniqueWithoutSizeInput | SizeGuideUpsertWithWhereUniqueWithoutSizeInput[]
+    createMany?: SizeGuideCreateManySizeInputEnvelope
+    set?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    disconnect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    delete?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    update?: SizeGuideUpdateWithWhereUniqueWithoutSizeInput | SizeGuideUpdateWithWhereUniqueWithoutSizeInput[]
+    updateMany?: SizeGuideUpdateManyWithWhereWithoutSizeInput | SizeGuideUpdateManyWithWhereWithoutSizeInput[]
+    deleteMany?: SizeGuideScalarWhereInput | SizeGuideScalarWhereInput[]
+  }
+
+  export type SizeTemplateItemUncheckedUpdateManyWithoutSizeNestedInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeInput, SizeTemplateItemUncheckedCreateWithoutSizeInput> | SizeTemplateItemCreateWithoutSizeInput[] | SizeTemplateItemUncheckedCreateWithoutSizeInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeInput | SizeTemplateItemCreateOrConnectWithoutSizeInput[]
+    upsert?: SizeTemplateItemUpsertWithWhereUniqueWithoutSizeInput | SizeTemplateItemUpsertWithWhereUniqueWithoutSizeInput[]
+    createMany?: SizeTemplateItemCreateManySizeInputEnvelope
+    set?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    disconnect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    delete?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    update?: SizeTemplateItemUpdateWithWhereUniqueWithoutSizeInput | SizeTemplateItemUpdateWithWhereUniqueWithoutSizeInput[]
+    updateMany?: SizeTemplateItemUpdateManyWithWhereWithoutSizeInput | SizeTemplateItemUpdateManyWithWhereWithoutSizeInput[]
+    deleteMany?: SizeTemplateItemScalarWhereInput | SizeTemplateItemScalarWhereInput[]
+  }
+
+  export type SizeTemplateItemCreateNestedManyWithoutSizeTemplateInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeTemplateInput, SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput> | SizeTemplateItemCreateWithoutSizeTemplateInput[] | SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput | SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput[]
+    createMany?: SizeTemplateItemCreateManySizeTemplateInputEnvelope
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+  }
+
+  export type SizeTemplateItemUncheckedCreateNestedManyWithoutSizeTemplateInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeTemplateInput, SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput> | SizeTemplateItemCreateWithoutSizeTemplateInput[] | SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput | SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput[]
+    createMany?: SizeTemplateItemCreateManySizeTemplateInputEnvelope
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+  }
+
+  export type SizeTemplateItemUpdateManyWithoutSizeTemplateNestedInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeTemplateInput, SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput> | SizeTemplateItemCreateWithoutSizeTemplateInput[] | SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput | SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput[]
+    upsert?: SizeTemplateItemUpsertWithWhereUniqueWithoutSizeTemplateInput | SizeTemplateItemUpsertWithWhereUniqueWithoutSizeTemplateInput[]
+    createMany?: SizeTemplateItemCreateManySizeTemplateInputEnvelope
+    set?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    disconnect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    delete?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    update?: SizeTemplateItemUpdateWithWhereUniqueWithoutSizeTemplateInput | SizeTemplateItemUpdateWithWhereUniqueWithoutSizeTemplateInput[]
+    updateMany?: SizeTemplateItemUpdateManyWithWhereWithoutSizeTemplateInput | SizeTemplateItemUpdateManyWithWhereWithoutSizeTemplateInput[]
+    deleteMany?: SizeTemplateItemScalarWhereInput | SizeTemplateItemScalarWhereInput[]
+  }
+
+  export type SizeTemplateItemUncheckedUpdateManyWithoutSizeTemplateNestedInput = {
+    create?: XOR<SizeTemplateItemCreateWithoutSizeTemplateInput, SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput> | SizeTemplateItemCreateWithoutSizeTemplateInput[] | SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput[]
+    connectOrCreate?: SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput | SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput[]
+    upsert?: SizeTemplateItemUpsertWithWhereUniqueWithoutSizeTemplateInput | SizeTemplateItemUpsertWithWhereUniqueWithoutSizeTemplateInput[]
+    createMany?: SizeTemplateItemCreateManySizeTemplateInputEnvelope
+    set?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    disconnect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    delete?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    connect?: SizeTemplateItemWhereUniqueInput | SizeTemplateItemWhereUniqueInput[]
+    update?: SizeTemplateItemUpdateWithWhereUniqueWithoutSizeTemplateInput | SizeTemplateItemUpdateWithWhereUniqueWithoutSizeTemplateInput[]
+    updateMany?: SizeTemplateItemUpdateManyWithWhereWithoutSizeTemplateInput | SizeTemplateItemUpdateManyWithWhereWithoutSizeTemplateInput[]
+    deleteMany?: SizeTemplateItemScalarWhereInput | SizeTemplateItemScalarWhereInput[]
+  }
+
+  export type SizeTemplateCreateNestedOneWithoutSizeTemplateItemsInput = {
+    create?: XOR<SizeTemplateCreateWithoutSizeTemplateItemsInput, SizeTemplateUncheckedCreateWithoutSizeTemplateItemsInput>
+    connectOrCreate?: SizeTemplateCreateOrConnectWithoutSizeTemplateItemsInput
+    connect?: SizeTemplateWhereUniqueInput
+  }
+
+  export type SizeCreateNestedOneWithoutSizeTemplateItemsInput = {
+    create?: XOR<SizeCreateWithoutSizeTemplateItemsInput, SizeUncheckedCreateWithoutSizeTemplateItemsInput>
+    connectOrCreate?: SizeCreateOrConnectWithoutSizeTemplateItemsInput
+    connect?: SizeWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type SizeTemplateUpdateOneRequiredWithoutSizeTemplateItemsNestedInput = {
+    create?: XOR<SizeTemplateCreateWithoutSizeTemplateItemsInput, SizeTemplateUncheckedCreateWithoutSizeTemplateItemsInput>
+    connectOrCreate?: SizeTemplateCreateOrConnectWithoutSizeTemplateItemsInput
+    upsert?: SizeTemplateUpsertWithoutSizeTemplateItemsInput
+    connect?: SizeTemplateWhereUniqueInput
+    update?: XOR<XOR<SizeTemplateUpdateToOneWithWhereWithoutSizeTemplateItemsInput, SizeTemplateUpdateWithoutSizeTemplateItemsInput>, SizeTemplateUncheckedUpdateWithoutSizeTemplateItemsInput>
+  }
+
+  export type SizeUpdateOneRequiredWithoutSizeTemplateItemsNestedInput = {
+    create?: XOR<SizeCreateWithoutSizeTemplateItemsInput, SizeUncheckedCreateWithoutSizeTemplateItemsInput>
+    connectOrCreate?: SizeCreateOrConnectWithoutSizeTemplateItemsInput
+    upsert?: SizeUpsertWithoutSizeTemplateItemsInput
+    connect?: SizeWhereUniqueInput
+    update?: XOR<XOR<SizeUpdateToOneWithWhereWithoutSizeTemplateItemsInput, SizeUpdateWithoutSizeTemplateItemsInput>, SizeUncheckedUpdateWithoutSizeTemplateItemsInput>
   }
 
   export type ProductCreateNestedManyWithoutBrandInput = {
@@ -26466,18 +29621,18 @@ export namespace Prisma {
     connect?: ProductImageWhereUniqueInput | ProductImageWhereUniqueInput[]
   }
 
-  export type ProductColorCreateNestedManyWithoutProductInput = {
-    create?: XOR<ProductColorCreateWithoutProductInput, ProductColorUncheckedCreateWithoutProductInput> | ProductColorCreateWithoutProductInput[] | ProductColorUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutProductInput | ProductColorCreateOrConnectWithoutProductInput[]
-    createMany?: ProductColorCreateManyProductInputEnvelope
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+  export type ProductInventoryCreateNestedManyWithoutProductInput = {
+    create?: XOR<ProductInventoryCreateWithoutProductInput, ProductInventoryUncheckedCreateWithoutProductInput> | ProductInventoryCreateWithoutProductInput[] | ProductInventoryUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutProductInput | ProductInventoryCreateOrConnectWithoutProductInput[]
+    createMany?: ProductInventoryCreateManyProductInputEnvelope
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
   }
 
-  export type ProductSizeCreateNestedManyWithoutProductInput = {
-    create?: XOR<ProductSizeCreateWithoutProductInput, ProductSizeUncheckedCreateWithoutProductInput> | ProductSizeCreateWithoutProductInput[] | ProductSizeUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutProductInput | ProductSizeCreateOrConnectWithoutProductInput[]
-    createMany?: ProductSizeCreateManyProductInputEnvelope
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
+  export type SizeGuideCreateNestedManyWithoutProductInput = {
+    create?: XOR<SizeGuideCreateWithoutProductInput, SizeGuideUncheckedCreateWithoutProductInput> | SizeGuideCreateWithoutProductInput[] | SizeGuideUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutProductInput | SizeGuideCreateOrConnectWithoutProductInput[]
+    createMany?: SizeGuideCreateManyProductInputEnvelope
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
   }
 
   export type ReviewCreateNestedManyWithoutProductInput = {
@@ -26501,18 +29656,18 @@ export namespace Prisma {
     connect?: ProductImageWhereUniqueInput | ProductImageWhereUniqueInput[]
   }
 
-  export type ProductColorUncheckedCreateNestedManyWithoutProductInput = {
-    create?: XOR<ProductColorCreateWithoutProductInput, ProductColorUncheckedCreateWithoutProductInput> | ProductColorCreateWithoutProductInput[] | ProductColorUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutProductInput | ProductColorCreateOrConnectWithoutProductInput[]
-    createMany?: ProductColorCreateManyProductInputEnvelope
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+  export type ProductInventoryUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<ProductInventoryCreateWithoutProductInput, ProductInventoryUncheckedCreateWithoutProductInput> | ProductInventoryCreateWithoutProductInput[] | ProductInventoryUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutProductInput | ProductInventoryCreateOrConnectWithoutProductInput[]
+    createMany?: ProductInventoryCreateManyProductInputEnvelope
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
   }
 
-  export type ProductSizeUncheckedCreateNestedManyWithoutProductInput = {
-    create?: XOR<ProductSizeCreateWithoutProductInput, ProductSizeUncheckedCreateWithoutProductInput> | ProductSizeCreateWithoutProductInput[] | ProductSizeUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutProductInput | ProductSizeCreateOrConnectWithoutProductInput[]
-    createMany?: ProductSizeCreateManyProductInputEnvelope
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
+  export type SizeGuideUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<SizeGuideCreateWithoutProductInput, SizeGuideUncheckedCreateWithoutProductInput> | SizeGuideCreateWithoutProductInput[] | SizeGuideUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutProductInput | SizeGuideCreateOrConnectWithoutProductInput[]
+    createMany?: SizeGuideCreateManyProductInputEnvelope
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
   }
 
   export type ReviewUncheckedCreateNestedManyWithoutProductInput = {
@@ -26527,14 +29682,6 @@ export namespace Prisma {
     connectOrCreate?: OrderItemCreateOrConnectWithoutProductInput | OrderItemCreateOrConnectWithoutProductInput[]
     createMany?: OrderItemCreateManyProductInputEnvelope
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -26577,32 +29724,32 @@ export namespace Prisma {
     deleteMany?: ProductImageScalarWhereInput | ProductImageScalarWhereInput[]
   }
 
-  export type ProductColorUpdateManyWithoutProductNestedInput = {
-    create?: XOR<ProductColorCreateWithoutProductInput, ProductColorUncheckedCreateWithoutProductInput> | ProductColorCreateWithoutProductInput[] | ProductColorUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutProductInput | ProductColorCreateOrConnectWithoutProductInput[]
-    upsert?: ProductColorUpsertWithWhereUniqueWithoutProductInput | ProductColorUpsertWithWhereUniqueWithoutProductInput[]
-    createMany?: ProductColorCreateManyProductInputEnvelope
-    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    update?: ProductColorUpdateWithWhereUniqueWithoutProductInput | ProductColorUpdateWithWhereUniqueWithoutProductInput[]
-    updateMany?: ProductColorUpdateManyWithWhereWithoutProductInput | ProductColorUpdateManyWithWhereWithoutProductInput[]
-    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
+  export type ProductInventoryUpdateManyWithoutProductNestedInput = {
+    create?: XOR<ProductInventoryCreateWithoutProductInput, ProductInventoryUncheckedCreateWithoutProductInput> | ProductInventoryCreateWithoutProductInput[] | ProductInventoryUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutProductInput | ProductInventoryCreateOrConnectWithoutProductInput[]
+    upsert?: ProductInventoryUpsertWithWhereUniqueWithoutProductInput | ProductInventoryUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: ProductInventoryCreateManyProductInputEnvelope
+    set?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    disconnect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    delete?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    update?: ProductInventoryUpdateWithWhereUniqueWithoutProductInput | ProductInventoryUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: ProductInventoryUpdateManyWithWhereWithoutProductInput | ProductInventoryUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
   }
 
-  export type ProductSizeUpdateManyWithoutProductNestedInput = {
-    create?: XOR<ProductSizeCreateWithoutProductInput, ProductSizeUncheckedCreateWithoutProductInput> | ProductSizeCreateWithoutProductInput[] | ProductSizeUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutProductInput | ProductSizeCreateOrConnectWithoutProductInput[]
-    upsert?: ProductSizeUpsertWithWhereUniqueWithoutProductInput | ProductSizeUpsertWithWhereUniqueWithoutProductInput[]
-    createMany?: ProductSizeCreateManyProductInputEnvelope
-    set?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    disconnect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    delete?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    update?: ProductSizeUpdateWithWhereUniqueWithoutProductInput | ProductSizeUpdateWithWhereUniqueWithoutProductInput[]
-    updateMany?: ProductSizeUpdateManyWithWhereWithoutProductInput | ProductSizeUpdateManyWithWhereWithoutProductInput[]
-    deleteMany?: ProductSizeScalarWhereInput | ProductSizeScalarWhereInput[]
+  export type SizeGuideUpdateManyWithoutProductNestedInput = {
+    create?: XOR<SizeGuideCreateWithoutProductInput, SizeGuideUncheckedCreateWithoutProductInput> | SizeGuideCreateWithoutProductInput[] | SizeGuideUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutProductInput | SizeGuideCreateOrConnectWithoutProductInput[]
+    upsert?: SizeGuideUpsertWithWhereUniqueWithoutProductInput | SizeGuideUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: SizeGuideCreateManyProductInputEnvelope
+    set?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    disconnect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    delete?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    update?: SizeGuideUpdateWithWhereUniqueWithoutProductInput | SizeGuideUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: SizeGuideUpdateManyWithWhereWithoutProductInput | SizeGuideUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: SizeGuideScalarWhereInput | SizeGuideScalarWhereInput[]
   }
 
   export type ReviewUpdateManyWithoutProductNestedInput = {
@@ -26655,32 +29802,32 @@ export namespace Prisma {
     deleteMany?: ProductImageScalarWhereInput | ProductImageScalarWhereInput[]
   }
 
-  export type ProductColorUncheckedUpdateManyWithoutProductNestedInput = {
-    create?: XOR<ProductColorCreateWithoutProductInput, ProductColorUncheckedCreateWithoutProductInput> | ProductColorCreateWithoutProductInput[] | ProductColorUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutProductInput | ProductColorCreateOrConnectWithoutProductInput[]
-    upsert?: ProductColorUpsertWithWhereUniqueWithoutProductInput | ProductColorUpsertWithWhereUniqueWithoutProductInput[]
-    createMany?: ProductColorCreateManyProductInputEnvelope
-    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    update?: ProductColorUpdateWithWhereUniqueWithoutProductInput | ProductColorUpdateWithWhereUniqueWithoutProductInput[]
-    updateMany?: ProductColorUpdateManyWithWhereWithoutProductInput | ProductColorUpdateManyWithWhereWithoutProductInput[]
-    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
+  export type ProductInventoryUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<ProductInventoryCreateWithoutProductInput, ProductInventoryUncheckedCreateWithoutProductInput> | ProductInventoryCreateWithoutProductInput[] | ProductInventoryUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: ProductInventoryCreateOrConnectWithoutProductInput | ProductInventoryCreateOrConnectWithoutProductInput[]
+    upsert?: ProductInventoryUpsertWithWhereUniqueWithoutProductInput | ProductInventoryUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: ProductInventoryCreateManyProductInputEnvelope
+    set?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    disconnect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    delete?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    connect?: ProductInventoryWhereUniqueInput | ProductInventoryWhereUniqueInput[]
+    update?: ProductInventoryUpdateWithWhereUniqueWithoutProductInput | ProductInventoryUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: ProductInventoryUpdateManyWithWhereWithoutProductInput | ProductInventoryUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
   }
 
-  export type ProductSizeUncheckedUpdateManyWithoutProductNestedInput = {
-    create?: XOR<ProductSizeCreateWithoutProductInput, ProductSizeUncheckedCreateWithoutProductInput> | ProductSizeCreateWithoutProductInput[] | ProductSizeUncheckedCreateWithoutProductInput[]
-    connectOrCreate?: ProductSizeCreateOrConnectWithoutProductInput | ProductSizeCreateOrConnectWithoutProductInput[]
-    upsert?: ProductSizeUpsertWithWhereUniqueWithoutProductInput | ProductSizeUpsertWithWhereUniqueWithoutProductInput[]
-    createMany?: ProductSizeCreateManyProductInputEnvelope
-    set?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    disconnect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    delete?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    connect?: ProductSizeWhereUniqueInput | ProductSizeWhereUniqueInput[]
-    update?: ProductSizeUpdateWithWhereUniqueWithoutProductInput | ProductSizeUpdateWithWhereUniqueWithoutProductInput[]
-    updateMany?: ProductSizeUpdateManyWithWhereWithoutProductInput | ProductSizeUpdateManyWithWhereWithoutProductInput[]
-    deleteMany?: ProductSizeScalarWhereInput | ProductSizeScalarWhereInput[]
+  export type SizeGuideUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<SizeGuideCreateWithoutProductInput, SizeGuideUncheckedCreateWithoutProductInput> | SizeGuideCreateWithoutProductInput[] | SizeGuideUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SizeGuideCreateOrConnectWithoutProductInput | SizeGuideCreateOrConnectWithoutProductInput[]
+    upsert?: SizeGuideUpsertWithWhereUniqueWithoutProductInput | SizeGuideUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: SizeGuideCreateManyProductInputEnvelope
+    set?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    disconnect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    delete?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    connect?: SizeGuideWhereUniqueInput | SizeGuideWhereUniqueInput[]
+    update?: SizeGuideUpdateWithWhereUniqueWithoutProductInput | SizeGuideUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: SizeGuideUpdateManyWithWhereWithoutProductInput | SizeGuideUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: SizeGuideScalarWhereInput | SizeGuideScalarWhereInput[]
   }
 
   export type ReviewUncheckedUpdateManyWithoutProductNestedInput = {
@@ -26725,60 +29872,74 @@ export namespace Prisma {
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutGalleryImagesInput, ProductUpdateWithoutGalleryImagesInput>, ProductUncheckedUpdateWithoutGalleryImagesInput>
   }
 
-  export type ProductCreateNestedOneWithoutColorsInput = {
-    create?: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutColorsInput
+  export type ProductCreateNestedOneWithoutProductInventoriesInput = {
+    create?: XOR<ProductCreateWithoutProductInventoriesInput, ProductUncheckedCreateWithoutProductInventoriesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutProductInventoriesInput
     connect?: ProductWhereUniqueInput
   }
 
-  export type ColorCreateNestedOneWithoutProductColorsInput = {
-    create?: XOR<ColorCreateWithoutProductColorsInput, ColorUncheckedCreateWithoutProductColorsInput>
-    connectOrCreate?: ColorCreateOrConnectWithoutProductColorsInput
+  export type ColorCreateNestedOneWithoutProductInventoriesInput = {
+    create?: XOR<ColorCreateWithoutProductInventoriesInput, ColorUncheckedCreateWithoutProductInventoriesInput>
+    connectOrCreate?: ColorCreateOrConnectWithoutProductInventoriesInput
     connect?: ColorWhereUniqueInput
   }
 
-  export type ProductUpdateOneRequiredWithoutColorsNestedInput = {
-    create?: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutColorsInput
-    upsert?: ProductUpsertWithoutColorsInput
-    connect?: ProductWhereUniqueInput
-    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutColorsInput, ProductUpdateWithoutColorsInput>, ProductUncheckedUpdateWithoutColorsInput>
+  export type SizeCreateNestedOneWithoutProductInventoriesInput = {
+    create?: XOR<SizeCreateWithoutProductInventoriesInput, SizeUncheckedCreateWithoutProductInventoriesInput>
+    connectOrCreate?: SizeCreateOrConnectWithoutProductInventoriesInput
+    connect?: SizeWhereUniqueInput
   }
 
-  export type ColorUpdateOneRequiredWithoutProductColorsNestedInput = {
-    create?: XOR<ColorCreateWithoutProductColorsInput, ColorUncheckedCreateWithoutProductColorsInput>
-    connectOrCreate?: ColorCreateOrConnectWithoutProductColorsInput
-    upsert?: ColorUpsertWithoutProductColorsInput
+  export type ProductUpdateOneRequiredWithoutProductInventoriesNestedInput = {
+    create?: XOR<ProductCreateWithoutProductInventoriesInput, ProductUncheckedCreateWithoutProductInventoriesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutProductInventoriesInput
+    upsert?: ProductUpsertWithoutProductInventoriesInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutProductInventoriesInput, ProductUpdateWithoutProductInventoriesInput>, ProductUncheckedUpdateWithoutProductInventoriesInput>
+  }
+
+  export type ColorUpdateOneRequiredWithoutProductInventoriesNestedInput = {
+    create?: XOR<ColorCreateWithoutProductInventoriesInput, ColorUncheckedCreateWithoutProductInventoriesInput>
+    connectOrCreate?: ColorCreateOrConnectWithoutProductInventoriesInput
+    upsert?: ColorUpsertWithoutProductInventoriesInput
     connect?: ColorWhereUniqueInput
-    update?: XOR<XOR<ColorUpdateToOneWithWhereWithoutProductColorsInput, ColorUpdateWithoutProductColorsInput>, ColorUncheckedUpdateWithoutProductColorsInput>
+    update?: XOR<XOR<ColorUpdateToOneWithWhereWithoutProductInventoriesInput, ColorUpdateWithoutProductInventoriesInput>, ColorUncheckedUpdateWithoutProductInventoriesInput>
   }
 
-  export type ProductCreateNestedOneWithoutSizesInput = {
-    create?: XOR<ProductCreateWithoutSizesInput, ProductUncheckedCreateWithoutSizesInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutSizesInput
+  export type SizeUpdateOneRequiredWithoutProductInventoriesNestedInput = {
+    create?: XOR<SizeCreateWithoutProductInventoriesInput, SizeUncheckedCreateWithoutProductInventoriesInput>
+    connectOrCreate?: SizeCreateOrConnectWithoutProductInventoriesInput
+    upsert?: SizeUpsertWithoutProductInventoriesInput
+    connect?: SizeWhereUniqueInput
+    update?: XOR<XOR<SizeUpdateToOneWithWhereWithoutProductInventoriesInput, SizeUpdateWithoutProductInventoriesInput>, SizeUncheckedUpdateWithoutProductInventoriesInput>
+  }
+
+  export type ProductCreateNestedOneWithoutSizeGuidesInput = {
+    create?: XOR<ProductCreateWithoutSizeGuidesInput, ProductUncheckedCreateWithoutSizeGuidesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutSizeGuidesInput
     connect?: ProductWhereUniqueInput
   }
 
-  export type SizeCreateNestedOneWithoutProductSizesInput = {
-    create?: XOR<SizeCreateWithoutProductSizesInput, SizeUncheckedCreateWithoutProductSizesInput>
-    connectOrCreate?: SizeCreateOrConnectWithoutProductSizesInput
+  export type SizeCreateNestedOneWithoutSizeGuidesInput = {
+    create?: XOR<SizeCreateWithoutSizeGuidesInput, SizeUncheckedCreateWithoutSizeGuidesInput>
+    connectOrCreate?: SizeCreateOrConnectWithoutSizeGuidesInput
     connect?: SizeWhereUniqueInput
   }
 
-  export type ProductUpdateOneRequiredWithoutSizesNestedInput = {
-    create?: XOR<ProductCreateWithoutSizesInput, ProductUncheckedCreateWithoutSizesInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutSizesInput
-    upsert?: ProductUpsertWithoutSizesInput
+  export type ProductUpdateOneRequiredWithoutSizeGuidesNestedInput = {
+    create?: XOR<ProductCreateWithoutSizeGuidesInput, ProductUncheckedCreateWithoutSizeGuidesInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutSizeGuidesInput
+    upsert?: ProductUpsertWithoutSizeGuidesInput
     connect?: ProductWhereUniqueInput
-    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutSizesInput, ProductUpdateWithoutSizesInput>, ProductUncheckedUpdateWithoutSizesInput>
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutSizeGuidesInput, ProductUpdateWithoutSizeGuidesInput>, ProductUncheckedUpdateWithoutSizeGuidesInput>
   }
 
-  export type SizeUpdateOneRequiredWithoutProductSizesNestedInput = {
-    create?: XOR<SizeCreateWithoutProductSizesInput, SizeUncheckedCreateWithoutProductSizesInput>
-    connectOrCreate?: SizeCreateOrConnectWithoutProductSizesInput
-    upsert?: SizeUpsertWithoutProductSizesInput
+  export type SizeUpdateOneRequiredWithoutSizeGuidesNestedInput = {
+    create?: XOR<SizeCreateWithoutSizeGuidesInput, SizeUncheckedCreateWithoutSizeGuidesInput>
+    connectOrCreate?: SizeCreateOrConnectWithoutSizeGuidesInput
+    upsert?: SizeUpsertWithoutSizeGuidesInput
     connect?: SizeWhereUniqueInput
-    update?: XOR<XOR<SizeUpdateToOneWithWhereWithoutProductSizesInput, SizeUpdateWithoutProductSizesInput>, SizeUncheckedUpdateWithoutProductSizesInput>
+    update?: XOR<XOR<SizeUpdateToOneWithWhereWithoutSizeGuidesInput, SizeUpdateWithoutSizeGuidesInput>, SizeUncheckedUpdateWithoutSizeGuidesInput>
   }
 
   export type OrderCreateNestedManyWithoutCustomerInput = {
@@ -27358,17 +30519,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -27383,6 +30533,17 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -27476,8 +30637,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     brand?: BrandCreateNestedOneWithoutProductsInput
     galleryImages?: ProductImageCreateNestedManyWithoutProductInput
-    colors?: ProductColorCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutProductInput
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
@@ -27500,8 +30661,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     brandId?: number | null
     galleryImages?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    colors?: ProductColorUncheckedCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeUncheckedCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutProductInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
@@ -27555,95 +30716,336 @@ export namespace Prisma {
     brandId?: IntNullableFilter<"Product"> | number | null
   }
 
-  export type ProductColorCreateWithoutColorInput = {
-    product: ProductCreateNestedOneWithoutColorsInput
-  }
-
-  export type ProductColorUncheckedCreateWithoutColorInput = {
-    id?: number
-    productId: number
-  }
-
-  export type ProductColorCreateOrConnectWithoutColorInput = {
-    where: ProductColorWhereUniqueInput
-    create: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput>
-  }
-
-  export type ProductColorCreateManyColorInputEnvelope = {
-    data: ProductColorCreateManyColorInput | ProductColorCreateManyColorInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ProductColorUpsertWithWhereUniqueWithoutColorInput = {
-    where: ProductColorWhereUniqueInput
-    update: XOR<ProductColorUpdateWithoutColorInput, ProductColorUncheckedUpdateWithoutColorInput>
-    create: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput>
-  }
-
-  export type ProductColorUpdateWithWhereUniqueWithoutColorInput = {
-    where: ProductColorWhereUniqueInput
-    data: XOR<ProductColorUpdateWithoutColorInput, ProductColorUncheckedUpdateWithoutColorInput>
-  }
-
-  export type ProductColorUpdateManyWithWhereWithoutColorInput = {
-    where: ProductColorScalarWhereInput
-    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyWithoutColorInput>
-  }
-
-  export type ProductColorScalarWhereInput = {
-    AND?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
-    OR?: ProductColorScalarWhereInput[]
-    NOT?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
-    id?: IntFilter<"ProductColor"> | number
-    productId?: IntFilter<"ProductColor"> | number
-    colorId?: IntFilter<"ProductColor"> | number
-  }
-
-  export type ProductSizeCreateWithoutSizeInput = {
+  export type ProductInventoryCreateWithoutColorInput = {
     stock?: number
-    product: ProductCreateNestedOneWithoutSizesInput
+    product: ProductCreateNestedOneWithoutProductInventoriesInput
+    size: SizeCreateNestedOneWithoutProductInventoriesInput
   }
 
-  export type ProductSizeUncheckedCreateWithoutSizeInput = {
+  export type ProductInventoryUncheckedCreateWithoutColorInput = {
     id?: number
     stock?: number
     productId: number
+    sizeId: number
   }
 
-  export type ProductSizeCreateOrConnectWithoutSizeInput = {
-    where: ProductSizeWhereUniqueInput
-    create: XOR<ProductSizeCreateWithoutSizeInput, ProductSizeUncheckedCreateWithoutSizeInput>
+  export type ProductInventoryCreateOrConnectWithoutColorInput = {
+    where: ProductInventoryWhereUniqueInput
+    create: XOR<ProductInventoryCreateWithoutColorInput, ProductInventoryUncheckedCreateWithoutColorInput>
   }
 
-  export type ProductSizeCreateManySizeInputEnvelope = {
-    data: ProductSizeCreateManySizeInput | ProductSizeCreateManySizeInput[]
+  export type ProductInventoryCreateManyColorInputEnvelope = {
+    data: ProductInventoryCreateManyColorInput | ProductInventoryCreateManyColorInput[]
     skipDuplicates?: boolean
   }
 
-  export type ProductSizeUpsertWithWhereUniqueWithoutSizeInput = {
-    where: ProductSizeWhereUniqueInput
-    update: XOR<ProductSizeUpdateWithoutSizeInput, ProductSizeUncheckedUpdateWithoutSizeInput>
-    create: XOR<ProductSizeCreateWithoutSizeInput, ProductSizeUncheckedCreateWithoutSizeInput>
+  export type ProductInventoryUpsertWithWhereUniqueWithoutColorInput = {
+    where: ProductInventoryWhereUniqueInput
+    update: XOR<ProductInventoryUpdateWithoutColorInput, ProductInventoryUncheckedUpdateWithoutColorInput>
+    create: XOR<ProductInventoryCreateWithoutColorInput, ProductInventoryUncheckedCreateWithoutColorInput>
   }
 
-  export type ProductSizeUpdateWithWhereUniqueWithoutSizeInput = {
-    where: ProductSizeWhereUniqueInput
-    data: XOR<ProductSizeUpdateWithoutSizeInput, ProductSizeUncheckedUpdateWithoutSizeInput>
+  export type ProductInventoryUpdateWithWhereUniqueWithoutColorInput = {
+    where: ProductInventoryWhereUniqueInput
+    data: XOR<ProductInventoryUpdateWithoutColorInput, ProductInventoryUncheckedUpdateWithoutColorInput>
   }
 
-  export type ProductSizeUpdateManyWithWhereWithoutSizeInput = {
-    where: ProductSizeScalarWhereInput
-    data: XOR<ProductSizeUpdateManyMutationInput, ProductSizeUncheckedUpdateManyWithoutSizeInput>
+  export type ProductInventoryUpdateManyWithWhereWithoutColorInput = {
+    where: ProductInventoryScalarWhereInput
+    data: XOR<ProductInventoryUpdateManyMutationInput, ProductInventoryUncheckedUpdateManyWithoutColorInput>
   }
 
-  export type ProductSizeScalarWhereInput = {
-    AND?: ProductSizeScalarWhereInput | ProductSizeScalarWhereInput[]
-    OR?: ProductSizeScalarWhereInput[]
-    NOT?: ProductSizeScalarWhereInput | ProductSizeScalarWhereInput[]
-    id?: IntFilter<"ProductSize"> | number
-    stock?: IntFilter<"ProductSize"> | number
-    productId?: IntFilter<"ProductSize"> | number
-    sizeId?: IntFilter<"ProductSize"> | number
+  export type ProductInventoryScalarWhereInput = {
+    AND?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
+    OR?: ProductInventoryScalarWhereInput[]
+    NOT?: ProductInventoryScalarWhereInput | ProductInventoryScalarWhereInput[]
+    id?: IntFilter<"ProductInventory"> | number
+    stock?: IntFilter<"ProductInventory"> | number
+    productId?: IntFilter<"ProductInventory"> | number
+    colorId?: IntFilter<"ProductInventory"> | number
+    sizeId?: IntFilter<"ProductInventory"> | number
+  }
+
+  export type ProductInventoryCreateWithoutSizeInput = {
+    stock?: number
+    product: ProductCreateNestedOneWithoutProductInventoriesInput
+    color: ColorCreateNestedOneWithoutProductInventoriesInput
+  }
+
+  export type ProductInventoryUncheckedCreateWithoutSizeInput = {
+    id?: number
+    stock?: number
+    productId: number
+    colorId: number
+  }
+
+  export type ProductInventoryCreateOrConnectWithoutSizeInput = {
+    where: ProductInventoryWhereUniqueInput
+    create: XOR<ProductInventoryCreateWithoutSizeInput, ProductInventoryUncheckedCreateWithoutSizeInput>
+  }
+
+  export type ProductInventoryCreateManySizeInputEnvelope = {
+    data: ProductInventoryCreateManySizeInput | ProductInventoryCreateManySizeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SizeGuideCreateWithoutSizeInput = {
+    centimeters: number
+    product: ProductCreateNestedOneWithoutSizeGuidesInput
+  }
+
+  export type SizeGuideUncheckedCreateWithoutSizeInput = {
+    id?: number
+    centimeters: number
+    productId: number
+  }
+
+  export type SizeGuideCreateOrConnectWithoutSizeInput = {
+    where: SizeGuideWhereUniqueInput
+    create: XOR<SizeGuideCreateWithoutSizeInput, SizeGuideUncheckedCreateWithoutSizeInput>
+  }
+
+  export type SizeGuideCreateManySizeInputEnvelope = {
+    data: SizeGuideCreateManySizeInput | SizeGuideCreateManySizeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SizeTemplateItemCreateWithoutSizeInput = {
+    centimeters: number
+    sizeTemplate: SizeTemplateCreateNestedOneWithoutSizeTemplateItemsInput
+  }
+
+  export type SizeTemplateItemUncheckedCreateWithoutSizeInput = {
+    id?: number
+    centimeters: number
+    sizeTemplateId: number
+  }
+
+  export type SizeTemplateItemCreateOrConnectWithoutSizeInput = {
+    where: SizeTemplateItemWhereUniqueInput
+    create: XOR<SizeTemplateItemCreateWithoutSizeInput, SizeTemplateItemUncheckedCreateWithoutSizeInput>
+  }
+
+  export type SizeTemplateItemCreateManySizeInputEnvelope = {
+    data: SizeTemplateItemCreateManySizeInput | SizeTemplateItemCreateManySizeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProductInventoryUpsertWithWhereUniqueWithoutSizeInput = {
+    where: ProductInventoryWhereUniqueInput
+    update: XOR<ProductInventoryUpdateWithoutSizeInput, ProductInventoryUncheckedUpdateWithoutSizeInput>
+    create: XOR<ProductInventoryCreateWithoutSizeInput, ProductInventoryUncheckedCreateWithoutSizeInput>
+  }
+
+  export type ProductInventoryUpdateWithWhereUniqueWithoutSizeInput = {
+    where: ProductInventoryWhereUniqueInput
+    data: XOR<ProductInventoryUpdateWithoutSizeInput, ProductInventoryUncheckedUpdateWithoutSizeInput>
+  }
+
+  export type ProductInventoryUpdateManyWithWhereWithoutSizeInput = {
+    where: ProductInventoryScalarWhereInput
+    data: XOR<ProductInventoryUpdateManyMutationInput, ProductInventoryUncheckedUpdateManyWithoutSizeInput>
+  }
+
+  export type SizeGuideUpsertWithWhereUniqueWithoutSizeInput = {
+    where: SizeGuideWhereUniqueInput
+    update: XOR<SizeGuideUpdateWithoutSizeInput, SizeGuideUncheckedUpdateWithoutSizeInput>
+    create: XOR<SizeGuideCreateWithoutSizeInput, SizeGuideUncheckedCreateWithoutSizeInput>
+  }
+
+  export type SizeGuideUpdateWithWhereUniqueWithoutSizeInput = {
+    where: SizeGuideWhereUniqueInput
+    data: XOR<SizeGuideUpdateWithoutSizeInput, SizeGuideUncheckedUpdateWithoutSizeInput>
+  }
+
+  export type SizeGuideUpdateManyWithWhereWithoutSizeInput = {
+    where: SizeGuideScalarWhereInput
+    data: XOR<SizeGuideUpdateManyMutationInput, SizeGuideUncheckedUpdateManyWithoutSizeInput>
+  }
+
+  export type SizeGuideScalarWhereInput = {
+    AND?: SizeGuideScalarWhereInput | SizeGuideScalarWhereInput[]
+    OR?: SizeGuideScalarWhereInput[]
+    NOT?: SizeGuideScalarWhereInput | SizeGuideScalarWhereInput[]
+    id?: IntFilter<"SizeGuide"> | number
+    centimeters?: FloatFilter<"SizeGuide"> | number
+    productId?: IntFilter<"SizeGuide"> | number
+    sizeId?: IntFilter<"SizeGuide"> | number
+  }
+
+  export type SizeTemplateItemUpsertWithWhereUniqueWithoutSizeInput = {
+    where: SizeTemplateItemWhereUniqueInput
+    update: XOR<SizeTemplateItemUpdateWithoutSizeInput, SizeTemplateItemUncheckedUpdateWithoutSizeInput>
+    create: XOR<SizeTemplateItemCreateWithoutSizeInput, SizeTemplateItemUncheckedCreateWithoutSizeInput>
+  }
+
+  export type SizeTemplateItemUpdateWithWhereUniqueWithoutSizeInput = {
+    where: SizeTemplateItemWhereUniqueInput
+    data: XOR<SizeTemplateItemUpdateWithoutSizeInput, SizeTemplateItemUncheckedUpdateWithoutSizeInput>
+  }
+
+  export type SizeTemplateItemUpdateManyWithWhereWithoutSizeInput = {
+    where: SizeTemplateItemScalarWhereInput
+    data: XOR<SizeTemplateItemUpdateManyMutationInput, SizeTemplateItemUncheckedUpdateManyWithoutSizeInput>
+  }
+
+  export type SizeTemplateItemScalarWhereInput = {
+    AND?: SizeTemplateItemScalarWhereInput | SizeTemplateItemScalarWhereInput[]
+    OR?: SizeTemplateItemScalarWhereInput[]
+    NOT?: SizeTemplateItemScalarWhereInput | SizeTemplateItemScalarWhereInput[]
+    id?: IntFilter<"SizeTemplateItem"> | number
+    centimeters?: FloatFilter<"SizeTemplateItem"> | number
+    sizeTemplateId?: IntFilter<"SizeTemplateItem"> | number
+    sizeId?: IntFilter<"SizeTemplateItem"> | number
+  }
+
+  export type SizeTemplateItemCreateWithoutSizeTemplateInput = {
+    centimeters: number
+    size: SizeCreateNestedOneWithoutSizeTemplateItemsInput
+  }
+
+  export type SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput = {
+    id?: number
+    centimeters: number
+    sizeId: number
+  }
+
+  export type SizeTemplateItemCreateOrConnectWithoutSizeTemplateInput = {
+    where: SizeTemplateItemWhereUniqueInput
+    create: XOR<SizeTemplateItemCreateWithoutSizeTemplateInput, SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput>
+  }
+
+  export type SizeTemplateItemCreateManySizeTemplateInputEnvelope = {
+    data: SizeTemplateItemCreateManySizeTemplateInput | SizeTemplateItemCreateManySizeTemplateInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SizeTemplateItemUpsertWithWhereUniqueWithoutSizeTemplateInput = {
+    where: SizeTemplateItemWhereUniqueInput
+    update: XOR<SizeTemplateItemUpdateWithoutSizeTemplateInput, SizeTemplateItemUncheckedUpdateWithoutSizeTemplateInput>
+    create: XOR<SizeTemplateItemCreateWithoutSizeTemplateInput, SizeTemplateItemUncheckedCreateWithoutSizeTemplateInput>
+  }
+
+  export type SizeTemplateItemUpdateWithWhereUniqueWithoutSizeTemplateInput = {
+    where: SizeTemplateItemWhereUniqueInput
+    data: XOR<SizeTemplateItemUpdateWithoutSizeTemplateInput, SizeTemplateItemUncheckedUpdateWithoutSizeTemplateInput>
+  }
+
+  export type SizeTemplateItemUpdateManyWithWhereWithoutSizeTemplateInput = {
+    where: SizeTemplateItemScalarWhereInput
+    data: XOR<SizeTemplateItemUpdateManyMutationInput, SizeTemplateItemUncheckedUpdateManyWithoutSizeTemplateInput>
+  }
+
+  export type SizeTemplateCreateWithoutSizeTemplateItemsInput = {
+    name: string
+    description?: string | null
+    category?: string | null
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SizeTemplateUncheckedCreateWithoutSizeTemplateItemsInput = {
+    id?: number
+    name: string
+    description?: string | null
+    category?: string | null
+    isActive?: boolean
+    isDefault?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SizeTemplateCreateOrConnectWithoutSizeTemplateItemsInput = {
+    where: SizeTemplateWhereUniqueInput
+    create: XOR<SizeTemplateCreateWithoutSizeTemplateItemsInput, SizeTemplateUncheckedCreateWithoutSizeTemplateItemsInput>
+  }
+
+  export type SizeCreateWithoutSizeTemplateItemsInput = {
+    value: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productInventories?: ProductInventoryCreateNestedManyWithoutSizeInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutSizeInput
+  }
+
+  export type SizeUncheckedCreateWithoutSizeTemplateItemsInput = {
+    id?: number
+    value: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutSizeInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutSizeInput
+  }
+
+  export type SizeCreateOrConnectWithoutSizeTemplateItemsInput = {
+    where: SizeWhereUniqueInput
+    create: XOR<SizeCreateWithoutSizeTemplateItemsInput, SizeUncheckedCreateWithoutSizeTemplateItemsInput>
+  }
+
+  export type SizeTemplateUpsertWithoutSizeTemplateItemsInput = {
+    update: XOR<SizeTemplateUpdateWithoutSizeTemplateItemsInput, SizeTemplateUncheckedUpdateWithoutSizeTemplateItemsInput>
+    create: XOR<SizeTemplateCreateWithoutSizeTemplateItemsInput, SizeTemplateUncheckedCreateWithoutSizeTemplateItemsInput>
+    where?: SizeTemplateWhereInput
+  }
+
+  export type SizeTemplateUpdateToOneWithWhereWithoutSizeTemplateItemsInput = {
+    where?: SizeTemplateWhereInput
+    data: XOR<SizeTemplateUpdateWithoutSizeTemplateItemsInput, SizeTemplateUncheckedUpdateWithoutSizeTemplateItemsInput>
+  }
+
+  export type SizeTemplateUpdateWithoutSizeTemplateItemsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SizeTemplateUncheckedUpdateWithoutSizeTemplateItemsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SizeUpsertWithoutSizeTemplateItemsInput = {
+    update: XOR<SizeUpdateWithoutSizeTemplateItemsInput, SizeUncheckedUpdateWithoutSizeTemplateItemsInput>
+    create: XOR<SizeCreateWithoutSizeTemplateItemsInput, SizeUncheckedCreateWithoutSizeTemplateItemsInput>
+    where?: SizeWhereInput
+  }
+
+  export type SizeUpdateToOneWithWhereWithoutSizeTemplateItemsInput = {
+    where?: SizeWhereInput
+    data: XOR<SizeUpdateWithoutSizeTemplateItemsInput, SizeUncheckedUpdateWithoutSizeTemplateItemsInput>
+  }
+
+  export type SizeUpdateWithoutSizeTemplateItemsInput = {
+    value?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productInventories?: ProductInventoryUpdateManyWithoutSizeNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutSizeNestedInput
+  }
+
+  export type SizeUncheckedUpdateWithoutSizeTemplateItemsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutSizeNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutSizeNestedInput
   }
 
   export type ProductCreateWithoutBrandInput = {
@@ -27663,8 +31065,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
     galleryImages?: ProductImageCreateNestedManyWithoutProductInput
-    colors?: ProductColorCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutProductInput
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
@@ -27687,8 +31089,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     categoryId: number
     galleryImages?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    colors?: ProductColorUncheckedCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeUncheckedCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutProductInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
@@ -27798,43 +31200,47 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ProductColorCreateWithoutProductInput = {
-    color: ColorCreateNestedOneWithoutProductColorsInput
+  export type ProductInventoryCreateWithoutProductInput = {
+    stock?: number
+    color: ColorCreateNestedOneWithoutProductInventoriesInput
+    size: SizeCreateNestedOneWithoutProductInventoriesInput
   }
 
-  export type ProductColorUncheckedCreateWithoutProductInput = {
+  export type ProductInventoryUncheckedCreateWithoutProductInput = {
     id?: number
+    stock?: number
     colorId: number
-  }
-
-  export type ProductColorCreateOrConnectWithoutProductInput = {
-    where: ProductColorWhereUniqueInput
-    create: XOR<ProductColorCreateWithoutProductInput, ProductColorUncheckedCreateWithoutProductInput>
-  }
-
-  export type ProductColorCreateManyProductInputEnvelope = {
-    data: ProductColorCreateManyProductInput | ProductColorCreateManyProductInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ProductSizeCreateWithoutProductInput = {
-    stock?: number
-    size: SizeCreateNestedOneWithoutProductSizesInput
-  }
-
-  export type ProductSizeUncheckedCreateWithoutProductInput = {
-    id?: number
-    stock?: number
     sizeId: number
   }
 
-  export type ProductSizeCreateOrConnectWithoutProductInput = {
-    where: ProductSizeWhereUniqueInput
-    create: XOR<ProductSizeCreateWithoutProductInput, ProductSizeUncheckedCreateWithoutProductInput>
+  export type ProductInventoryCreateOrConnectWithoutProductInput = {
+    where: ProductInventoryWhereUniqueInput
+    create: XOR<ProductInventoryCreateWithoutProductInput, ProductInventoryUncheckedCreateWithoutProductInput>
   }
 
-  export type ProductSizeCreateManyProductInputEnvelope = {
-    data: ProductSizeCreateManyProductInput | ProductSizeCreateManyProductInput[]
+  export type ProductInventoryCreateManyProductInputEnvelope = {
+    data: ProductInventoryCreateManyProductInput | ProductInventoryCreateManyProductInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SizeGuideCreateWithoutProductInput = {
+    centimeters: number
+    size: SizeCreateNestedOneWithoutSizeGuidesInput
+  }
+
+  export type SizeGuideUncheckedCreateWithoutProductInput = {
+    id?: number
+    centimeters: number
+    sizeId: number
+  }
+
+  export type SizeGuideCreateOrConnectWithoutProductInput = {
+    where: SizeGuideWhereUniqueInput
+    create: XOR<SizeGuideCreateWithoutProductInput, SizeGuideUncheckedCreateWithoutProductInput>
+  }
+
+  export type SizeGuideCreateManyProductInputEnvelope = {
+    data: SizeGuideCreateManyProductInput | SizeGuideCreateManyProductInput[]
     skipDuplicates?: boolean
   }
 
@@ -27985,36 +31391,36 @@ export namespace Prisma {
     productId?: IntFilter<"ProductImage"> | number
   }
 
-  export type ProductColorUpsertWithWhereUniqueWithoutProductInput = {
-    where: ProductColorWhereUniqueInput
-    update: XOR<ProductColorUpdateWithoutProductInput, ProductColorUncheckedUpdateWithoutProductInput>
-    create: XOR<ProductColorCreateWithoutProductInput, ProductColorUncheckedCreateWithoutProductInput>
+  export type ProductInventoryUpsertWithWhereUniqueWithoutProductInput = {
+    where: ProductInventoryWhereUniqueInput
+    update: XOR<ProductInventoryUpdateWithoutProductInput, ProductInventoryUncheckedUpdateWithoutProductInput>
+    create: XOR<ProductInventoryCreateWithoutProductInput, ProductInventoryUncheckedCreateWithoutProductInput>
   }
 
-  export type ProductColorUpdateWithWhereUniqueWithoutProductInput = {
-    where: ProductColorWhereUniqueInput
-    data: XOR<ProductColorUpdateWithoutProductInput, ProductColorUncheckedUpdateWithoutProductInput>
+  export type ProductInventoryUpdateWithWhereUniqueWithoutProductInput = {
+    where: ProductInventoryWhereUniqueInput
+    data: XOR<ProductInventoryUpdateWithoutProductInput, ProductInventoryUncheckedUpdateWithoutProductInput>
   }
 
-  export type ProductColorUpdateManyWithWhereWithoutProductInput = {
-    where: ProductColorScalarWhereInput
-    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyWithoutProductInput>
+  export type ProductInventoryUpdateManyWithWhereWithoutProductInput = {
+    where: ProductInventoryScalarWhereInput
+    data: XOR<ProductInventoryUpdateManyMutationInput, ProductInventoryUncheckedUpdateManyWithoutProductInput>
   }
 
-  export type ProductSizeUpsertWithWhereUniqueWithoutProductInput = {
-    where: ProductSizeWhereUniqueInput
-    update: XOR<ProductSizeUpdateWithoutProductInput, ProductSizeUncheckedUpdateWithoutProductInput>
-    create: XOR<ProductSizeCreateWithoutProductInput, ProductSizeUncheckedCreateWithoutProductInput>
+  export type SizeGuideUpsertWithWhereUniqueWithoutProductInput = {
+    where: SizeGuideWhereUniqueInput
+    update: XOR<SizeGuideUpdateWithoutProductInput, SizeGuideUncheckedUpdateWithoutProductInput>
+    create: XOR<SizeGuideCreateWithoutProductInput, SizeGuideUncheckedCreateWithoutProductInput>
   }
 
-  export type ProductSizeUpdateWithWhereUniqueWithoutProductInput = {
-    where: ProductSizeWhereUniqueInput
-    data: XOR<ProductSizeUpdateWithoutProductInput, ProductSizeUncheckedUpdateWithoutProductInput>
+  export type SizeGuideUpdateWithWhereUniqueWithoutProductInput = {
+    where: SizeGuideWhereUniqueInput
+    data: XOR<SizeGuideUpdateWithoutProductInput, SizeGuideUncheckedUpdateWithoutProductInput>
   }
 
-  export type ProductSizeUpdateManyWithWhereWithoutProductInput = {
-    where: ProductSizeScalarWhereInput
-    data: XOR<ProductSizeUpdateManyMutationInput, ProductSizeUncheckedUpdateManyWithoutProductInput>
+  export type SizeGuideUpdateManyWithWhereWithoutProductInput = {
+    where: SizeGuideScalarWhereInput
+    data: XOR<SizeGuideUpdateManyMutationInput, SizeGuideUncheckedUpdateManyWithoutProductInput>
   }
 
   export type ReviewUpsertWithWhereUniqueWithoutProductInput = {
@@ -28092,8 +31498,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
     brand?: BrandCreateNestedOneWithoutProductsInput
-    colors?: ProductColorCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutProductInput
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
@@ -28116,8 +31522,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     categoryId: number
     brandId?: number | null
-    colors?: ProductColorUncheckedCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeUncheckedCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutProductInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
@@ -28155,8 +31561,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     brand?: BrandUpdateOneWithoutProductsNestedInput
-    colors?: ProductColorUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutProductNestedInput
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
@@ -28179,13 +31585,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
-    colors?: ProductColorUncheckedUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUncheckedUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutProductNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  export type ProductCreateWithoutColorsInput = {
+  export type ProductCreateWithoutProductInventoriesInput = {
     name: string
     slug: string
     description?: string | null
@@ -28203,12 +31609,12 @@ export namespace Prisma {
     category: CategoryCreateNestedOneWithoutProductsInput
     brand?: BrandCreateNestedOneWithoutProductsInput
     galleryImages?: ProductImageCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutProductInput
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
 
-  export type ProductUncheckedCreateWithoutColorsInput = {
+  export type ProductUncheckedCreateWithoutProductInventoriesInput = {
     id?: number
     name: string
     slug: string
@@ -28227,17 +31633,17 @@ export namespace Prisma {
     categoryId: number
     brandId?: number | null
     galleryImages?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeUncheckedCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutProductInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
-  export type ProductCreateOrConnectWithoutColorsInput = {
+  export type ProductCreateOrConnectWithoutProductInventoriesInput = {
     where: ProductWhereUniqueInput
-    create: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
+    create: XOR<ProductCreateWithoutProductInventoriesInput, ProductUncheckedCreateWithoutProductInventoriesInput>
   }
 
-  export type ColorCreateWithoutProductColorsInput = {
+  export type ColorCreateWithoutProductInventoriesInput = {
     name: string
     hexCode?: string | null
     isActive?: boolean
@@ -28245,7 +31651,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ColorUncheckedCreateWithoutProductColorsInput = {
+  export type ColorUncheckedCreateWithoutProductInventoriesInput = {
     id?: number
     name: string
     hexCode?: string | null
@@ -28254,23 +31660,47 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ColorCreateOrConnectWithoutProductColorsInput = {
+  export type ColorCreateOrConnectWithoutProductInventoriesInput = {
     where: ColorWhereUniqueInput
-    create: XOR<ColorCreateWithoutProductColorsInput, ColorUncheckedCreateWithoutProductColorsInput>
+    create: XOR<ColorCreateWithoutProductInventoriesInput, ColorUncheckedCreateWithoutProductInventoriesInput>
   }
 
-  export type ProductUpsertWithoutColorsInput = {
-    update: XOR<ProductUpdateWithoutColorsInput, ProductUncheckedUpdateWithoutColorsInput>
-    create: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
+  export type SizeCreateWithoutProductInventoriesInput = {
+    value: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sizeGuides?: SizeGuideCreateNestedManyWithoutSizeInput
+    sizeTemplateItems?: SizeTemplateItemCreateNestedManyWithoutSizeInput
+  }
+
+  export type SizeUncheckedCreateWithoutProductInventoriesInput = {
+    id?: number
+    value: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutSizeInput
+    sizeTemplateItems?: SizeTemplateItemUncheckedCreateNestedManyWithoutSizeInput
+  }
+
+  export type SizeCreateOrConnectWithoutProductInventoriesInput = {
+    where: SizeWhereUniqueInput
+    create: XOR<SizeCreateWithoutProductInventoriesInput, SizeUncheckedCreateWithoutProductInventoriesInput>
+  }
+
+  export type ProductUpsertWithoutProductInventoriesInput = {
+    update: XOR<ProductUpdateWithoutProductInventoriesInput, ProductUncheckedUpdateWithoutProductInventoriesInput>
+    create: XOR<ProductCreateWithoutProductInventoriesInput, ProductUncheckedCreateWithoutProductInventoriesInput>
     where?: ProductWhereInput
   }
 
-  export type ProductUpdateToOneWithWhereWithoutColorsInput = {
+  export type ProductUpdateToOneWithWhereWithoutProductInventoriesInput = {
     where?: ProductWhereInput
-    data: XOR<ProductUpdateWithoutColorsInput, ProductUncheckedUpdateWithoutColorsInput>
+    data: XOR<ProductUpdateWithoutProductInventoriesInput, ProductUncheckedUpdateWithoutProductInventoriesInput>
   }
 
-  export type ProductUpdateWithoutColorsInput = {
+  export type ProductUpdateWithoutProductInventoriesInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28288,12 +31718,12 @@ export namespace Prisma {
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     brand?: BrandUpdateOneWithoutProductsNestedInput
     galleryImages?: ProductImageUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutProductNestedInput
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
 
-  export type ProductUncheckedUpdateWithoutColorsInput = {
+  export type ProductUncheckedUpdateWithoutProductInventoriesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
@@ -28312,23 +31742,23 @@ export namespace Prisma {
     categoryId?: IntFieldUpdateOperationsInput | number
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
     galleryImages?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUncheckedUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutProductNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  export type ColorUpsertWithoutProductColorsInput = {
-    update: XOR<ColorUpdateWithoutProductColorsInput, ColorUncheckedUpdateWithoutProductColorsInput>
-    create: XOR<ColorCreateWithoutProductColorsInput, ColorUncheckedCreateWithoutProductColorsInput>
+  export type ColorUpsertWithoutProductInventoriesInput = {
+    update: XOR<ColorUpdateWithoutProductInventoriesInput, ColorUncheckedUpdateWithoutProductInventoriesInput>
+    create: XOR<ColorCreateWithoutProductInventoriesInput, ColorUncheckedCreateWithoutProductInventoriesInput>
     where?: ColorWhereInput
   }
 
-  export type ColorUpdateToOneWithWhereWithoutProductColorsInput = {
+  export type ColorUpdateToOneWithWhereWithoutProductInventoriesInput = {
     where?: ColorWhereInput
-    data: XOR<ColorUpdateWithoutProductColorsInput, ColorUncheckedUpdateWithoutProductColorsInput>
+    data: XOR<ColorUpdateWithoutProductInventoriesInput, ColorUncheckedUpdateWithoutProductInventoriesInput>
   }
 
-  export type ColorUpdateWithoutProductColorsInput = {
+  export type ColorUpdateWithoutProductInventoriesInput = {
     name?: StringFieldUpdateOperationsInput | string
     hexCode?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -28336,7 +31766,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ColorUncheckedUpdateWithoutProductColorsInput = {
+  export type ColorUncheckedUpdateWithoutProductInventoriesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     hexCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28345,7 +31775,37 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProductCreateWithoutSizesInput = {
+  export type SizeUpsertWithoutProductInventoriesInput = {
+    update: XOR<SizeUpdateWithoutProductInventoriesInput, SizeUncheckedUpdateWithoutProductInventoriesInput>
+    create: XOR<SizeCreateWithoutProductInventoriesInput, SizeUncheckedCreateWithoutProductInventoriesInput>
+    where?: SizeWhereInput
+  }
+
+  export type SizeUpdateToOneWithWhereWithoutProductInventoriesInput = {
+    where?: SizeWhereInput
+    data: XOR<SizeUpdateWithoutProductInventoriesInput, SizeUncheckedUpdateWithoutProductInventoriesInput>
+  }
+
+  export type SizeUpdateWithoutProductInventoriesInput = {
+    value?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sizeGuides?: SizeGuideUpdateManyWithoutSizeNestedInput
+    sizeTemplateItems?: SizeTemplateItemUpdateManyWithoutSizeNestedInput
+  }
+
+  export type SizeUncheckedUpdateWithoutProductInventoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    value?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutSizeNestedInput
+    sizeTemplateItems?: SizeTemplateItemUncheckedUpdateManyWithoutSizeNestedInput
+  }
+
+  export type ProductCreateWithoutSizeGuidesInput = {
     name: string
     slug: string
     description?: string | null
@@ -28363,12 +31823,12 @@ export namespace Prisma {
     category: CategoryCreateNestedOneWithoutProductsInput
     brand?: BrandCreateNestedOneWithoutProductsInput
     galleryImages?: ProductImageCreateNestedManyWithoutProductInput
-    colors?: ProductColorCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutProductInput
     reviews?: ReviewCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
 
-  export type ProductUncheckedCreateWithoutSizesInput = {
+  export type ProductUncheckedCreateWithoutSizeGuidesInput = {
     id?: number
     name: string
     slug: string
@@ -28387,48 +31847,52 @@ export namespace Prisma {
     categoryId: number
     brandId?: number | null
     galleryImages?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    colors?: ProductColorUncheckedCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutProductInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
-  export type ProductCreateOrConnectWithoutSizesInput = {
+  export type ProductCreateOrConnectWithoutSizeGuidesInput = {
     where: ProductWhereUniqueInput
-    create: XOR<ProductCreateWithoutSizesInput, ProductUncheckedCreateWithoutSizesInput>
+    create: XOR<ProductCreateWithoutSizeGuidesInput, ProductUncheckedCreateWithoutSizeGuidesInput>
   }
 
-  export type SizeCreateWithoutProductSizesInput = {
+  export type SizeCreateWithoutSizeGuidesInput = {
     value: number
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    productInventories?: ProductInventoryCreateNestedManyWithoutSizeInput
+    sizeTemplateItems?: SizeTemplateItemCreateNestedManyWithoutSizeInput
   }
 
-  export type SizeUncheckedCreateWithoutProductSizesInput = {
+  export type SizeUncheckedCreateWithoutSizeGuidesInput = {
     id?: number
     value: number
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutSizeInput
+    sizeTemplateItems?: SizeTemplateItemUncheckedCreateNestedManyWithoutSizeInput
   }
 
-  export type SizeCreateOrConnectWithoutProductSizesInput = {
+  export type SizeCreateOrConnectWithoutSizeGuidesInput = {
     where: SizeWhereUniqueInput
-    create: XOR<SizeCreateWithoutProductSizesInput, SizeUncheckedCreateWithoutProductSizesInput>
+    create: XOR<SizeCreateWithoutSizeGuidesInput, SizeUncheckedCreateWithoutSizeGuidesInput>
   }
 
-  export type ProductUpsertWithoutSizesInput = {
-    update: XOR<ProductUpdateWithoutSizesInput, ProductUncheckedUpdateWithoutSizesInput>
-    create: XOR<ProductCreateWithoutSizesInput, ProductUncheckedCreateWithoutSizesInput>
+  export type ProductUpsertWithoutSizeGuidesInput = {
+    update: XOR<ProductUpdateWithoutSizeGuidesInput, ProductUncheckedUpdateWithoutSizeGuidesInput>
+    create: XOR<ProductCreateWithoutSizeGuidesInput, ProductUncheckedCreateWithoutSizeGuidesInput>
     where?: ProductWhereInput
   }
 
-  export type ProductUpdateToOneWithWhereWithoutSizesInput = {
+  export type ProductUpdateToOneWithWhereWithoutSizeGuidesInput = {
     where?: ProductWhereInput
-    data: XOR<ProductUpdateWithoutSizesInput, ProductUncheckedUpdateWithoutSizesInput>
+    data: XOR<ProductUpdateWithoutSizeGuidesInput, ProductUncheckedUpdateWithoutSizeGuidesInput>
   }
 
-  export type ProductUpdateWithoutSizesInput = {
+  export type ProductUpdateWithoutSizeGuidesInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28446,12 +31910,12 @@ export namespace Prisma {
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     brand?: BrandUpdateOneWithoutProductsNestedInput
     galleryImages?: ProductImageUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutProductNestedInput
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
 
-  export type ProductUncheckedUpdateWithoutSizesInput = {
+  export type ProductUncheckedUpdateWithoutSizeGuidesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
@@ -28470,35 +31934,39 @@ export namespace Prisma {
     categoryId?: IntFieldUpdateOperationsInput | number
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
     galleryImages?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUncheckedUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutProductNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
-  export type SizeUpsertWithoutProductSizesInput = {
-    update: XOR<SizeUpdateWithoutProductSizesInput, SizeUncheckedUpdateWithoutProductSizesInput>
-    create: XOR<SizeCreateWithoutProductSizesInput, SizeUncheckedCreateWithoutProductSizesInput>
+  export type SizeUpsertWithoutSizeGuidesInput = {
+    update: XOR<SizeUpdateWithoutSizeGuidesInput, SizeUncheckedUpdateWithoutSizeGuidesInput>
+    create: XOR<SizeCreateWithoutSizeGuidesInput, SizeUncheckedCreateWithoutSizeGuidesInput>
     where?: SizeWhereInput
   }
 
-  export type SizeUpdateToOneWithWhereWithoutProductSizesInput = {
+  export type SizeUpdateToOneWithWhereWithoutSizeGuidesInput = {
     where?: SizeWhereInput
-    data: XOR<SizeUpdateWithoutProductSizesInput, SizeUncheckedUpdateWithoutProductSizesInput>
+    data: XOR<SizeUpdateWithoutSizeGuidesInput, SizeUncheckedUpdateWithoutSizeGuidesInput>
   }
 
-  export type SizeUpdateWithoutProductSizesInput = {
+  export type SizeUpdateWithoutSizeGuidesInput = {
     value?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productInventories?: ProductInventoryUpdateManyWithoutSizeNestedInput
+    sizeTemplateItems?: SizeTemplateItemUpdateManyWithoutSizeNestedInput
   }
 
-  export type SizeUncheckedUpdateWithoutProductSizesInput = {
+  export type SizeUncheckedUpdateWithoutSizeGuidesInput = {
     id?: IntFieldUpdateOperationsInput | number
     value?: IntFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutSizeNestedInput
+    sizeTemplateItems?: SizeTemplateItemUncheckedUpdateManyWithoutSizeNestedInput
   }
 
   export type OrderCreateWithoutCustomerInput = {
@@ -28756,8 +32224,8 @@ export namespace Prisma {
     category: CategoryCreateNestedOneWithoutProductsInput
     brand?: BrandCreateNestedOneWithoutProductsInput
     galleryImages?: ProductImageCreateNestedManyWithoutProductInput
-    colors?: ProductColorCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutProductInput
     reviews?: ReviewCreateNestedManyWithoutProductInput
   }
 
@@ -28780,8 +32248,8 @@ export namespace Prisma {
     categoryId: number
     brandId?: number | null
     galleryImages?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    colors?: ProductColorUncheckedCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeUncheckedCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutProductInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -28855,8 +32323,8 @@ export namespace Prisma {
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     brand?: BrandUpdateOneWithoutProductsNestedInput
     galleryImages?: ProductImageUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutProductNestedInput
     reviews?: ReviewUpdateManyWithoutProductNestedInput
   }
 
@@ -28879,8 +32347,8 @@ export namespace Prisma {
     categoryId?: IntFieldUpdateOperationsInput | number
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
     galleryImages?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUncheckedUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUncheckedUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutProductNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
   }
 
@@ -28902,8 +32370,8 @@ export namespace Prisma {
     category: CategoryCreateNestedOneWithoutProductsInput
     brand?: BrandCreateNestedOneWithoutProductsInput
     galleryImages?: ProductImageCreateNestedManyWithoutProductInput
-    colors?: ProductColorCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideCreateNestedManyWithoutProductInput
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
   }
 
@@ -28926,8 +32394,8 @@ export namespace Prisma {
     categoryId: number
     brandId?: number | null
     galleryImages?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    colors?: ProductColorUncheckedCreateNestedManyWithoutProductInput
-    sizes?: ProductSizeUncheckedCreateNestedManyWithoutProductInput
+    productInventories?: ProductInventoryUncheckedCreateNestedManyWithoutProductInput
+    sizeGuides?: SizeGuideUncheckedCreateNestedManyWithoutProductInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -28989,8 +32457,8 @@ export namespace Prisma {
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     brand?: BrandUpdateOneWithoutProductsNestedInput
     galleryImages?: ProductImageUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
 
@@ -29013,8 +32481,8 @@ export namespace Prisma {
     categoryId?: IntFieldUpdateOperationsInput | number
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
     galleryImages?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUncheckedUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUncheckedUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
@@ -29537,8 +33005,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brand?: BrandUpdateOneWithoutProductsNestedInput
     galleryImages?: ProductImageUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutProductNestedInput
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
@@ -29561,8 +33029,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
     galleryImages?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUncheckedUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUncheckedUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutProductNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
@@ -29586,46 +33054,127 @@ export namespace Prisma {
     brandId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ProductColorCreateManyColorInput = {
-    id?: number
-    productId: number
-  }
-
-  export type ProductColorUpdateWithoutColorInput = {
-    product?: ProductUpdateOneRequiredWithoutColorsNestedInput
-  }
-
-  export type ProductColorUncheckedUpdateWithoutColorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    productId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ProductColorUncheckedUpdateManyWithoutColorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    productId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ProductSizeCreateManySizeInput = {
+  export type ProductInventoryCreateManyColorInput = {
     id?: number
     stock?: number
     productId: number
+    sizeId: number
   }
 
-  export type ProductSizeUpdateWithoutSizeInput = {
+  export type ProductInventoryUpdateWithoutColorInput = {
     stock?: IntFieldUpdateOperationsInput | number
-    product?: ProductUpdateOneRequiredWithoutSizesNestedInput
+    product?: ProductUpdateOneRequiredWithoutProductInventoriesNestedInput
+    size?: SizeUpdateOneRequiredWithoutProductInventoriesNestedInput
   }
 
-  export type ProductSizeUncheckedUpdateWithoutSizeInput = {
+  export type ProductInventoryUncheckedUpdateWithoutColorInput = {
     id?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type ProductSizeUncheckedUpdateManyWithoutSizeInput = {
+  export type ProductInventoryUncheckedUpdateManyWithoutColorInput = {
     id?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     productId?: IntFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ProductInventoryCreateManySizeInput = {
+    id?: number
+    stock?: number
+    productId: number
+    colorId: number
+  }
+
+  export type SizeGuideCreateManySizeInput = {
+    id?: number
+    centimeters: number
+    productId: number
+  }
+
+  export type SizeTemplateItemCreateManySizeInput = {
+    id?: number
+    centimeters: number
+    sizeTemplateId: number
+  }
+
+  export type ProductInventoryUpdateWithoutSizeInput = {
+    stock?: IntFieldUpdateOperationsInput | number
+    product?: ProductUpdateOneRequiredWithoutProductInventoriesNestedInput
+    color?: ColorUpdateOneRequiredWithoutProductInventoriesNestedInput
+  }
+
+  export type ProductInventoryUncheckedUpdateWithoutSizeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    colorId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ProductInventoryUncheckedUpdateManyWithoutSizeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+    colorId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeGuideUpdateWithoutSizeInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    product?: ProductUpdateOneRequiredWithoutSizeGuidesNestedInput
+  }
+
+  export type SizeGuideUncheckedUpdateWithoutSizeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeGuideUncheckedUpdateManyWithoutSizeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    productId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeTemplateItemUpdateWithoutSizeInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeTemplate?: SizeTemplateUpdateOneRequiredWithoutSizeTemplateItemsNestedInput
+  }
+
+  export type SizeTemplateItemUncheckedUpdateWithoutSizeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeTemplateId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeTemplateItemUncheckedUpdateManyWithoutSizeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeTemplateId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeTemplateItemCreateManySizeTemplateInput = {
+    id?: number
+    centimeters: number
+    sizeId: number
+  }
+
+  export type SizeTemplateItemUpdateWithoutSizeTemplateInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    size?: SizeUpdateOneRequiredWithoutSizeTemplateItemsNestedInput
+  }
+
+  export type SizeTemplateItemUncheckedUpdateWithoutSizeTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeTemplateItemUncheckedUpdateManyWithoutSizeTemplateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ProductCreateManyBrandInput = {
@@ -29664,8 +33213,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     galleryImages?: ProductImageUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUpdateManyWithoutProductNestedInput
     reviews?: ReviewUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
   }
@@ -29688,8 +33237,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     galleryImages?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    colors?: ProductColorUncheckedUpdateManyWithoutProductNestedInput
-    sizes?: ProductSizeUncheckedUpdateManyWithoutProductNestedInput
+    productInventories?: ProductInventoryUncheckedUpdateManyWithoutProductNestedInput
+    sizeGuides?: SizeGuideUncheckedUpdateManyWithoutProductNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProductNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
@@ -29722,14 +33271,16 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type ProductColorCreateManyProductInput = {
-    id?: number
-    colorId: number
-  }
-
-  export type ProductSizeCreateManyProductInput = {
+  export type ProductInventoryCreateManyProductInput = {
     id?: number
     stock?: number
+    colorId: number
+    sizeId: number
+  }
+
+  export type SizeGuideCreateManyProductInput = {
+    id?: number
+    centimeters: number
     sizeId: number
   }
 
@@ -29777,34 +33328,40 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProductColorUpdateWithoutProductInput = {
-    color?: ColorUpdateOneRequiredWithoutProductColorsNestedInput
-  }
-
-  export type ProductColorUncheckedUpdateWithoutProductInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    colorId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ProductColorUncheckedUpdateManyWithoutProductInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    colorId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ProductSizeUpdateWithoutProductInput = {
+  export type ProductInventoryUpdateWithoutProductInput = {
     stock?: IntFieldUpdateOperationsInput | number
-    size?: SizeUpdateOneRequiredWithoutProductSizesNestedInput
+    color?: ColorUpdateOneRequiredWithoutProductInventoriesNestedInput
+    size?: SizeUpdateOneRequiredWithoutProductInventoriesNestedInput
   }
 
-  export type ProductSizeUncheckedUpdateWithoutProductInput = {
+  export type ProductInventoryUncheckedUpdateWithoutProductInput = {
     id?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
+    colorId?: IntFieldUpdateOperationsInput | number
     sizeId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type ProductSizeUncheckedUpdateManyWithoutProductInput = {
+  export type ProductInventoryUncheckedUpdateManyWithoutProductInput = {
     id?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
+    colorId?: IntFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeGuideUpdateWithoutProductInput = {
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    size?: SizeUpdateOneRequiredWithoutSizeGuidesNestedInput
+  }
+
+  export type SizeGuideUncheckedUpdateWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
+    sizeId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SizeGuideUncheckedUpdateManyWithoutProductInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    centimeters?: FloatFieldUpdateOperationsInput | number
     sizeId?: IntFieldUpdateOperationsInput | number
   }
 

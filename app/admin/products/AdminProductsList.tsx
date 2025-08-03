@@ -5,6 +5,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Pagination from '../../../components/Pagination'
 import ProductActions from './ProductActions'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
 
 interface Product {
   id: number
@@ -33,17 +42,25 @@ interface Product {
     caption?: string
     displayOrder: number
   }>
-  colors: Array<{
+  // New ProductInventory structure
+  productInventories: Array<{
     id: number
+    stock: number
+    colorId: number
+    sizeId: number
     color: {
       id: number
       name: string
-      hexCode: string
+      hexCode?: string
+    }
+    size: {
+      id: number
+      value: number
     }
   }>
-  sizes: Array<{
+  sizeGuides?: Array<{
     id: number
-    stock: number
+    centimeters: number
     size: {
       id: number
       value: number
@@ -61,6 +78,44 @@ interface PaginatedResponse {
     hasNext: boolean
     hasPrev: boolean
   }
+}
+
+// Helper functions to work with ProductInventory data
+const getUniqueColors = (productInventories: Product['productInventories']) => {
+  if (!productInventories) return []
+  const uniqueColors = new Map()
+  productInventories.forEach(inv => {
+    if (!uniqueColors.has(inv.color.name)) {
+      uniqueColors.set(inv.color.name, inv.color)
+    }
+  })
+  return Array.from(uniqueColors.values())
+}
+
+const getUniqueSizes = (productInventories: Product['productInventories']) => {
+  if (!productInventories) return []
+  const uniqueSizes = new Map()
+  productInventories.forEach(inv => {
+    if (!uniqueSizes.has(inv.size.value)) {
+      uniqueSizes.set(inv.size.value, inv.size)
+    }
+  })
+  return Array.from(uniqueSizes.values()).sort((a, b) => a.value - b.value)
+}
+
+const getTotalStock = (productInventories: Product['productInventories']) => {
+  if (!productInventories) return 0
+  return productInventories.reduce((total, inv) => total + inv.stock, 0)
+}
+
+const getColorStock = (productInventories: Product['productInventories']) => {
+  if (!productInventories) return 0
+  const colorTotals = new Map()
+  productInventories.forEach(inv => {
+    const current = colorTotals.get(inv.color.name) || 0
+    colorTotals.set(inv.color.name, current + inv.stock)
+  })
+  return Array.from(colorTotals.values()).reduce((total, stock) => total + stock, 0)
 }
 
 export default function AdminProductsList() {
@@ -360,32 +415,34 @@ export default function AdminProductsList() {
 
       {/* Products Display */}
       {!loading && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100/50 overflow-hidden">
           {products.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="text-center py-16 px-6">
               <div className="text-gray-500">
-                <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-                <h3 className="mt-2 text-sm font-medium text-gray-900">No products found</h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No products found</h3>
+                <p className="text-gray-600 mb-8">
                   {debouncedSearchTerm || selectedCategory !== 'All' || selectedBrand !== 'All' || selectedStatus !== 'All'
                     ? 'Try adjusting your filters to find products.'
                     : 'Get started by adding your first product.'
                   }
                 </p>
-                <div className="mt-6">
+                <div>
                   {debouncedSearchTerm || selectedCategory !== 'All' || selectedBrand !== 'All' || selectedStatus !== 'All' ? (
                     <button
                       onClick={handleClearFilters}
-                      className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-pink-600 bg-pink-50 hover:bg-pink-100"
+                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
                     >
                       Clear Filters
                     </button>
                   ) : (
                     <Link
                       href="/admin/products/create"
-                      className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700"
+                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
                     >
                       Add Product
                     </Link>
@@ -398,219 +455,267 @@ export default function AdminProductsList() {
               {/* Grid View */}
               {viewMode === 'grid' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
-                  {products.map((product) => (
-                    <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                      {/* Product Image */}
-                      <div className="relative aspect-square">
-                        {product.thumbnailUrl || product.galleryImages[0] ? (
-                          <Image
-                            src={product.thumbnailUrl || product.galleryImages[0].url}
-                            alt={product.name}
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                            <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                          </div>
-                        )}
-
-                        {/* Status Badges */}
-                        <div className="absolute top-2 left-2 right-2 flex justify-between">
-                          <div className="flex gap-1">
-                            {product.isNew && (
-                              <span className="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                NEW
-                              </span>
-                            )}
-                            {product.isOnSale && (
-                              <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                SALE
-                              </span>
-                            )}
-                          </div>
-                          <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                            product.isActive
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-red-100 text-red-800'
-                          }`}>
-                            {product.isActive ? 'Active' : 'Inactive'}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Product Info */}
-                      <div className="p-4">
-                        <div className="mb-2">
-                          <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1">
-                            {product.name}
-                          </h3>
-                          <div className="flex items-center justify-between text-sm text-gray-500">
-                            <span>{product.category.name}</span>
-                            {product.brand && (
-                              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-                                {product.brand.name}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="mb-3">
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-lg text-gray-900">
-                              Rp {product.price.toLocaleString('id-ID')}
-                            </span>
-                            {product.originalPrice && (
-                              <span className="text-sm text-gray-500 line-through">
-                                Rp {product.originalPrice.toLocaleString('id-ID')}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Stock Info */}
-                        <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                          <span>
-                            {product.colors.length} color{product.colors.length !== 1 ? 's' : ''}
-                          </span>
-                          <span>
-                            {product.sizes.length} size{product.sizes.length !== 1 ? 's' : ''}
-                          </span>
-                          <span>
-                            Stock: {product.sizes.reduce((total, size) => total + size.stock, 0)}
-                          </span>
-                        </div>
-
-                        {/* Actions */}
-                        <ProductActions product={product} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Table View */}
-              {viewMode === 'table' && (
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Product
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Category
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Brand
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Price
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Stock
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Status
-                        </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {products.map((product) => (
-                        <tr key={product.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <div className="flex-shrink-0 h-12 w-12">
-                                {product.thumbnailUrl || product.galleryImages[0] ? (
-                                  <Image
-                                    className="h-12 w-12 rounded-lg object-cover"
-                                    src={product.thumbnailUrl || product.galleryImages[0].url}
-                                    alt={product.name}
-                                    width={48}
-                                    height={48}
-                                  />
-                                ) : (
-                                  <div className="h-12 w-12 bg-gray-200 rounded-lg flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                  </div>
-                                )}
-                              </div>
-                              <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900 max-w-xs truncate">
-                                  {product.name}
-                                </div>
-                                <div className="flex gap-1 mt-1">
-                                  {product.isNew && (
-                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                                      NEW
-                                    </span>
-                                  )}
-                                  {product.isOnSale && (
-                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-                                      SALE
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
+                  {products.map((product) => {
+                    const uniqueColors = getUniqueColors(product.productInventories)
+                    const uniqueSizes = getUniqueSizes(product.productInventories)
+                    const totalStock = getTotalStock(product.productInventories)
+                    const colorStock = getColorStock(product.productInventories)
+                    
+                    return (
+                      <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                        {/* Product Image */}
+                        <div className="relative aspect-square">
+                          {product.thumbnailUrl || (product.galleryImages && product.galleryImages.length > 0) ? (
+                            <Image
+                              src={product.thumbnailUrl || product.galleryImages[0]?.url || '/placeholder-product.svg'}
+                              alt={product.name}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
                             </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {product.category.name}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {product.brand ? (
-                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {product.brand.name}
-                              </span>
-                            ) : (
-                              <span className="text-gray-400">No brand</span>
-                            )}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            <div>
-                              <div className="font-medium">
-                                Rp {product.price.toLocaleString('id-ID')}
-                              </div>
-                              {product.originalPrice && (
-                                <div className="text-xs text-gray-500 line-through">
-                                  Rp {product.originalPrice.toLocaleString('id-ID')}
-                                </div>
+                          )}
+
+                          {/* Status Badges */}
+                          <div className="absolute top-2 left-2 right-2 flex justify-between">
+                            <div className="flex gap-1">
+                              {product.isNew && (
+                                <span className="bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                                  NEW
+                                </span>
+                              )}
+                              {product.isOnSale && (
+                                <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                                  SALE
+                                </span>
                               )}
                             </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            <div>
-                              <div className="font-medium">
-                                {product.sizes.reduce((total, size) => total + size.stock, 0)} units
-                              </div>
-                              <div className="text-xs text-gray-500">
-                                {product.colors.length} colors, {product.sizes.length} sizes
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
                               product.isActive
                                 ? 'bg-green-100 text-green-800'
                                 : 'bg-red-100 text-red-800'
                             }`}>
                               {product.isActive ? 'Active' : 'Inactive'}
                             </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <ProductActions product={product} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                          </div>
+                        </div>
+
+                        {/* Product Info */}
+                        <div className="p-4">
+                          <div className="mb-2">
+                            <h3 className="font-semibold text-gray-900 line-clamp-2 mb-1">
+                              {product.name}
+                            </h3>
+                            <div className="flex items-center justify-between text-sm text-gray-500">
+                              <span>{product.category.name}</span>
+                              {product.brand && (
+                                <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                                  {product.brand.name}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="mb-3">
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-lg text-gray-900">
+                                Rp {product.price.toLocaleString('id-ID')}
+                              </span>
+                              {product.originalPrice && (
+                                <span className="text-sm text-gray-500 line-through">
+                                  Rp {product.originalPrice.toLocaleString('id-ID')}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Stock Info */}
+                          <div className="space-y-2 mb-3">
+                            <div className="flex items-center justify-between text-xs text-gray-500">
+                              <span>
+                                {uniqueColors.length} color{uniqueColors.length !== 1 ? 's' : ''}
+                              </span>
+                              <span>
+                                {uniqueSizes.length} size{uniqueSizes.length !== 1 ? 's' : ''}
+                              </span>
+                              <span>
+                                Total Stock: {totalStock}
+                              </span>
+                            </div>
+
+                            {/* Inventory Summary */}
+                            <div className="text-xs">
+                              <span className="text-gray-600">Inventory Entries: </span>
+                              <span className="text-gray-800">
+                                {product.productInventories?.length || 0} combinations
+                              </span>
+                            </div>
+
+                            {/* Size Guide Indicator */}
+                            <div className="text-xs">
+                              <span className="text-gray-600">Size Guide: </span>
+                              <span className={`font-medium ${product.sizeGuides && product.sizeGuides.length > 0 ? 'text-green-600' : 'text-orange-600'}`}>
+                                {product.sizeGuides && product.sizeGuides.length > 0
+                                  ? `${product.sizeGuides.length} sizes configured`
+                                  : 'Not configured'
+                                }
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Actions */}
+                          <ProductActions product={product} />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
+              {/* Table View */}
+              {viewMode === 'table' && (
+                <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100/50 overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-gradient-to-r from-pink-50/50 to-purple-50/50 border-b border-pink-100/70 hover:bg-gradient-to-r hover:from-pink-50/70 hover:to-purple-50/70">
+                        <TableHead className="text-gray-700 font-semibold px-6 py-4 text-sm">Product</TableHead>
+                        <TableHead className="text-gray-700 font-semibold px-6 py-4 text-sm">Category</TableHead>
+                        <TableHead className="text-gray-700 font-semibold px-6 py-4 text-sm">Brand</TableHead>
+                        <TableHead className="text-gray-700 font-semibold px-6 py-4 text-sm">Price</TableHead>
+                        <TableHead className="text-gray-700 font-semibold px-6 py-4 text-sm">Inventory</TableHead>
+                        <TableHead className="text-gray-700 font-semibold px-6 py-4 text-sm">Status</TableHead>
+                        <TableHead className="text-gray-700 font-semibold px-6 py-4 text-sm text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {products.map((product, index) => {
+                        const uniqueColors = getUniqueColors(product.productInventories)
+                        const uniqueSizes = getUniqueSizes(product.productInventories)
+                        const totalStock = getTotalStock(product.productInventories)
+
+                        return (
+                          <TableRow
+                            key={product.id}
+                            className={`
+                              border-b border-gray-100/50 transition-all duration-200
+                              hover:bg-gradient-to-r hover:from-pink-50/30 hover:to-purple-50/30
+                              hover:shadow-sm group
+                              ${index % 2 === 0 ? 'bg-white/50' : 'bg-gray-50/30'}
+                            `}
+                          >
+                            <TableCell className="px-6 py-5">
+                              <div className="flex items-center gap-4">
+                                <div className="w-14 h-14 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm">
+                                  {product.thumbnailUrl || (product.galleryImages && product.galleryImages.length > 0) ? (
+                                    <Image
+                                      className="w-full h-full object-cover"
+                                      src={product.thumbnailUrl || product.galleryImages[0]?.url || '/placeholder-product.svg'}
+                                      alt={product.name}
+                                      width={56}
+                                      height={56}
+                                    />
+                                  ) : (
+                                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                  )}
+                                </div>
+                                <div className="space-y-2">
+                                  <div className="font-semibold text-gray-900 text-base max-w-xs truncate">
+                                    {product.name}
+                                  </div>
+                                  <div className="flex gap-2">
+                                    {product.isNew && (
+                                      <Badge className="bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 border-emerald-200 px-2 py-1 text-xs">
+                                        NEW
+                                      </Badge>
+                                    )}
+                                    {product.isOnSale && (
+                                      <Badge className="bg-gradient-to-r from-red-100 to-rose-100 text-red-700 border-red-200 px-2 py-1 text-xs">
+                                        SALE
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell className="px-6 py-5">
+                              <Badge className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border-blue-200/70 font-medium px-3 py-1.5 rounded-full">
+                                {product.category.name}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="px-6 py-5">
+                              {product.brand ? (
+                                <Badge className="bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 border-purple-200/70 font-medium px-3 py-1.5 rounded-full">
+                                  {product.brand.name}
+                                </Badge>
+                              ) : (
+                                <span className="text-gray-400 italic">No brand</span>
+                              )}
+                            </TableCell>
+                            <TableCell className="px-6 py-5">
+                              <div className="space-y-1">
+                                <div className="font-semibold text-gray-900">
+                                  Rp {product.price.toLocaleString('id-ID')}
+                                </div>
+                                {product.originalPrice && (
+                                  <div className="text-sm text-gray-500 line-through">
+                                    Rp {product.originalPrice.toLocaleString('id-ID')}
+                                  </div>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell className="px-6 py-5">
+                              <div className="space-y-2">
+                                <div className="font-semibold text-gray-900">
+                                  Total: {totalStock} units
+                                </div>
+                                <div className="text-sm text-gray-600">
+                                  {product.productInventories?.length || 0} inventory entries
+                                </div>
+                                <div className="text-sm text-gray-600">
+                                  {uniqueColors.length} colors • {uniqueSizes.length} sizes
+                                </div>
+                                <div className="text-sm">
+                                  <Badge className={`
+                                    font-medium px-2 py-1 text-xs rounded-full
+                                    ${product.sizeGuides && product.sizeGuides.length > 0
+                                      ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 border-emerald-200'
+                                      : 'bg-gradient-to-r from-orange-100 to-yellow-100 text-orange-700 border-orange-200'
+                                    }
+                                  `}>
+                                    Size Guide: {product.sizeGuides && product.sizeGuides.length > 0 ? '✓ Configured' : '✗ Missing'}
+                                  </Badge>
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell className="px-6 py-5">
+                              <Badge
+                                className={`
+                                  font-medium px-3 py-1.5 rounded-full shadow-sm
+                                  ${product.isActive
+                                    ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 border-emerald-200'
+                                    : 'bg-gradient-to-r from-red-100 to-rose-100 text-red-700 border-red-200'
+                                  }
+                                `}
+                              >
+                                {product.isActive ? 'Active' : 'Inactive'}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="px-6 py-5 text-right">
+                              <div className="opacity-70 group-hover:opacity-100 transition-opacity duration-200">
+                                <ProductActions product={product} />
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
+                    </TableBody>
+                  </Table>
                 </div>
               )}
 

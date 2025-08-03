@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { Edit2, Trash2, Power, PowerOff } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { useToast } from '../../hooks/useToast'
 
 interface Brand {
@@ -73,30 +75,61 @@ export default function BrandActions({ brand }: BrandActionsProps) {
   }
 
   return (
-    <div className="flex items-center space-x-2">
-      <Link
-        href={`/admin/master/brands/${brand.id}/edit`}
-        className="text-pink-600 hover:text-pink-700 font-medium"
+    <div className="flex items-center gap-2">
+      <Button
+        asChild
+        variant="outline"
+        size="sm"
+        className="h-8 px-3 border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-800 hover:border-blue-300"
       >
-        Edit
-      </Link>
-      <button
+        <Link href={`/admin/master/brands/${brand.id}/edit`}>
+          <Edit2 className="w-3.5 h-3.5 mr-1.5" />
+          Edit
+        </Link>
+      </Button>
+
+      <Button
         onClick={handleToggleStatus}
-        className={`font-medium ${
+        variant="outline"
+        size="sm"
+        className={`h-8 px-3 ${
           brand.isActive
-            ? 'text-orange-600 hover:text-orange-700'
-            : 'text-green-600 hover:text-green-700'
+            ? 'border-orange-200 text-orange-700 hover:bg-orange-50 hover:text-orange-800 hover:border-orange-300'
+            : 'border-emerald-200 text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300'
         }`}
       >
-        {brand.isActive ? 'Deactivate' : 'Activate'}
-      </button>
-      <button
+        {brand.isActive ? (
+          <>
+            <PowerOff className="w-3.5 h-3.5 mr-1.5" />
+            Deactivate
+          </>
+        ) : (
+          <>
+            <Power className="w-3.5 h-3.5 mr-1.5" />
+            Activate
+          </>
+        )}
+      </Button>
+
+      <Button
         onClick={handleDelete}
         disabled={isDeleting}
-        className="text-red-600 hover:text-red-700 font-medium disabled:opacity-50"
+        variant="outline"
+        size="sm"
+        className="h-8 px-3 border-red-200 text-red-700 hover:bg-red-50 hover:text-red-800 hover:border-red-300"
       >
-        {isDeleting ? 'Deleting...' : 'Delete'}
-      </button>
+        {isDeleting ? (
+          <>
+            <div className="w-3.5 h-3.5 mr-1.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
+            Deleting...
+          </>
+        ) : (
+          <>
+            <Trash2 className="w-3.5 h-3.5 mr-1.5" />
+            Delete
+          </>
+        )}
+      </Button>
     </div>
   )
 }
