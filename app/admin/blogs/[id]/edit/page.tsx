@@ -5,11 +5,18 @@ import { useParams } from 'next/navigation'
 import BlogForm from '../../BlogForm'
 import LoadingSpinner from '../../../components/LoadingSpinner'
 
-interface EditBlogPageProps {}
+interface EditBlogPageProps { }
 
-export default function EditBlogPage({}: EditBlogPageProps) {
+interface Blog {
+  id: string
+  title: string
+  content: string
+  // tambahkan properti lain jika ada
+}
+
+export default function EditBlogPage({ }: EditBlogPageProps) {
   const params = useParams()
-  const [blog, setBlog] = useState(null)
+  const [blog, setBlog] = useState<Blog | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -59,7 +66,7 @@ export default function EditBlogPage({}: EditBlogPageProps) {
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Edit Blog Post</h1>
         <p className="mt-2 text-sm text-gray-700">
-          Update the content and settings for "{blog?.title || 'this blog post'}"
+          Update the content and settings for &quot;{blog?.title || 'this blog post'}&quot;
         </p>
       </div>
 
