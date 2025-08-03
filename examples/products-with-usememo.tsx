@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import ProductCard from '../components/ProductCard'
+import ProductCardShadcn from '../components/ProductCardShadcn'
 import Pagination from '../components/Pagination'
 import { getProducts, categories } from '../services/products'
 import { Product } from '../types/product'
@@ -108,7 +108,7 @@ export default function ProductsPageWithUseMemo() {
         <>
           <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {paginationData.products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCardShadcn key={product.id} product={product} />
             ))}
           </div>
 

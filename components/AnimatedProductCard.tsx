@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import ProductCard from './ProductCard'
+import ProductCardShadcn from './ProductCardShadcn'
 import { Product } from '../types/product'
 
 interface AnimatedProductCardProps {
@@ -40,7 +40,7 @@ export default function AnimatedProductCard({ product, index }: AnimatedProductC
       className="group"
       role="listitem"
     >
-      <ProductCard product={product} />
+      <ProductCardShadcn product={product} />
     </motion.div>
   )
 }

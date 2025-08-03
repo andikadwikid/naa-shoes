@@ -46,13 +46,13 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-tr from-slate-50 via-white to-rose-50"></div>
         <div className="absolute top-0 left-0 w-full h-full opacity-30">
           <svg className="absolute top-20 left-20 text-pink-100" width="60" height="60" viewBox="0 0 60 60" fill="currentColor">
-            <circle cx="30" cy="30" r="30"/>
+            <circle cx="30" cy="30" r="30" />
           </svg>
           <svg className="absolute top-40 right-32 text-purple-100" width="80" height="80" viewBox="0 0 80 80" fill="currentColor">
-            <circle cx="40" cy="40" r="40"/>
+            <circle cx="40" cy="40" r="40" />
           </svg>
           <svg className="absolute bottom-32 left-40 text-rose-100" width="100" height="100" viewBox="0 0 100 100" fill="currentColor">
-            <circle cx="50" cy="50" r="50"/>
+            <circle cx="50" cy="50" r="50" />
           </svg>
         </div>
       </div>
@@ -100,7 +100,7 @@ export default function HeroSection() {
             >
               Koleksi premium yang menggabungkan
               <span className="font-semibold text-gray-900"> style, comfort, </span>
-              dan 
+              dan
               <span className="font-semibold text-gray-900"> quality </span>
               dalam setiap langkah.
             </motion.p>
@@ -175,7 +175,7 @@ export default function HeroSection() {
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                     <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
@@ -189,7 +189,7 @@ export default function HeroSection() {
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                     <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div>
