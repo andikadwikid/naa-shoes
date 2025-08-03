@@ -38,9 +38,9 @@ export default async function ColorsPage() {
                 <tr key={color.id} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="py-4 px-6">
                     <div className="flex items-center space-x-3">
-                      <div 
-                        className="w-6 h-6 rounded-full border border-gray-300" 
-                        style={{ backgroundColor: color.hexCode }}
+                      <div
+                        className="w-6 h-6 rounded-full border border-gray-300"
+                        style={{ backgroundColor: color.hexCode || '#000000' }}
                       />
                     </div>
                   </td>

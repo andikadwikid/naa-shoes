@@ -148,7 +148,7 @@ export default function CartPage() {
                         {/* Product Image */}
                         <div className="relative w-24 h-24 flex-shrink-0">
                           <Image
-                            src={item.product.image}
+                            src={item.product.image || '/placeholder-product.svg'}
                             alt={`${item.product.name} in ${item.selectedColor}`}
                             fill
                             className="object-cover rounded-lg"

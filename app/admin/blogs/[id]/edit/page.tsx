@@ -2,9 +2,9 @@ import { notFound } from 'next/navigation'
 import BlogForm from '../../BlogForm'
 
 interface EditBlogPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 async function getBlog(id: string) {
@@ -25,8 +25,9 @@ async function getBlog(id: string) {
 }
 
 export async function generateMetadata({ params }: EditBlogPageProps) {
-  const blog = await getBlog(params.id)
-  
+  const { id } = await params
+  const blog = await getBlog(id)
+
   return {
     title: blog ? `Edit "${blog.title}" - Admin Dashboard` : 'Edit Blog Post - Admin Dashboard',
     description: 'Edit blog post details and content'
@@ -34,7 +35,8 @@ export async function generateMetadata({ params }: EditBlogPageProps) {
 }
 
 export default async function EditBlogPage({ params }: EditBlogPageProps) {
-  const blog = await getBlog(params.id)
+  const { id } = await params
+  const blog = await getBlog(id)
 
   if (!blog) {
     notFound()

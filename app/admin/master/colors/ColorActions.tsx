@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 interface Color {
   id: number
   name: string
-  hexCode: string
+  hexCode: string | null
 }
 
 interface ColorActionsProps {

@@ -10,18 +10,17 @@ interface AnimatedProductCardProps {
 }
 
 const cardVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 60,
     scale: 0.9
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     scale: 1,
-    transition: { 
+    transition: {
       duration: 0.6,
-      ease: "easeOut",
       delay: 0.1
     }
   }

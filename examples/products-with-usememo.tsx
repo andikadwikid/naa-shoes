@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import ProductCard from '../../components/ProductCard'
-import Pagination from '../../components/Pagination'
-import { getProducts, categories } from '../../services/products'
-import { Product } from '../../types/product'
+import ProductCard from '../components/ProductCard'
+import Pagination from '../components/Pagination'
+import { getProducts, categories } from '../services/products'
+import { Product } from '../types/product'
 
 export default function ProductsPageWithUseMemo() {
   const [searchTerm, setSearchTerm] = useState('')

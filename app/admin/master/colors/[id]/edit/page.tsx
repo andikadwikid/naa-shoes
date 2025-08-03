@@ -25,11 +25,11 @@ export default async function EditColorPage({ params }: EditColorPageProps) {
       </div>
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <ColorForm 
+        <ColorForm
           color={{
             id: color.id,
             name: color.name,
-            hexCode: color.hexCode
+            hexCode: color.hexCode || '#000000'
           }}
         />
       </div>

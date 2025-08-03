@@ -320,7 +320,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\andik\\OneDrive\\Documents\\Next Js\\naa-shoes\\app\\generated\\prisma",
+      "value": "/Users/user/Documents/Next Js/naa-shoes/app/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -329,12 +329,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\andik\\OneDrive\\Documents\\Next Js\\naa-shoes\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/user/Documents/Next Js/naa-shoes/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -348,7 +348,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

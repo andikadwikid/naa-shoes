@@ -6,8 +6,8 @@ export async function GET(): Promise<Response> {
   const baseUrl = 'https://naashoes.com'
   
   // Get all products and blog posts
-  const products = getProducts()
-  const blogPosts = getBlogPosts()
+  const products = await getProducts()
+  const blogPosts = await getBlogPosts()
   
   // Static pages
   const staticPages = [
@@ -58,7 +58,7 @@ export async function GET(): Promise<Response> {
   }))
   
   // Dynamic blog pages
-  const blogPages = blogPosts.map((post) => ({
+  const blogPages = blogPosts.blogs.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.publishedAt),
     changeFrequency: 'monthly' as const,

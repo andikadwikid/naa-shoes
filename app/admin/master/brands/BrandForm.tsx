@@ -7,9 +7,9 @@ import { useToast } from '../../hooks/useToast'
 interface Brand {
   id?: number
   name: string
-  description?: string
-  logo?: string
-  website?: string
+  description?: string | null
+  logo?: string | null
+  website?: string | null
   isActive: boolean
 }
 
@@ -19,7 +19,7 @@ interface BrandFormProps {
 }
 
 export default function BrandForm({ brand, isEdit = false }: BrandFormProps) {
-  const [formData, setFormData] = useState<Brand>({
+  const [formData, setFormData] = useState({
     name: brand?.name || '',
     description: brand?.description || '',
     logo: brand?.logo || '',
