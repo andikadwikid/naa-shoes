@@ -1,12 +1,18 @@
+// Core product types
 export interface SizeGuide {
+  id: number
   size: number
   centimeters: number
+  productId: number
+  sizeId: number
 }
 
 export interface ProductInventory {
+  id: number
   colorId: number
   sizeId: number
   stock: number
+  productId: number
   color: {
     id: number
     name: string
@@ -18,40 +24,63 @@ export interface ProductInventory {
   }
 }
 
-// Legacy interfaces for backward compatibility
-export interface ColorStock {
-  color: string
-  stock: number
+export interface ProductImage {
+  id: number
+  url: string
+  altText?: string
+  caption?: string
+  displayOrder: number
+  productId: number
 }
 
 export interface Product {
   id: number
   name: string
+  slug: string
+  description?: string
   price: number
   originalPrice?: number
   thumbnailUrl?: string | null
-  image?: string // Keep for backward compatibility
-  category: string
-  description: string
-  
-  // New inventory structure
-  productInventories?: ProductInventory[]
-  
-  // Legacy structure for backward compatibility
-  colors: string[]
-  sizes: number[]
+  isNew: boolean
+  isOnSale: boolean
+  isActive: boolean
+  weight?: number
+  dimensions?: string
+  material?: string
+  createdAt: string
+  updatedAt: string
+
+  // Relations
+  categoryId: number
+  brandId?: number
+  category: {
+    id: number
+    name: string
+    slug: string
+  } | string // Support both object and string for backward compatibility
+  brand?: {
+    id: number
+    name: string
+    slug: string
+  }
+
+  // Product variants and images
+  productInventories: ProductInventory[]
+  galleryImages: ProductImage[]
+  sizeGuides: SizeGuide[]
+
+  // Legacy properties for backward compatibility
+  image?: string
+  colors?: string[]
+  sizes?: number[]
   colorStock?: ColorStock[]
   sizeGuide?: SizeGuide[]
-  
-  isNew?: boolean
-  isOnSale?: boolean
-  galleryImages?: Array<{
-    id: number
-    url: string
-    altText?: string
-    caption?: string
-    displayOrder: number
-  }>
+}
+
+// Legacy interfaces for backward compatibility
+export interface ColorStock {
+  color: string
+  stock: number
 }
 
 // Helper functions to work with new inventory structure

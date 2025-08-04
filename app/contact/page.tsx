@@ -168,7 +168,7 @@ export default function ContactPage() {
                     aria-describedby="email-error email-help"
                   />
                   <p id="email-help" className="text-xs text-gray-500 mt-1">
-                    We'll never share your email address
+                    We&apos;ll never share your email address
                   </p>
                   <div id="email-error" className="sr-only" aria-live="polite"></div>
                 </div>

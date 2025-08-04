@@ -81,7 +81,7 @@ export default function AddToCartDialogShadcn({
           <div className="flex-1 space-y-1">
             <h4 className="font-semibold text-gray-900 leading-tight text-sm">{product.name}</h4>
             <span className="text-xs text-gray-500 font-medium uppercase tracking-wide bg-white px-2 py-0.5 rounded">
-              {product.category}
+              {typeof product.category === 'string' ? product.category : product.category.name}
             </span>
             <div className="flex items-center gap-2">
               <span className="text-base font-bold text-pink-600">

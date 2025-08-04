@@ -7,6 +7,7 @@ import HeroSection from "../components/HeroSection"
 import Footer from "../components/Footer"
 import WhatsAppFloat from "../components/WhatsAppFloat"
 import { getFeaturedProducts } from "../services/api-products"
+import { Product } from "../types/product"
 
 // Animation variants
 const fadeInUp = {
@@ -87,7 +88,7 @@ const structuredData = {
 }
 
 export default function Home() {
-  const [featuredProducts, setFeaturedProducts] = useState<any[]>([])
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {

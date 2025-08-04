@@ -9,7 +9,7 @@ import Footer from '../../components/Footer'
 import WhatsAppFloat from '../../components/WhatsAppFloat'
 import { getPaginatedProducts, getCategories } from '../../services/api-products'
 import { Product } from '../../types/product'
-import type { PaginatedResponse } from '../../services/api-products'
+import type { ProductPaginatedResponse } from '../../services/api-products'
 
 const metadata = {
   title: "Koleksi Sepatu Wanita Terlengkap - Sneakers, Heels, Boots | NAA Shoes",
@@ -74,7 +74,7 @@ export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [categoriesLoading, setCategoriesLoading] = useState(true)
-  const [paginatedData, setPaginatedData] = useState<PaginatedResponse<Product> | null>(null)
+  const [paginatedData, setPaginatedData] = useState<ProductPaginatedResponse<Product> | null>(null)
   const [categories, setCategories] = useState<string[]>(['All'])
 
   const itemsPerPage = 12
@@ -322,7 +322,7 @@ export default function ProductsPage() {
                 <p className="text-xs sm:text-sm">
                   {debouncedSearchTerm && (
                     <span>
-                      for "<span className="font-semibold text-pink-600">{debouncedSearchTerm}</span>"
+                      for &quot;<span className="font-semibold text-pink-600">{debouncedSearchTerm}</span>&quot;
                     </span>
                   )}
                   {selectedCategory !== 'All' && (
@@ -409,7 +409,7 @@ export default function ProductsPage() {
                     totalPages={pagination.totalPages}
                     onPageChange={handlePageChange}
                   />
-                  
+
                   {/* Page Info */}
                   <div className="text-center mt-4">
                     <p className="text-sm text-gray-600">
@@ -435,7 +435,7 @@ export default function ProductsPage() {
                 </svg>
                 <h2 className="text-lg font-medium text-gray-900 mb-2">No products found</h2>
                 <p className="text-gray-600 mb-4">
-                  Try adjusting your search terms or filters to find what you're looking for.
+                  Try adjusting your search terms or filters to find what you&apos;re looking for.
                 </p>
                 <button
                   onClick={handleClearFilters}

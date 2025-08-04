@@ -52,7 +52,8 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         setSelectedColor(productData.colors?.[0] || 'Default')
 
         // Load related products (same category, excluding current product)
-        const categoryProducts = await getProductsByCategory(productData.category)
+        const categoryName = typeof productData.category === 'string' ? productData.category : productData.category.name
+        const categoryProducts = await getProductsByCategory(categoryName)
         const related = categoryProducts
           .filter(p => p.id !== productData.id)
           .slice(0, 4)
@@ -250,7 +251,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-sm bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                  {product.category}
+                  {typeof product.category === 'string' ? product.category : product.category.name}
                 </span>
                 {product.isNew && (
                   <span className="text-sm bg-pink-100 text-pink-600 px-2 py-1 rounded-full">

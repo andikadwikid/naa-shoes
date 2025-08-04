@@ -14,6 +14,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
+import { Category, Brand } from '@/types/admin'
 
 interface Product {
   id: number
@@ -153,14 +154,14 @@ export default function AdminProductsList() {
         ])
 
         if (categoriesRes.ok) {
-          const categoryList = await categoriesRes.json()
-          const categoryNames = categoryList.map((cat: any) => cat.name)
+          const categoryList: Category[] = await categoriesRes.json()
+          const categoryNames = categoryList.map((cat) => cat.name)
           setCategories(['All', ...categoryNames])
         }
 
         if (brandsRes.ok) {
-          const brandList = await brandsRes.json()
-          const brandNames = brandList.map((brand: any) => brand.name)
+          const brandList: Brand[] = await brandsRes.json()
+          const brandNames = brandList.map((brand) => brand.name)
           setBrands(['All', ...brandNames])
         }
       } catch (error) {

@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
   return {
     title: `${post.title} | NAA Shoes Blog`,
     description: post.excerpt,
-    keywords: post.tags,
+    keywords: post.tags?.map(tag => tag.name) || [],
     authors: [{ name: post.author.name }],
     openGraph: {
       title: post.title,
@@ -33,22 +33,22 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
       type: 'article',
       publishedTime: post.publishedAt,
       authors: [post.author.name],
-      section: post.category,
-      tags: post.tags,
-      images: [
+      section: post.blogCategory.name,
+      tags: post.tags?.map(tag => tag.name) || [],
+      images: post.image ? [
         {
           url: post.image,
           width: 800,
           height: 400,
           alt: post.title,
         },
-      ],
+      ] : [],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [post.image],
+      images: post.image ? [post.image] : [],
     },
     alternates: {
       canonical: `https://naashoes.com/blog/${post.slug}`,
@@ -101,8 +101,8 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
       "@type": "WebPage",
       "@id": `https://naashoes.com/blog/${post.slug}`
     },
-    "articleSection": post.category,
-    "keywords": post.tags.join(", "),
+    "articleSection": post.blogCategory.name,
+    "keywords": post.tags?.map(tag => tag.name).join(", ") || "",
     "wordCount": post.content.replace(/<[^>]*>/g, '').split(' ').length,
     "timeRequired": `PT${post.readTime}M`,
     "inLanguage": "id-ID",
@@ -222,9 +222,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                         className="inline-block bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm font-medium uppercase tracking-wide" 
                         itemProp="articleSection"
                         role="text"
-                        aria-label={`Article category: ${post.category}`}
+                        aria-label={`Article category: ${post.blogCategory.name}`}
                       >
-                        {post.category}
+                        {post.blogCategory.name}
                       </span>
                     </div>
                     
@@ -249,7 +249,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                         aria-label="Author information"
                       >
                         <Image
-                          src={post.author.avatar}
+                          src={post.author.avatar || '/default-avatar.png'}
                           alt=""
                           width={48}
                           height={48}
@@ -265,9 +265,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                             dateTime={post.publishedAt} 
                             className="text-gray-600 text-sm" 
                             itemProp="datePublished"
-                            aria-label={`Published on ${formatDate(post.publishedAt)}`}
+                            aria-label={`Published on ${formatDate(post.publishedAt || post.createdAt)}`}
                           >
-                            {formatDate(post.publishedAt)}
+                            {formatDate(post.publishedAt || post.createdAt)}
                           </time>
                         </div>
                       </div>
@@ -300,24 +300,26 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                   </header>
 
                   {/* Featured Image */}
-                  <figure 
-                    className="relative h-64 sm:h-80 lg:h-96 mx-6 sm:mx-8 lg:mx-10 mb-8 rounded-xl overflow-hidden"
-                    role="img"
-                    aria-labelledby="featured-image-caption"
-                  >
-                    <Image
-                      src={post.image}
-                      alt={`Featured image for article: ${post.title}`}
-                      fill
-                      className="object-cover"
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 75vw"
-                      itemProp="image"
-                    />
-                    <figcaption id="featured-image-caption" className="sr-only">
-                      Featured image for the article: {post.title}
-                    </figcaption>
-                  </figure>
+                  {post.image && (
+                    <figure
+                      className="relative h-64 sm:h-80 lg:h-96 mx-6 sm:mx-8 lg:mx-10 mb-8 rounded-xl overflow-hidden"
+                      role="img"
+                      aria-labelledby="featured-image-caption"
+                    >
+                      <Image
+                        src={post.image}
+                        alt={`Featured image for article: ${post.title}`}
+                        fill
+                        className="object-cover"
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 75vw"
+                        itemProp="image"
+                      />
+                      <figcaption id="featured-image-caption" className="sr-only">
+                        Featured image for the article: {post.title}
+                      </figcaption>
+                    </figure>
+                  )}
 
                   {/* Table of Contents */}
                   {tableOfContents.length > 0 && (
@@ -374,18 +376,18 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                         Tags Artikel
                       </h2>
                       <div className="flex flex-wrap gap-2" role="list" aria-label="Article tags">
-                        {post.tags.map((tag) => (
+                        {post.tags?.map((tag) => (
                           <span
-                            key={tag}
+                            key={tag.id}
                             className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-pink-100 hover:text-pink-600 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                             itemProp="keywords"
                             role="listitem"
                             tabIndex={0}
-                            aria-label={`Tag: ${tag}`}
+                            aria-label={`Tag: ${tag.name}`}
                           >
-                            #{tag}
+                            #{tag.name}
                           </span>
-                        ))}
+                        )) || []}
                       </div>
                     </section>
 
@@ -444,7 +446,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                           >
                             <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
                               <Image
-                                src={recentPost.image}
+                                src={recentPost.image || '/placeholder-blog.jpg'}
                                 alt=""
                                 fill
                                 className="object-cover"
@@ -458,9 +460,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                               <time 
                                 dateTime={recentPost.publishedAt} 
                                 className="text-xs text-gray-500"
-                                aria-label={`Published on ${formatDate(recentPost.publishedAt)}`}
+                                aria-label={`Published on ${formatDate(recentPost.publishedAt || recentPost.createdAt)}`}
                               >
-                                {formatDate(recentPost.publishedAt)}
+                                {formatDate(recentPost.publishedAt || recentPost.createdAt)}
                               </time>
                             </div>
                           </Link>

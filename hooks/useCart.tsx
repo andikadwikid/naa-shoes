@@ -116,8 +116,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const savedCart = storage.get('naashoes-cart')
-    if (savedCart) {
+    const savedCart = storage.get<CartState>('naashoes-cart')
+    if (savedCart && savedCart.items && Array.isArray(savedCart.items)) {
       dispatch({ type: 'LOAD_CART', payload: savedCart })
     }
   }, [])

@@ -72,9 +72,9 @@ export function isClient(): boolean {
 
 // Local storage helpers with error handling
 export const storage = {
-  get: (key: string): any => {
+  get: <T = unknown>(key: string): T | null => {
     if (!isClient()) return null
-    
+
     try {
       const item = localStorage.getItem(key)
       return item ? JSON.parse(item) : null
@@ -83,10 +83,10 @@ export const storage = {
       return null
     }
   },
-  
-  set: (key: string, value: any): void => {
+
+  set: (key: string, value: unknown): void => {
     if (!isClient()) return
-    
+
     try {
       localStorage.setItem(key, JSON.stringify(value))
     } catch (error) {

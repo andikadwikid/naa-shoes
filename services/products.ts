@@ -10,10 +10,11 @@ export const categories = [
 ]
 
 // Mock products data - in real app, this would come from API
-const productsData: Product[] = [
+const productsData = [
   {
     id: 1,
     name: "Elegant Rose Gold Heels",
+    slug: "elegant-rose-gold-heels",
     price: 850000,
     originalPrice: 1200000,
     image: "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=400&h=400&fit=crop",
@@ -21,7 +22,15 @@ const productsData: Product[] = [
     description: "Sepatu hak tinggi dengan warna rose gold yang elegan, perfect untuk acara formal dan pesta.",
     colors: ["Rose Gold", "Silver", "Black"],
     sizes: [36, 37, 38, 39, 40],
-    isOnSale: true
+    isNew: false,
+    isOnSale: true,
+    isActive: true,
+    createdAt: "2024-01-01T00:00:00Z",
+    updatedAt: "2024-01-01T00:00:00Z",
+    categoryId: 1,
+    productInventories: [],
+    galleryImages: [],
+    sizeGuides: []
   },
   {
     id: 2,
@@ -308,7 +317,7 @@ export interface PaginatedResponse<T> {
 export const getProducts = async (): Promise<Product[]> => {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 100))
-  return productsData
+  return productsData as Product[]
 }
 
 // Get paginated products
@@ -366,7 +375,7 @@ export const getPaginatedProducts = async (params: PaginationParams): Promise<Pa
   const data = filtered.slice(startIndex, endIndex)
 
   return {
-    data,
+    data: data as Product[],
     pagination: {
       currentPage: page,
       totalPages,
@@ -388,28 +397,28 @@ export const getProductById = async (id: number): Promise<Product | null> => {
   }
 
   const product = productsData.find(product => product.id === id)
-  return product || null
+  return (product as Product) || null
 }
 
 export const getProductsByCategory = async (category: string): Promise<Product[]> => {
   await new Promise(resolve => setTimeout(resolve, 100))
-  if (category === 'All') return productsData
-  return productsData.filter(product => product.category === category)
+  if (category === 'All') return productsData as Product[]
+  return productsData.filter(product => product.category === category) as Product[]
 }
 
 export const getFeaturedProducts = async (): Promise<Product[]> => {
   await new Promise(resolve => setTimeout(resolve, 100))
-  return productsData.filter(product => product.isNew || product.isOnSale).slice(0, 6)
+  return productsData.filter(product => product.isNew || product.isOnSale).slice(0, 6) as Product[]
 }
 
 export const searchProducts = async (query: string): Promise<Product[]> => {
   await new Promise(resolve => setTimeout(resolve, 100))
   const lowercaseQuery = query.toLowerCase()
-  return productsData.filter(product => 
+  return productsData.filter(product =>
     product.name.toLowerCase().includes(lowercaseQuery) ||
     product.description.toLowerCase().includes(lowercaseQuery) ||
     product.category.toLowerCase().includes(lowercaseQuery)
-  )
+  ) as Product[]
 }
 
 // Categories helper

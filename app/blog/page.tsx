@@ -121,7 +121,7 @@ export default function BlogPage() {
   }, [selectedCategory])
 
   // Handle featured post display logic
-  const featuredPost = selectedCategory === 'all' ? posts.find(post => post.featured) : null
+  const featuredPost = selectedCategory === 'all' ? posts.find(post => post.isFeatured) : null
   const regularPosts = selectedCategory === 'all'
     ? posts.filter(post => post.id !== featuredPost?.id) // Only filter out the specific featured post being shown at top
     : posts // Show all posts when filtering by category
@@ -202,7 +202,7 @@ export default function BlogPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                   <div className="relative h-64 sm:h-80 lg:h-full min-h-[400px]">
                     <Image
-                      src={featuredPost.image}
+                      src={featuredPost.image || '/placeholder-blog.jpg'}
                       alt={`Featured article image: ${featuredPost.title}`}
                       fill
                       className="object-cover"
@@ -218,7 +218,7 @@ export default function BlogPage() {
                   <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
                     <div className="mb-4">
                       <span className="text-pink-600 font-medium text-sm uppercase tracking-wide">
-                        {featuredPost.category}
+                        {featuredPost.blogCategory.name}
                       </span>
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-tight">
@@ -230,7 +230,7 @@ export default function BlogPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
                         <Image
-                          src={featuredPost.author.avatar}
+                          src={featuredPost.author.avatar || '/default-avatar.png'}
                           alt={`${featuredPost.author.name} - Author photo`}
                           width={40}
                           height={40}
@@ -238,7 +238,7 @@ export default function BlogPage() {
                         />
                         <div>
                           <p className="font-medium text-gray-900">{featuredPost.author.name}</p>
-                          <p className="text-sm text-gray-500">{formatDate(featuredPost.publishedAt)}</p>
+                          <p className="text-sm text-gray-500">{formatDate(featuredPost.publishedAt || featuredPost.createdAt)}</p>
                         </div>
                       </div>
                       <Link
@@ -269,9 +269,9 @@ export default function BlogPage() {
                   }`}
                   role="tab"
                   aria-selected={selectedCategory === category.slug}
-                  aria-label={`Filter by ${category.name} category, ${category.count} posts`}
+                  aria-label={`Filter by ${category.name} category, ${category._count?.blogPosts || 0} posts`}
                 >
-                  {category.name} ({category.count})
+                  {category.name} ({category._count?.blogPosts || 0})
                 </button>
               ))}
             </div>
@@ -289,7 +289,7 @@ export default function BlogPage() {
                         <Link href={`/blog/${post.slug}`} className="block" aria-label={`Read article: ${post.title}`}>
                           <div className="relative h-48 sm:h-56">
                             <Image
-                              src={post.image}
+                              src={post.image || '/placeholder-blog.jpg'}
                               alt={`Article image: ${post.title}`}
                               fill
                               className="object-cover"
@@ -299,7 +299,7 @@ export default function BlogPage() {
                           <div className="p-6">
                             <div className="mb-3">
                               <span className="text-pink-600 font-medium text-sm uppercase tracking-wide">
-                                {post.category}
+                                {post.blogCategory.name}
                               </span>
                             </div>
                             <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2 hover:text-pink-600 transition-colors">
@@ -311,7 +311,7 @@ export default function BlogPage() {
                             <div className="flex items-center justify-between">
                               <div className="flex items-center space-x-3">
                                 <Image
-                                  src={post.author.avatar}
+                                  src={post.author.avatar || '/default-avatar.png'}
                                   alt={`${post.author.name} - Author photo`}
                                   width={32}
                                   height={32}
@@ -319,7 +319,7 @@ export default function BlogPage() {
                                 />
                                 <div>
                                   <p className="font-medium text-gray-900 text-sm">{post.author.name}</p>
-                                  <p className="text-xs text-gray-500">{formatDate(post.publishedAt)}</p>
+                                  <p className="text-xs text-gray-500">{formatDate(post.publishedAt || post.createdAt)}</p>
                                 </div>
                               </div>
                               <div className="flex items-center text-gray-500 text-sm">

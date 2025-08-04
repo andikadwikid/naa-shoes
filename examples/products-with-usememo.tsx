@@ -46,8 +46,8 @@ export default function ProductsPageWithUseMemo() {
       const lowercaseQuery = searchTerm.toLowerCase()
       filtered = filtered.filter(product => 
         product.name.toLowerCase().includes(lowercaseQuery) ||
-        product.description.toLowerCase().includes(lowercaseQuery) ||
-        product.category.toLowerCase().includes(lowercaseQuery)
+        (product.description || '').toLowerCase().includes(lowercaseQuery) ||
+        (typeof product.category === 'string' ? product.category : product.category.name).toLowerCase().includes(lowercaseQuery)
       )
     }
 

@@ -46,10 +46,10 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
           {/* Category & Rating */}
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
-              {product.category}
+              {typeof product.category === 'string' ? product.category : product.category.name}
             </span>
             <div className="flex items-center text-xs text-gray-400">
-              <span className="text-yellow-400 mr-1">★★★★★</span>
+              <span className="text-yellow-400 mr-1">���★★★★</span>
               <span>(4.9)</span>
             </div>
           </div>
@@ -104,8 +104,8 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
                     title={color}
                   />
                 ))}
-                {product.colors.length > 3 && (
-                  <span className="text-xs">+{product.colors.length - 3}</span>
+                {(product.colors?.length || 0) > 3 && (
+                  <span className="text-xs">+{(product.colors?.length || 0) - 3}</span>
                 )}
               </div>
             </div>

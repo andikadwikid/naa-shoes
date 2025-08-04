@@ -78,7 +78,7 @@ export default function ProductCardShadcn({ product, className = '' }: ProductCa
           {/* Category & Rating */}
           <div className="mb-2 flex items-center justify-between">
             <span className="text-xs text-gray-500 font-medium uppercase tracking-wide bg-gray-50 px-2 py-1 rounded-md">
-              {product.category}
+              {typeof product.category === 'string' ? product.category : product.category.name}
             </span>
             <div className="flex items-center gap-1 text-xs text-gray-400">
               <span className="text-yellow-400">★★★★★</span>
