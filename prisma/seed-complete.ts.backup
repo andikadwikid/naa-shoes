@@ -1,0 +1,499 @@
+import { PrismaClient } from '../app/generated/prisma'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  console.log('🌱 Starting complete database seeding...')
+
+  try {
+    // Clear existing data in correct order (respecting foreign key constraints)
+    console.log('🧹 Cleaning existing data...')
+    await prisma.sizeGuide.deleteMany()
+    await prisma.productColor.deleteMany()
+    await prisma.productSize.deleteMany()
+    await prisma.productImage.deleteMany()
+    await prisma.blogTag.deleteMany()
+    await prisma.blogPost.deleteMany()
+    await prisma.tag.deleteMany()
+    await prisma.blogCategory.deleteMany()
+    await prisma.author.deleteMany()
+    await prisma.orderItem.deleteMany()
+    await prisma.order.deleteMany()
+    await prisma.review.deleteMany()
+    await prisma.customer.deleteMany()
+    await prisma.product.deleteMany()
+    await prisma.brand.deleteMany()
+    await prisma.color.deleteMany()
+    await prisma.size.deleteMany()
+    await prisma.category.deleteMany()
+
+    // 1. Create Categories
+    console.log('📂 Creating categories...')
+    const categories = await Promise.all([
+      prisma.category.create({
+        data: {
+          name: 'Sneakers',
+          slug: 'sneakers',
+          description: 'Casual and sports sneakers for everyday wear'
+        }
+      }),
+      prisma.category.create({
+        data: {
+          name: 'High Heels',
+          slug: 'high-heels',
+          description: 'Elegant high heels for formal occasions'
+        }
+      }),
+      prisma.category.create({
+        data: {
+          name: 'Flats',
+          slug: 'flats',
+          description: 'Comfortable flat shoes for daily activities'
+        }
+      }),
+      prisma.category.create({
+        data: {
+          name: 'Boots',
+          slug: 'boots',
+          description: 'Stylish boots for all seasons'
+        }
+      }),
+      prisma.category.create({
+        data: {
+          name: 'Sandals',
+          slug: 'sandals',
+          description: 'Light and airy sandals for summer'
+        }
+      })
+    ])
+    console.log(`✅ Created ${categories.length} categories`)
+
+    // 2. Create Brands
+    console.log('🏷️ Creating brands...')
+    const brands = await Promise.all([
+      prisma.brand.create({
+        data: {
+          name: 'Nike',
+          slug: 'nike',
+          description: 'Just Do It - Premium athletic footwear'
+        }
+      }),
+      prisma.brand.create({
+        data: {
+          name: 'Adidas',
+          slug: 'adidas',
+          description: 'Impossible is Nothing - Sports and lifestyle shoes'
+        }
+      }),
+      prisma.brand.create({
+        data: {
+          name: 'Zara',
+          slug: 'zara',
+          description: 'Fast fashion footwear with European style'
+        }
+      }),
+      prisma.brand.create({
+        data: {
+          name: 'H&M',
+          slug: 'hm',
+          description: 'Affordable fashion footwear for everyone'
+        }
+      }),
+      prisma.brand.create({
+        data: {
+          name: 'Charles & Keith',
+          slug: 'charles-keith',
+          description: 'Contemporary fashion footwear and accessories'
+        }
+      }),
+      prisma.brand.create({
+        data: {
+          name: 'Pedro',
+          slug: 'pedro',
+          description: 'Modern and sophisticated footwear designs'
+        }
+      }),
+      prisma.brand.create({
+        data: {
+          name: 'Mango',
+          slug: 'mango',
+          description: 'Mediterranean fashion with contemporary style'
+        }
+      }),
+      prisma.brand.create({
+        data: {
+          name: 'Converse',
+          slug: 'converse',
+          description: 'Classic sneakers with timeless appeal'
+        }
+      })
+    ])
+    console.log(`✅ Created ${brands.length} brands`)
+
+    // 3. Create Colors
+    console.log('🎨 Creating colors...')
+    const colors = await Promise.all([
+      prisma.color.create({
+        data: { name: 'Black', hexCode: '#000000' }
+      }),
+      prisma.color.create({
+        data: { name: 'White', hexCode: '#FFFFFF' }
+      }),
+      prisma.color.create({
+        data: { name: 'Pink', hexCode: '#EC4899' }
+      }),
+      prisma.color.create({
+        data: { name: 'Rose Gold', hexCode: '#E11D48' }
+      }),
+      prisma.color.create({
+        data: { name: 'Nude', hexCode: '#D4A574' }
+      }),
+      prisma.color.create({
+        data: { name: 'Brown', hexCode: '#92400E' }
+      }),
+      prisma.color.create({
+        data: { name: 'Silver', hexCode: '#9CA3AF' }
+      }),
+      prisma.color.create({
+        data: { name: 'Gold', hexCode: '#FBBF24' }
+      })
+    ])
+    console.log(`✅ Created ${colors.length} colors`)
+
+    // 4. Create Sizes
+    console.log('👟 Creating sizes...')
+    const sizes = await Promise.all([
+      prisma.size.create({ data: { value: 36 } }),
+      prisma.size.create({ data: { value: 37 } }),
+      prisma.size.create({ data: { value: 38 } }),
+      prisma.size.create({ data: { value: 39 } }),
+      prisma.size.create({ data: { value: 40 } }),
+      prisma.size.create({ data: { value: 41 } }),
+      prisma.size.create({ data: { value: 42 } })
+    ])
+    console.log(`✅ Created ${sizes.length} sizes`)
+
+    // 5. Create Sample Products
+    console.log('👠 Creating products...')
+    const productsData = [
+      {
+        name: 'Nike Air Max 90 Pink',
+        category: 'Sneakers',
+        brand: 'Nike',
+        price: 1299000,
+        originalPrice: 1499000,
+        description: 'Classic Nike Air Max with pink accents, perfect for casual wear',
+        colors: ['Pink', 'White'],
+        sizes: [36, 37, 38, 39, 40],
+        isNew: true,
+        isOnSale: true
+      },
+      {
+        name: 'Elegant Rose Gold Heels',
+        category: 'High Heels',
+        brand: 'Charles & Keith',
+        price: 899000,
+        originalPrice: 1199000,
+        description: 'Sophisticated rose gold heels for special occasions',
+        colors: ['Rose Gold', 'Nude'],
+        sizes: [36, 37, 38, 39, 40],
+        isNew: false,
+        isOnSale: true
+      },
+      {
+        name: 'Comfort Black Flats',
+        category: 'Flats',
+        brand: 'Zara',
+        price: 459000,
+        description: 'All-day comfort with sleek black design',
+        colors: ['Black', 'Brown'],
+        sizes: [36, 37, 38, 39, 40, 41],
+        isNew: false,
+        isOnSale: false
+      },
+      {
+        name: 'Adventure Leather Boots',
+        category: 'Boots',
+        brand: 'Pedro',
+        price: 1899000,
+        description: 'Durable leather boots for outdoor adventures',
+        colors: ['Brown', 'Black'],
+        sizes: [37, 38, 39, 40, 41, 42],
+        isNew: true,
+        isOnSale: false
+      },
+      {
+        name: 'Summer Gold Sandals',
+        category: 'Sandals',
+        brand: 'Mango',
+        price: 329000,
+        originalPrice: 449000,
+        description: 'Light and breezy gold sandals for summer',
+        colors: ['Gold', 'Silver'],
+        sizes: [36, 37, 38, 39, 40],
+        isNew: false,
+        isOnSale: true
+      },
+      {
+        name: 'Adidas Ultraboost White',
+        category: 'Sneakers',
+        brand: 'Adidas',
+        price: 2799000,
+        description: 'Premium running shoes with boost technology',
+        colors: ['White', 'Black'],
+        sizes: [36, 37, 38, 39, 40, 41],
+        isNew: true,
+        isOnSale: false
+      },
+      {
+        name: 'Converse Chuck Taylor Pink',
+        category: 'Sneakers',
+        brand: 'Converse',
+        price: 659000,
+        description: 'Classic Chuck Taylor with a modern pink twist',
+        colors: ['Pink', 'White'],
+        sizes: [36, 37, 38, 39, 40],
+        isNew: false,
+        isOnSale: false
+      },
+      {
+        name: 'H&M Nude Office Heels',
+        category: 'High Heels',
+        brand: 'H&M',
+        price: 399000,
+        description: 'Professional nude heels perfect for office wear',
+        colors: ['Nude', 'Black'],
+        sizes: [36, 37, 38, 39, 40],
+        isNew: false,
+        isOnSale: false
+      }
+    ]
+
+    for (const productData of productsData) {
+      const category = categories.find(c => c.name === productData.category)!
+      const brand = brands.find(b => b.name === productData.brand)!
+      
+      // Create slug
+      const slug = productData.name.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+
+      const product = await prisma.product.create({
+        data: {
+          name: productData.name,
+          slug: slug,
+          description: productData.description,
+          price: productData.price,
+          originalPrice: productData.originalPrice,
+          categoryId: category.id,
+          brandId: brand.id,
+          isNew: productData.isNew,
+          isOnSale: productData.isOnSale,
+          isActive: true,
+          material: 'Premium materials',
+          weight: Math.random() * 500 + 200 // Random weight between 200-700g
+        }
+      })
+
+      // Add colors with stock
+      for (const colorName of productData.colors) {
+        const color = colors.find(c => c.name === colorName)!
+        const stock = Math.floor(Math.random() * 50) + 10 // Random stock 10-60
+        
+        await prisma.productColor.create({
+          data: {
+            productId: product.id,
+            colorId: color.id,
+            stock: stock
+          }
+        })
+      }
+
+      // Add sizes with stock
+      for (const sizeValue of productData.sizes) {
+        const size = sizes.find(s => s.value === sizeValue)!
+        const stock = Math.floor(Math.random() * 30) + 5 // Random stock 5-35
+        
+        await prisma.productSize.create({
+          data: {
+            productId: product.id,
+            sizeId: size.id,
+            stock: stock
+          }
+        })
+      }
+
+      // Add size guides
+      for (const sizeValue of productData.sizes) {
+        const size = sizes.find(s => s.value === sizeValue)!
+        // Calculate centimeters based on EU size formula
+        const centimeters = Math.round(((sizeValue - 2) / 1.5) * 10) / 10
+        
+        await prisma.sizeGuide.create({
+          data: {
+            productId: product.id,
+            sizeId: size.id,
+            centimeters: centimeters
+          }
+        })
+      }
+
+      console.log(`✅ Created product: ${product.name}`)
+    }
+
+    // 6. Create Blog Categories and Authors
+    console.log('📝 Creating blog data...')
+    
+    const blogCategories = await Promise.all([
+      prisma.blogCategory.create({
+        data: {
+          name: 'Fashion Trends',
+          slug: 'fashion-trends',
+          description: 'Latest fashion trends and style tips'
+        }
+      }),
+      prisma.blogCategory.create({
+        data: {
+          name: 'Shoe Care',
+          slug: 'shoe-care',
+          description: 'Tips and guides for maintaining your shoes'
+        }
+      }),
+      prisma.blogCategory.create({
+        data: {
+          name: 'Style Guide',
+          slug: 'style-guide',
+          description: 'How to style different types of footwear'
+        }
+      })
+    ])
+
+    const authors = await Promise.all([
+      prisma.author.create({
+        data: {
+          name: 'Sarah Johnson',
+          email: 'sarah@naashoes.com',
+          bio: 'Fashion stylist and footwear expert with 10 years of experience'
+        }
+      }),
+      prisma.author.create({
+        data: {
+          name: 'Maya Chen',
+          email: 'maya@naashoes.com',
+          bio: 'Lifestyle blogger and shoe enthusiast'
+        }
+      })
+    ])
+
+    // 7. Create Sample Blog Posts
+    const blogPosts = [
+      {
+        title: '10 Must-Have Shoes for Every Woman\'s Wardrobe',
+        content: 'Discover the essential footwear pieces that every modern woman should own...',
+        category: 'Style Guide',
+        author: 'Sarah Johnson'
+      },
+      {
+        title: 'How to Care for Your Leather Shoes',
+        content: 'Learn the best practices for maintaining and extending the life of your leather footwear...',
+        category: 'Shoe Care',
+        author: 'Maya Chen'
+      },
+      {
+        title: 'Spring 2024 Shoe Trends You Need to Know',
+        content: 'Get ahead of the fashion curve with these upcoming shoe trends for spring...',
+        category: 'Fashion Trends',
+        author: 'Sarah Johnson'
+      }
+    ]
+
+    for (const postData of blogPosts) {
+      const category = blogCategories.find(c => c.name === postData.category)!
+      const author = authors.find(a => a.name === postData.author)!
+      
+      const slug = postData.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+
+      await prisma.blogPost.create({
+        data: {
+          title: postData.title,
+          slug: slug,
+          content: postData.content,
+          excerpt: postData.content.substring(0, 150) + '...',
+          isPublished: true,
+          isFeatured: Math.random() > 0.5,
+          readTime: Math.floor(Math.random() * 10) + 3,
+          publishedAt: new Date(),
+          authorId: author.id,
+          blogCategoryId: category.id
+        }
+      })
+    }
+
+    console.log(`✅ Created blog content`)
+
+    // 8. Create Sample Customer and Orders (optional)
+    console.log('👥 Creating sample customers...')
+    
+    const customers = await Promise.all([
+      prisma.customer.create({
+        data: {
+          name: 'Siti Rahma',
+          email: 'siti@example.com',
+          phone: '+628123456789'
+        }
+      }),
+      prisma.customer.create({
+        data: {
+          name: 'Andi Pratama',
+          email: 'andi@example.com',
+          phone: '+628987654321'
+        }
+      })
+    ])
+
+    console.log(`✅ Created ${customers.length} sample customers`)
+
+    console.log('🎉 Database seeding completed successfully!')
+    
+    // Print summary
+    const stats = {
+      categories: await prisma.category.count(),
+      brands: await prisma.brand.count(),
+      colors: await prisma.color.count(),
+      sizes: await prisma.size.count(),
+      products: await prisma.product.count(),
+      productColors: await prisma.productColor.count(),
+      productSizes: await prisma.productSize.count(),
+      sizeGuides: await prisma.sizeGuide.count(),
+      customers: await prisma.customer.count(),
+      blogPosts: await prisma.blogPost.count()
+    }
+
+    console.log('\n📊 Seeding Summary:')
+    console.log(`├── Categories: ${stats.categories}`)
+    console.log(`├── Brands: ${stats.brands}`)
+    console.log(`├── Colors: ${stats.colors}`)
+    console.log(`├── Sizes: ${stats.sizes}`)
+    console.log(`├── Products: ${stats.products}`)
+    console.log(`├── Product Colors: ${stats.productColors}`)
+    console.log(`├── Product Sizes: ${stats.productSizes}`)
+    console.log(`├── Size Guides: ${stats.sizeGuides}`)
+    console.log(`├── Customers: ${stats.customers}`)
+    console.log(`└── Blog Posts: ${stats.blogPosts}`)
+
+  } catch (error) {
+    console.error('❌ Error during seeding:', error)
+    throw error
+  }
+}
+
+main()
+  .catch((e) => {
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
